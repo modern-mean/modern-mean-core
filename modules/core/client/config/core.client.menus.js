@@ -32,9 +32,9 @@
     });
 
     Menus.addSubMenuItem('account', 'settings', {
-      title: 'Edit Privacy Settings',
-      icon: 'fa-shield',
-      state: 'settings.privacy'
+      title: 'Manage Social Accounts',
+      icon: 'fa-users',
+      state: 'settings.accounts'
     });
 
     Menus.addSubMenuItem('account', 'settings', {
