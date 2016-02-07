@@ -97,7 +97,7 @@
       return true;
     }
 
-    if (config.sessionSecret === 'SHACKAPP') {
+    if (config.sessionSecret === 'MODERN!MEAN') {
       if (!testing) {
         console.log(chalk.red('+ WARNING: It is strongly recommended that you change sessionSecret config while running in production!'));
         console.log(chalk.red('  Please add `sessionSecret: process.env.SESSION_SECRET || \'super duper amazing secret\'` to '));
@@ -184,9 +184,9 @@
     // Merge config files
     var config = _.merge(defaultConfig, environmentConfig);
 
-    // read package.json for shackApp project information
+    // read package.json for Modern-MEAN project information
     var pkg = require(path.resolve('./package.json'));
-    config.shackapp = pkg;
+    config.mean = pkg;
 
     // Extend the config object with the local-NODE_ENV.js custom/local environment. This will override any settings present in the local configuration.
     config = _.merge(config, (fs.existsSync(path.join(process.cwd(), 'config/env/local-' + process.env.NODE_ENV + '.js')) && require(path.join(process.cwd(), 'config/env/local-' + process.env.NODE_ENV + '.js'))) || {});

@@ -51,7 +51,7 @@
         console.log(chalk.green('Database:        ' + config.db.uri));
         console.log(chalk.green('App version:     ' + config.mean.version));
         if (config.mean['mean-version'])
-          console.log(chalk.green('mean version: ' + config.mean['mean-version']));
+          console.log(chalk.green('Modern-MEAN version: ' + config.mean['mean-version']));
         console.log('--');
 
         if (callback) callback(app, db, config);
