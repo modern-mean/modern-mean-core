@@ -5,21 +5,23 @@
     .module('users')
     .controller('AuthenticationController', AuthenticationController);
 
-  AuthenticationController.$inject = ['$scope', '$state', '$http', '$location', '$window', 'Authentication', 'PasswordValidator'];
+  AuthenticationController.$inject = ['Authentication', 'PasswordValidator', '$state', '$http', '$location', '$window', '$scope'];
 
-  function AuthenticationController($scope, $state, $http, $location, $window, Authentication, PasswordValidator) {
-    $scope.authentication = Authentication;
-    $scope.popoverMsg = PasswordValidator.getPopoverMsg();
+  function AuthenticationController(Authentication, PasswordValidator, $state, $http, $location, $window, $scope) {
+    var vm = this;
+
+    vm.authentication = Authentication;
+    vm.popoverMsg = PasswordValidator.getPopoverMsg();
 
     // Get an eventual error defined in the URL query string:
-    $scope.error = $location.search().err;
+    vm.error = $location.search().err;
 
     // If user is signed in then redirect back home
-    if ($scope.authentication.user) {
+    if (vm.authentication.user) {
       $location.path('/');
     }
 
-    $scope.signup = function (isValid) {
+    vm.signup = function (isValid) {
       $scope.error = null;
 
       if (!isValid) {
@@ -28,9 +30,9 @@
         return false;
       }
 
-      $http.post('/api/auth/signup', $scope.credentials).success(function (response) {
+      $http.post('/api/auth/signup', vm.credentials).success(function (response) {
         // If successful we assign the response to the global user model
-        //$scope.authentication.user = response;
+        //vm.authentication.user = response;
         Authentication.login(response.user, response.token);
 
         // And redirect to the previous or home page
@@ -40,7 +42,7 @@
       });
     };
 
-    $scope.signin = function (isValid) {
+    vm.signin = function (isValid) {
       $scope.error = null;
 
       if (!isValid) {
@@ -49,9 +51,9 @@
         return false;
       }
 
-      $http.post('/api/auth/signin', $scope.credentials).success(function (response) {
+      $http.post('/api/auth/signin', vm.credentials).success(function (response) {
         // If successful we assign the response to the global user model
-        //$scope.authentication.user = response;
+        //vm.authentication.user = response;
         Authentication.login(response.user, response.token);
 
         // And redirect to the previous or home page
@@ -62,7 +64,7 @@
     };
 
     // OAuth provider request
-    $scope.callOauthProvider = function (url) {
+    vm.callOauthProvider = function (url) {
       if ($state.previous && $state.previous.href) {
         url += '?redirect_to=' + encodeURIComponent($state.previous.href);
       }
