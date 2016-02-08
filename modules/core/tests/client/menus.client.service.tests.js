@@ -177,6 +177,7 @@
         menuItemOptions = {
           title: 'title',
           state: 'state',
+          icon: 'icon',
           type: 'type',
           class: 'class',
           isPublic: false,
@@ -235,8 +236,8 @@
         });
 
         it('should call addSubMenuItem for each item in options', function() {
-          expect(Menus.addSubMenuItem).toHaveBeenCalledWith(menuId, menuItemOptions.state, subMenuItem1);
-          expect(Menus.addSubMenuItem).toHaveBeenCalledWith(menuId, menuItemOptions.state, subMenuItem2);
+          expect(Menus.addSubMenuItem).toHaveBeenCalledWith(menuId, menuItemOptions.state, menuItemOptions.icon, subMenuItem1);
+          expect(Menus.addSubMenuItem).toHaveBeenCalledWith(menuId, menuItemOptions.state, menuItemOptions.icon, subMenuItem2);
         });
       });
 
@@ -405,21 +406,21 @@
           expect(subItem2.position).toBe(0);
         });
       });
-      
+
       describe('then removeSubMenuItem', function() {
         beforeEach(function() {
           Menus.validateMenuExistance = jasmine.createSpy();
           menu = Menus.removeSubMenuItem(menuId, subItem1.state);
         });
-  
+
         it('should validate menu existance', function() {
           expect(Menus.validateMenuExistance).toHaveBeenCalledWith(menuId);
         });
-  
+
         it('should return menu object', function() {
           expect(menu).toBeDefined();
         });
-  
+
         it('should remove sub menu item', function() {
           expect(menuItem1.items.length).toBe(1);
           expect(menuItem1.items[0].state).toEqual(subItem2.state);
