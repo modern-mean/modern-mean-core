@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  // Setting up route
   angular
     .module('core.admin.routes')
     .config(menuConfig);
