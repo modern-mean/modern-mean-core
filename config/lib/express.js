@@ -160,9 +160,11 @@
     app.use('/', express.static(path.resolve('./public')));
 
     // Globbing static routing
+    /*
     config.folders.client.forEach(function (staticPath) {
       app.use(staticPath, express.static(path.resolve('./' + staticPath)));
     });
+    */
   };
 
   /**

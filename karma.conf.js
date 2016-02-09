@@ -40,7 +40,7 @@
       },
 
       // List of files / patterns to load in the browser
-      files: _.union(defaultAssets.client.lib.js, defaultAssets.client.lib.tests, defaultAssets.client.js, testAssets.tests.client, defaultAssets.client.views),
+      files: ['public/dist/core.js', 'public/dist/application.js', 'public/dist/vendor.js', 'public/dist/templates.js', 'modules/*/tests/client/**/*.js'],
 
       // Test results reporter to use
       // Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'

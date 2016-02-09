@@ -1,9 +1,9 @@
 var gulp = require('gulp'),
   plugins = require('gulp-load-plugins')(),
-  defaultAssets = require('../../config/assets/default');
+  pngquant = require('imagemin-pngquant');
 
 gulp.task('imagemin', function () {
-  return gulp.src(defaultAssets.client.img)
+  return gulp.src(['modules/*/client/**/*.{jpg,png,gif}'])
     .pipe(plugins.imagemin({
       progressive: true,
       svgoPlugins: [{ removeViewBox: false }],

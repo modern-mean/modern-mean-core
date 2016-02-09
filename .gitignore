@@ -10,7 +10,7 @@ Thumbs.db
 .nodemonignore
 .sass-cache/
 node_modules/
-public/lib/
+bower_components/
 app/tests/coverage/
 .bower-*/
 .idea/
@@ -25,6 +25,7 @@ modules/users/client/img/profile/uploads
 config/env/local.js
 config/env/local-*.js
 *.pem
+modules/core/server/views/layout.server.view.html
 
 # Ignoring Modern-MEAN's gh-pages branch for documenation
 _site/
