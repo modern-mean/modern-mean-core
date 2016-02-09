@@ -260,7 +260,7 @@
         // Click Submit button
         element(by.css('button[type="submit"]')).click();
         // Email Error
-        expect(element.all(by.css('.error-text')).get(0).getText()).toBe('Email address is required.');
+        expect(element.all(by.css('.error-text')).get(0).getText()).toBe('email is required.');
         // Password Error
         expect(element.all(by.css('.error-text')).get(1).getText()).toBe('Password is required.');
       });
