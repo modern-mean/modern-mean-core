@@ -181,9 +181,9 @@ gulp test:e2e
 ```
 
 
-## Getting Started With SHACKAPP
+## Getting Started With Modern-MEAN
 You have your application running, but there is a lot of stuff to understand. We recommend you go over the Official Documentation *under construction*.
-In the docs we'll try to explain both general concepts of SHACKAPP components and give you some guidelines to help you improve your development process. We tried covering as many aspects as possible, and will keep it updated by your request. You can also help us develop and improve the documentation by checking out the *gh-pages* branch of this repository.
+In the docs we'll try to explain both general concepts of Modern-MEAN components and give you some guidelines to help you improve your development process. We tried covering as many aspects as possible, and will keep it updated by your request. You can also help us develop and improve the documentation by checking out the *gh-pages* branch of this repository.
 
 
 ## Community
