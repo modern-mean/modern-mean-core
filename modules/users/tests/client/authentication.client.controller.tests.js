@@ -45,7 +45,7 @@
 
         // Initialize the Authentication controller
         AuthenticationController = $controller('AuthenticationController as vm', {
-          $scope: scope
+          $scope: $scope
         });
       }));
 
@@ -53,7 +53,7 @@
         Authentication.signout();
       }));
 
-      describe('$scope.signin()', function () {
+      describe('$scope.vm.signin()', function () {
         it('should login with a correct user and password', function () {
           // Test expected GET request
           $httpBackend.when('POST', '/api/auth/signin').respond(200, { user: { name : 'fred@test.com' } });
@@ -102,7 +102,7 @@
           $httpBackend.flush();
 
           // Test scope value
-          expect(scope.error).toEqual('Missing credentials');
+          expect($scope.error).toEqual('Missing credentials');
         });
 
         it('should fail to log in with wrong credentials', function () {
@@ -119,7 +119,7 @@
           $httpBackend.flush();
 
           // Test scope value
-          expect(scope.error).toEqual('Unknown user');
+          expect($scope.error).toEqual('Unknown user');
         });
       });
 
@@ -134,7 +134,7 @@
 
           // test scope value
           expect($scope.vm.authentication.user.name).toBe('fred@test.com');
-          expect(scope.error).toEqual(null);
+          expect($scope.error).toEqual(null);
           expect($location.url()).toBe('/');
         });
 
@@ -148,14 +148,14 @@
           $httpBackend.flush();
 
           // Test scope value
-          expect(scope.error).toBe('Email already exists');
+          expect($scope.error).toBe('Email already exists');
         });
       });
     });
 
     describe('Logged in user', function () {
       beforeEach(inject(function ($controller, $rootScope, _$location_, _Authentication_) {
-        scope = $rootScope.$new();
+        $scope = $rootScope.$new();
 
         $location = _$location_;
         $location.path = jasmine.createSpy().and.returnValue(true);
