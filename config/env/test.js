@@ -100,6 +100,6 @@
       }
     },
     // This config is set to true during grunt coverage
-    coverage: process.env.COVERAGE || false
+    coverage: process.env.COVERAGE || true
   };
 })();

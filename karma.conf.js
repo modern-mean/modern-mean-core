@@ -48,11 +48,10 @@
 
       // Configure the coverage reporter
       coverageReporter: {
-        dir : 'coverage/client',
+        dir : '.coverdata',
         reporters: [
           // Reporters not supporting the `file` property
-          { type: 'html', subdir: 'report-html' },
-          { type: 'lcov', subdir: 'report-lcov' },
+          { type: 'lcov'},
           // Output coverage to console
           { type: 'text' }
         ],
