@@ -7,6 +7,10 @@
 
 Modern-MEAN is a full-stack JavaScript open-source solution, which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. The idea is to solve the common issues with connecting those frameworks, build a robust framework to support daily development needs, and help developers use better practices while working with popular JavaScript components.
 
+modern-mean-core is the essential building block for your application, the core functionality of Modern-MEAN! We are planning on releasing additional modules at a later point in our development and maturity of Modern-MEAN. Modules will have their own repository and/or be branched off the modern-mean-core.
+
+One of main goals is to always be current, be it by features, by dependencies, or by community input! Let's make this the last and best script you have been looking for! Happy coding!
+
 
 ## Before You Begin
 Before you begin we recommend you read about the basic building blocks that assemble a SHACKAPP application:
