@@ -390,7 +390,8 @@
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Changed
-        expect(element.all(by.css('strong')).get(0).getText()).toBe('Password Changed Successfully');
+        expect(browser.getCurrentUrl()).toEqual('http://localhost:3001/settings/password');
+//        expect(element.all(by.css('.text-success')).get(0).getText()).toBe('<strong>Password Changed Successfully</strong>');
       });
     });
   });
