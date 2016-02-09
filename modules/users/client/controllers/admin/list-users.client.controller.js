@@ -5,33 +5,35 @@
     .module('users.admin')
     .controller('UserListController', UserListController);
 
-  UserListController.$inject = ['$scope', '$filter', 'Admin'];
+  UserListController.$inject = ['Admin', '$filter'];
 
-  function UserListController($scope, $filter, Admin) {
+  function UserListController(Admin, $filter) {
+    var vm = this;
+
     Admin.query(function (data) {
-      $scope.users = data;
-      $scope.buildPager();
+      vm.users = data;
+      vm.buildPager();
     });
 
-    $scope.buildPager = function () {
-      $scope.pagedItems = [];
-      $scope.itemsPerPage = 15;
-      $scope.currentPage = 1;
-      $scope.figureOutItemsToDisplay();
+    vm.buildPager = function () {
+      vm.pagedItems = [];
+      vm.itemsPerPage = 15;
+      vm.currentPage = 1;
+      vm.figureOutItemsToDisplay();
     };
 
-    $scope.figureOutItemsToDisplay = function () {
-      $scope.filteredItems = $filter('filter')($scope.users, {
-        $: $scope.search
+    vm.figureOutItemsToDisplay = function () {
+      vm.filteredItems = $filter('filter')(vm.users, {
+        $: vm.search
       });
-      $scope.filterLength = $scope.filteredItems.length;
-      var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-      var end = begin + $scope.itemsPerPage;
-      $scope.pagedItems = $scope.filteredItems.slice(begin, end);
+      vm.filterLength = vm.filteredItems.length;
+      var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+      var end = begin + vm.itemsPerPage;
+      vm.pagedItems = vm.filteredItems.slice(begin, end);
     };
 
-    $scope.pageChanged = function () {
-      $scope.figureOutItemsToDisplay();
+    vm.pageChanged = function () {
+      vm.figureOutItemsToDisplay();
     };
   }
 })();

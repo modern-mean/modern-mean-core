@@ -5,19 +5,21 @@
     .module('users')
     .controller('PasswordController', PasswordController);
 
-  PasswordController.$inject = ['$scope', '$stateParams', '$http', '$location', 'Authentication', 'PasswordValidator'];
+  PasswordController.$inject = ['Authentication', 'PasswordValidator', '$stateParams', '$http', '$location', '$scope'];
 
-  function PasswordController($scope, $stateParams, $http, $location, Authentication, PasswordValidator) {
-    $scope.authentication = Authentication;
-    $scope.popoverMsg = PasswordValidator.getPopoverMsg();
+  function PasswordController(Authentication, PasswordValidator, $stateParams, $http, $location, $scope) {
+    var vm = this;
+
+    vm.authentication = Authentication;
+    vm.popoverMsg = PasswordValidator.getPopoverMsg();
 
     // If user is signed in then redirect back home
-    if ($scope.authentication.user) {
+    if (vm.authentication.user) {
       $location.path('/');
     }
 
     // Submit forgotten password account id
-    $scope.askForPasswordReset = function (isValid) {
+    vm.askForPasswordReset = function (isValid) {
       $scope.success = $scope.error = null;
 
       if (!isValid) {
@@ -26,20 +28,20 @@
         return false;
       }
 
-      $http.post('/api/auth/forgot', $scope.credentials).success(function (response) {
+      $http.post('/api/auth/forgot', vm.credentials).success(function (response) {
         // Show user success message and clear form
-        $scope.credentials = null;
+        vm.credentials = null;
         $scope.success = response.message;
 
       }).error(function (response) {
         // Show user error message and clear form
-        $scope.credentials = null;
+        vm.credentials = null;
         $scope.error = response.message;
       });
     };
 
     // Change user password
-    $scope.resetUserPassword = function (isValid) {
+    vm.resetUserPassword = function (isValid) {
       $scope.success = $scope.error = null;
 
       if (!isValid) {
@@ -48,9 +50,9 @@
         return false;
       }
 
-      $http.post('/api/auth/reset/' + $stateParams.token, $scope.passwordDetails).success(function (response) {
+      $http.post('/api/auth/reset/' + $stateParams.token, vm.passwordDetails).success(function (response) {
         // If successful show success message and clear form
-        $scope.passwordDetails = null;
+        vm.passwordDetails = null;
 
         // Attach user profile
         Authentication.login(response.user, response.token);

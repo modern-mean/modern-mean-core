@@ -5,9 +5,11 @@
     .module('users')
     .controller('SettingsController', SettingsController);
 
-  SettingsController.$inject = ['$scope', 'Authentication'];
+  SettingsController.$inject = ['Authentication'];
 
-  function SettingsController($scope, Authentication) {
-    $scope.user = Authentication.user;
+  function SettingsController(Authentication) {
+    var vm = this;
+
+    vm.user = Authentication.user;
   }
 })();

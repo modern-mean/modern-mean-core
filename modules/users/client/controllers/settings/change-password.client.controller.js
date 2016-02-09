@@ -5,14 +5,16 @@
     .module('users')
     .controller('ChangePasswordController', ChangePasswordController);
 
-  ChangePasswordController.$inject = ['$scope', '$http', 'Authentication', 'PasswordValidator'];
+  ChangePasswordController.$inject = ['Authentication', 'PasswordValidator', '$http', '$scope'];
 
-  function ChangePasswordController($scope, $http, Authentication, PasswordValidator) {
-    $scope.user = Authentication.user;
-    $scope.popoverMsg = PasswordValidator.getPopoverMsg();
+  function ChangePasswordController(Authentication, PasswordValidator, $http, $scope) {
+    var vm = this;
+
+    vm.user = Authentication.user;
+    vm.popoverMsg = PasswordValidator.getPopoverMsg();
 
     // Change user password
-    $scope.changeUserPassword = function (isValid) {
+    vm.changeUserPassword = function (isValid) {
       $scope.success = $scope.error = null;
 
       if (!isValid) {
@@ -21,11 +23,11 @@
         return false;
       }
 
-      $http.post('/api/users/password', $scope.passwordDetails).success(function (response) {
+      $http.post('/api/users/password', vm.passwordDetails).success(function (response) {
         // If successful show success message and clear form
         $scope.$broadcast('show-errors-reset', 'passwordForm');
         $scope.success = true;
-        $scope.passwordDetails = null;
+        vm.passwordDetails = null;
       }).error(function (response) {
         $scope.error = response.message;
       });
