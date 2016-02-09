@@ -14,7 +14,8 @@ public/lib/
 app/tests/coverage/
 .bower-*/
 .idea/
-coverage/
+.coverrun
+.coverdata
 
 # Modern-MEAN app and assets
 # ======================

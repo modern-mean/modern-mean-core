@@ -24,7 +24,12 @@
     protractor = require('gulp-protractor').protractor,
     webdriver_update = require('gulp-protractor').webdriver_update,
     webdriver_standalone = require('gulp-protractor').webdriver_standalone,
-    KarmaServer = require('karma').Server;
+    KarmaServer = require('karma').Server,
+    cover = require('gulp-coverage');
+
+  //Require Gulp Tasks
+  require('require-dir')('./tasks/gulp');
+
 
   // Set NODE_ENV to 'test'
   gulp.task('env:test', function () {
@@ -249,6 +254,9 @@
       mongoose.loadModels();
       // Run the tests
       gulp.src(testSuites)
+        .pipe(cover.instrument({
+          pattern: ['modules/*/server/**/*.js']
+        }))
         .pipe(plugins.mocha({
           reporter: 'spec',
           timeout: 10000
@@ -262,7 +270,11 @@
           mongoose.disconnect(function () {
             done(error);
           });
-        });
+        })
+        .pipe(cover.gather())
+        .pipe(cover.format({ reporter: 'lcov', outFile: 'lcov.info' }))
+        .pipe(gulp.dest('.coverdata'));
+
     });
 
   });
@@ -322,6 +334,9 @@
     runSequence('less', 'sass', ['csslint', 'eslint', 'jshint'], done);
   });
 
+
+
+
   // Lint project files and minify them into two production files.
   gulp.task('build', function (done) {
     runSequence('env:dev', 'lint', ['uglify', 'cssmin'], done);
@@ -329,7 +344,7 @@
 
   // Run the project tests
   gulp.task('test', function (done) {
-    runSequence('env:test', 'copy:localConfig', 'lint', 'mocha', 'karma', 'nodemon', 'protractor', done);
+    runSequence('env:test', 'copy:localConfig', 'lint', 'mocha', 'karma', 'coveralls', 'nodemon', 'protractor', done);
   });
 
   gulp.task('test:server', function (done) {
