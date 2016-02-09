@@ -1,6 +1,6 @@
-'use strict';
-
 (function() {
+  'use strict';
+
   describe('Menus', function() {
     //Initialize global variables
     var scope,
