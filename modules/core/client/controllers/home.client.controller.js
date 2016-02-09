@@ -5,10 +5,11 @@
     .module('core')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$scope', 'Authentication'];
+  HomeController.$inject = ['Authentication'];
 
-  function HomeController($scope, Authentication) {
+  function HomeController(Authentication) {
+    var vm = this;
     // This provides Authentication context.
-    $scope.authentication = Authentication;
+    vm.authentication = Authentication;
   }
 })();

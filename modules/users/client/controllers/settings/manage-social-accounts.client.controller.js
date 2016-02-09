@@ -5,14 +5,16 @@
     .module('users')
     .controller('SocialAccountsController', SocialAccountsController);
 
-  SocialAccountsController.$inject = ['$scope', '$http', 'Authentication'];
+  SocialAccountsController.$inject = ['Authentication', '$http', '$scope'];
 
-  function SocialAccountsController($scope, $http, Authentication) {
-    $scope.user = Authentication.user;
+  function SocialAccountsController(Authentication, $http, $scope) {
+    var vm = this;
+
+    vm.user = Authentication.user;
 
     // Check if there are additional accounts
-    $scope.hasConnectedAdditionalSocialAccounts = function (provider) {
-      for (var i in $scope.user.additionalProvidersData) {
+    vm.hasConnectedAdditionalSocialAccounts = function (provider) {
+      for (var i in vm.user.additionalProvidersData) {
         return true;
       }
 
@@ -20,12 +22,12 @@
     };
 
     // Check if provider is already in use with current user
-    $scope.isConnectedSocialAccount = function (provider) {
-      return $scope.user.provider === provider || ($scope.user.additionalProvidersData && $scope.user.additionalProvidersData[provider]);
+    vm.isConnectedSocialAccount = function (provider) {
+      return vm.user.provider === provider || (vm.user.additionalProvidersData && vm.user.additionalProvidersData[provider]);
     };
 
     // Remove a user social account
-    $scope.removeUserSocialAccount = function (provider) {
+    vm.removeUserSocialAccount = function (provider) {
       $scope.success = $scope.error = null;
 
       $http.delete('/api/users/accounts', {
@@ -35,7 +37,7 @@
       }).success(function (response) {
         // If successful show success message and clear form
         $scope.success = true;
-        $scope.user = Authentication.user = response;
+        vm.user = Authentication.user = response;
       }).error(function (response) {
         $scope.error = response.message;
       });
