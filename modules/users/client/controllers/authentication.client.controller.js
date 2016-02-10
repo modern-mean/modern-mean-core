@@ -72,5 +72,7 @@
       // Effectively call OAuth authentication route:
       $window.location.href = url;
     };
+
+    console.log('AuthenticationController::Init', vm);
   }
 })();
