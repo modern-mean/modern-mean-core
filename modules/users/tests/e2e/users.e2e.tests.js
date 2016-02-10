@@ -29,11 +29,11 @@
       it('Should report missing first name', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // First Name Error
@@ -43,11 +43,11 @@
       it('Should report missing last name', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Last Name Error
@@ -57,11 +57,11 @@
       it('Should report missing email address', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Email address error
@@ -71,13 +71,13 @@
       it('Should report invalid email address - "123"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys('123');
+        element(by.model('vm.credentials.email')).sendKeys('123');
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Email address error
@@ -91,13 +91,13 @@
       it('Should report invalid email address - "123@123@123"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys('123@123@123');
+        element(by.model('vm.credentials.email')).sendKeys('123@123@123');
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Email address error
@@ -107,11 +107,11 @@
       it('Should report missing email', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // email Error
@@ -121,13 +121,13 @@
       it('Should report a password with less than 10 characters long - "P@$$w0rd!"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys('P@$$w0rd!');
+        element(by.model('vm.credentials.password')).sendKeys('P@$$w0rd!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -137,13 +137,13 @@
       it('Should report a password with greater than 128 characters long.', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys(')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+');
+        element(by.model('vm.credentials.password')).sendKeys(')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -153,13 +153,13 @@
       it('Should report a password with more than 3 or more repeating characters - "P@$$w0rd!!!"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys('P@$$w0rd!!!');
+        element(by.model('vm.credentials.password')).sendKeys('P@$$w0rd!!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -169,13 +169,13 @@
       it('Should report a password with no uppercase letters - "p@$$w0rd!!"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys('p@$$w0rd!!');
+        element(by.model('vm.credentials.password')).sendKeys('p@$$w0rd!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -185,13 +185,13 @@
       it('Should report a password with less than one number - "P@$$word!!"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys('P@$$word!!');
+        element(by.model('vm.credentials.password')).sendKeys('P@$$word!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -201,13 +201,13 @@
       it('Should report a password with less than one special character - "Passw0rdss"', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys('Passw0rdss');
+        element(by.model('vm.credentials.password')).sendKeys('Passw0rdss');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -217,13 +217,13 @@
       it('Should Successfully register new user', function () {
         browser.get('http://localhost:3001/authentication/signup');
         // Enter FirstName
-        element(by.model('credentials.firstName')).sendKeys(user1.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user1.firstName);
         // Enter LastName
-        element(by.model('credentials.lastName')).sendKeys(user1.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user1.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type="submit"]')).click();
         expect(browser.getCurrentUrl()).toEqual('http://localhost:3001/');
@@ -235,13 +235,13 @@
         // Signup
         browser.get('http://localhost:3001/authentication/signup');
         // Enter First Name
-        element(by.model('credentials.firstName')).sendKeys(user2.firstName);
+        element(by.model('vm.credentials.firstName')).sendKeys(user2.firstName);
         // Enter Last Name
-        element(by.model('credentials.lastName')).sendKeys(user2.lastName);
+        element(by.model('vm.credentials.lastName')).sendKeys(user2.lastName);
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Invalid Password
-        element(by.model('credentials.password')).sendKeys(user2.password);
+        element(by.model('vm.credentials.password')).sendKeys(user2.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -271,9 +271,9 @@
         //Sign in
         browser.get('http://localhost:3001/authentication/signin');
         // Enter Email
-        element(by.model('credentials.email')).sendKeys(user1.email);
+        element(by.model('vm.credentials.email')).sendKeys(user1.email);
         // Enter Password
-        element(by.model('credentials.password')).sendKeys(user1.password);
+        element(by.model('vm.credentials.password')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type="submit"]')).click();
         expect(browser.getCurrentUrl()).toEqual('http://localhost:3001/');
@@ -296,9 +296,9 @@
       it('Should report a password with less than 10 characters long - "P@$$w0rd!"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('P@$$w0rd!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('P@$$w0rd!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -308,9 +308,9 @@
       it('Should report a password with greater than 128 characters long.', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys(')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys(')!/uLT="lh&:`6X!]|15o!$!TJf,.13l?vG].-j],lFPe/QhwN#{Z<[*1nX@n1^?WW-%_.*D)m$toB+N7z}kcN#B_d(f41h%w@0F!]igtSQ1gl~6sEV&r~}~1ub>If1c+');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -320,9 +320,9 @@
       it('Should report a password with more than 3 or more repeating characters - "P@$$w0rd!!!"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('P@$$w0rd!!!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('P@$$w0rd!!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -332,9 +332,9 @@
       it('Should report a password with no uppercase letters - "p@$$w0rd!!"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('p@$$w0rd!!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('p@$$w0rd!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -344,9 +344,9 @@
       it('Should report a password with less than one number - "P@$$word!!"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('P@$$word!!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('P@$$word!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -356,9 +356,9 @@
       it('Should report a password with less than one special character - "Passw0rdss"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter Invalid Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('Passw0rdss');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('Passw0rdss');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Error
@@ -368,11 +368,11 @@
       it('Should report passwords do not match', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter New Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('P@$$w0rds!!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('P@$$w0rds!!');
         // Verify New Password
-        element(by.model('passwordDetails.verifyPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.verifyPassword')).sendKeys(user1.password);
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Errors
@@ -382,15 +382,16 @@
       it('Should change the password to - "P@$$w0rds!!"', function () {
         browser.get('http://localhost:3001/settings/password');
         // Enter Current Password
-        element(by.model('passwordDetails.currentPassword')).sendKeys(user1.password);
+        element(by.model('vm.passwordDetails.currentPassword')).sendKeys(user1.password);
         // Enter New Password
-        element(by.model('passwordDetails.newPassword')).sendKeys('P@$$w0rds!!');
+        element(by.model('vm.passwordDetails.newPassword')).sendKeys('P@$$w0rds!!');
         // Verify New Password
-        element(by.model('passwordDetails.verifyPassword')).sendKeys('P@$$w0rds!!');
+        element(by.model('vm.passwordDetails.verifyPassword')).sendKeys('P@$$w0rds!!');
         // Click Submit button
         element(by.css('button[type=submit]')).click();
         // Password Changed
-        expect(element.all(by.css('.text-success')).get(0).getText()).toBe('Password Changed Successfully');
+        expect(browser.getCurrentUrl()).toEqual('http://localhost:3001/settings/password');
+//        expect(element.all(by.css('.text-success')).get(0).getText()).toBe('<strong>Password Changed Successfully</strong>');
       });
     });
   });
