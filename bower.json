@@ -30,9 +30,15 @@
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/js/bootstrap.min.js",
-        "dist/css/bootstrap.min.css",
-        "less/bootstrap.less"
+        "./dist/js/bootstrap.min.js",
+        "./dist/css/bootstrap.min.css",
+        "./dist/fonts/*.*"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "./css/font-awesome.min.css",
+        "./fonts/*.*"
       ]
     }
   }

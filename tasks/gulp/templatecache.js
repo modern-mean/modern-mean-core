@@ -14,5 +14,5 @@ gulp.task('templatecache', function () {
       templateBody: '		$templateCache.put(\'<%= url %>\', \'<%= contents %>\');',
       templateFooter: '	}' + endOfLine + '})();' + endOfLine,
     }))
-    .pipe(gulp.dest('public/dist/src'));
+    .pipe(gulp.dest('./public/dist'));
 });

@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
 // JS minifying task
 gulp.task('uglify', function () {
-  return gulp.src('public/dist/src/*.js')
+  return gulp.src('public/dist/*.js')
     .pipe(plugins.ngAnnotate())
     .pipe(plugins.uglify({
       mangle: true
