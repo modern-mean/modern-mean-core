@@ -26,7 +26,7 @@ gulp.task('build', function (done) {
 
 // Run the project tests
 gulp.task('test', function (done) {
-  runSequence('clean:coverage', 'env:test', 'build', 'copy:localConfig', 'nodemon', ['mocha', 'karma', 'protractor'], done);
+  runSequence('clean:coverage', 'env:test', 'build', 'stripDebug', 'copy:localConfig', 'nodemon', ['mocha', 'karma', 'protractor'], done);
 });
 
 gulp.task('test:server', function (done) {
@@ -51,15 +51,15 @@ gulp.task('test:e2e', function (done) {
 
 // Run the project in development mode
 gulp.task('default', function (done) {
-  runSequence('env:dev', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:dev', 'build', 'stripDebug', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
 
 // Run the project in debug mode
 gulp.task('debug', function (done) {
-  runSequence('env:dev', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:dev', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
 
 // Run the project in production mode
 gulp.task('prod', function (done) {
-  runSequence('env:prod', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:prod', 'build', 'stripDebug', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
