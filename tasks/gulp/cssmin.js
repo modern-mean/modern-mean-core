@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
   // CSS minifying task
   gulp.task('cssmin', function () {
-    return gulp.src(['public/dist/src/*.css'])
+    return gulp.src(['./public/dist/*.css'])
       .pipe(plugins.cssmin())
-      .pipe(gulp.dest('public/dist'));
+      .pipe(gulp.dest('./public/dist'));
   });
