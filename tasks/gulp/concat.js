@@ -24,7 +24,7 @@ gulp.task('concat:js:application', function () {
 });
 
 gulp.task('concat:js:vendor', function () {
-  var filterJS = filter('**/*.js', { restore: true });
+  var filterJS = filter(['**/*.js', '!**/angular.js'], { restore: true });
   var filterCSS = filter('**/*.css', { restore: true });
   var filterFonts = filter('**/*.{svg,woff,woff2,eot,ttf}', { restore: true });
 
