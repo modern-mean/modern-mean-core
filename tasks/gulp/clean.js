@@ -14,6 +14,13 @@ gulp.task('clean:build', function () {
   ]);
 });
 
+
+gulp.task('clean:build:src', function () {
+  return del([
+    'public/dist/src'
+  ]);
+});
+
 gulp.task('clean:coverage', function () {
   return del([
     '.coverdata'

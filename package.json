@@ -78,6 +78,7 @@
     "gulp-cssmin": "~0.1.7",
     "gulp-eslint": "~1.1.1",
     "gulp-imagemin": "~2.4.0",
+    "gulp-inject": "^3.0.0",
     "gulp-jshint": "~2.0.0",
     "gulp-less": "~3.0.5",
     "gulp-livereload": "~3.8.1",
@@ -85,6 +86,7 @@
     "gulp-mocha": "~2.2.0",
     "gulp-ng-annotate": "~1.1.0",
     "gulp-nodemon": "~2.0.6",
+    "gulp-obfuscate": "^0.2.9",
     "gulp-protractor": "~2.1.0",
     "gulp-rename": "~1.2.2",
     "gulp-sass": "~2.2.0",
@@ -99,10 +101,12 @@
     "karma-jasmine": "~0.3.7",
     "karma-ng-html2js-preprocessor": "~0.2.0",
     "karma-phantomjs-launcher": "~1.0.0",
+    "main-bower-files": "^2.11.1",
     "mock-fs": "~3.7.0",
     "require-dir": "^0.3.0",
     "run-sequence": "~1.1.5",
     "should": "~8.2.1",
+    "stream-series": "^0.1.1",
     "supertest": "~1.1.0",
     "yargs": "~3.32.0"
   }

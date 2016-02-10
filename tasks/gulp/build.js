@@ -4,12 +4,29 @@ var gulp = require('gulp'),
 
 // Lint project files and minify them into two production files.
 gulp.task('build', function (done) {
-  runSequence('lint', ['uglify', 'cssmin'], done);
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin'], 'clean:build:src', 'inject', done);
+      break;
+
+    case 'test':
+      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin'], 'clean:build:src', 'inject', done);
+      break;
+
+    case 'development':
+      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], 'inject', done);
+      break;
+
+    default:
+
+      break;
+  }
+
 });
 
 // Run the project tests
 gulp.task('test', function (done) {
-  runSequence('clean:coverage', 'env:test', 'copy:localConfig', 'lint', 'mocha', 'karma', 'coveralls', 'nodemon', 'protractor', done);
+  runSequence('clean:coverage', 'env:test', 'build', 'copy:localConfig', 'nodemon', ['mocha', 'karma', 'protractor'], done);
 });
 
 gulp.task('test:server', function (done) {
@@ -25,24 +42,24 @@ gulp.task('test:server:watch', function (done) {
 });
 
 gulp.task('test:client', function (done) {
-  runSequence('clean:coverage', 'env:test', 'lint', 'karma', done);
+  runSequence('clean:coverage', 'env:test', 'build', 'karma', done);
 });
 
 gulp.task('test:e2e', function (done) {
-  runSequence('clean:coverage', 'env:test', 'lint', 'dropdb', 'nodemon', 'protractor', done);
+  runSequence('clean:coverage', 'env:test', 'dropdb', 'nodemon', 'protractor', done);
 });
 
 // Run the project in development mode
 gulp.task('default', function (done) {
-  runSequence('env:dev', 'lint', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:dev', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
 
 // Run the project in debug mode
 gulp.task('debug', function (done) {
-  runSequence('env:dev', 'lint', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:dev', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
 
 // Run the project in production mode
 gulp.task('prod', function (done) {
-  runSequence('clean', 'env:prod', 'templatecache', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
+  runSequence('env:prod', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
 });
