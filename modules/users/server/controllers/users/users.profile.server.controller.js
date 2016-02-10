@@ -63,7 +63,7 @@
             message: 'Error occurred while uploading profile picture'
           });
         } else {
-          user.profileImageURL = config.uploads.profileUpload.dest + req.file.filename;
+          user.profileImageURL = './img/profile/uploads/' + req.file.filename;
 
           user.save(function (saveError) {
             if (saveError) {

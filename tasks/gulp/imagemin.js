@@ -3,7 +3,7 @@ var gulp = require('gulp'),
   pngquant = require('imagemin-pngquant');
 
 gulp.task('imagemin', function () {
-  return gulp.src(['modules/*/client/**/*.{jpg,png,gif}'])
+  return gulp.src(['modules/*/client/**/*.{jpg,png,gif,ico}'])
     .pipe(plugins.imagemin({
       progressive: true,
       svgoPlugins: [{ removeViewBox: false }],

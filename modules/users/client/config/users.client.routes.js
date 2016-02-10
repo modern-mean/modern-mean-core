@@ -15,8 +15,6 @@
         abstract: true,
         url: '/settings',
         templateUrl: 'modules/users/client/views/settings/settings.client.view.html',
-        controller: 'SettingsController',
-        controllerAs: 'vm',
         data: {
           roles: ['user', 'admin']
         }
