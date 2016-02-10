@@ -62,7 +62,7 @@
     },
     profileImageURL: {
       type: String,
-      default: 'modules/users/client/img/profile/default.png'
+      default: '/dist/img/users/client/img/profile/default.png'
     },
     provider: {
       type: String,
