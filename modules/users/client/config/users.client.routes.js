@@ -92,5 +92,7 @@
         controller: 'PasswordController',
         controllerAs: 'vm'
       });
+
+    console.log('Users::Routes::Loaded', $stateProvider);
   }
 })();

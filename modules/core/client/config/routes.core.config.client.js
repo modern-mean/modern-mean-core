@@ -2,13 +2,14 @@
   'use strict';
 
   angular
-    .module('core')
+    .module('core.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function routeConfig($stateProvider, $urlRouterProvider) {
     // Redirect to 404 when route not found
+
     $urlRouterProvider.otherwise(function ($injector, $location) {
       $injector.get('$state').transitionTo('not-found', null, {
         location: false
@@ -44,6 +45,8 @@
         ignoreState: true
       }
     });
+
+    console.log('Core::Routes::Loaded', $stateProvider);
   }
 
 })();

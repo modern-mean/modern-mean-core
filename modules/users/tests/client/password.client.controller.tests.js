@@ -27,7 +27,7 @@
     });
 
     // Load the main application module
-    beforeEach(module(ApplicationConfiguration.applicationModuleName));
+    beforeEach(module(window.modernMeanApplication.name));
 
     describe('Logged in user', function() {
       beforeEach(inject(function($controller, $rootScope, _Authentication_, _$stateParams_, _$httpBackend_, _$location_) {

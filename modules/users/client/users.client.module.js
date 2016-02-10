@@ -1,8 +1,9 @@
-(function() {
+(function(window, angular) {
   'use strict';
 
-  // Use Application configuration module to register a new module
-  ApplicationConfiguration.registerModule('users', ['core']);
-  ApplicationConfiguration.registerModule('users.admin', ['core.admin']);
-  ApplicationConfiguration.registerModule('users.admin.routes', ['core.admin.routes']);
-})();
+  window.modernMeanApplication.registerModule('users', ['core']);
+  window.modernMeanApplication.registerModule('users.routes', ['core.routes']);
+  window.modernMeanApplication.registerModule('users.admin', ['core.admin']);
+  window.modernMeanApplication.registerModule('users.admin.routes', ['core.admin.routes']);
+  
+})(window, angular);

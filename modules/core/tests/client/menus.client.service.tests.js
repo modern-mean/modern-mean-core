@@ -7,7 +7,7 @@
       Menus;
 
     // Load the main application module
-    beforeEach(module(ApplicationConfiguration.applicationModuleName));
+    beforeEach(module(window.modernMeanApplication.name));
 
     beforeEach(inject(function(_Menus_) {
       Menus = _Menus_;
