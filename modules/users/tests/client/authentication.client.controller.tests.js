@@ -28,7 +28,7 @@
     });
 
     // Load the main application module
-    beforeEach(module(ApplicationConfiguration.applicationModuleName));
+    beforeEach(module(window.modernMeanApplication.name));
 
     describe('Logged out user', function () {
       // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).

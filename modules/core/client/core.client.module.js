@@ -1,8 +1,9 @@
-(function() {
+(function(window) {
   'use strict';
 
-  // Use Application configuration module to register a new module
-  ApplicationConfiguration.registerModule('core');
-  ApplicationConfiguration.registerModule('core.admin', ['core']);
-  ApplicationConfiguration.registerModule('core.admin.routes', ['ui.router']);
-})();
+  window.modernMeanApplication.registerModule('core', []);
+  window.modernMeanApplication.registerModule('core.routes', ['ui.router']);
+  window.modernMeanApplication.registerModule('core.admin', []);
+  window.modernMeanApplication.registerModule('core.admin.routes', ['core.routes']);
+  
+})(window);
