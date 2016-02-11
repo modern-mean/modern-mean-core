@@ -13,7 +13,6 @@
         if (!rejection.config.ignoreAuthModule) {
           switch (rejection.status) {
             case 401:
-              // Deauthenticate the global user
               var auth = $injector.get('Authentication');
               auth.signout();
               $injector.get('$state').transitionTo('authentication.signin');
@@ -23,7 +22,6 @@
               break;
           }
         }
-        // otherwise, default behaviour
         return $q.reject(rejection);
       }
     };

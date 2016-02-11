@@ -6,10 +6,10 @@
     .module('users.admin')
     .run(menuConfig);
 
-  menuConfig.$inject = ['Menus'];
+  menuConfig.$inject = ['menuService'];
 
-  function menuConfig(Menus) {
-    Menus.addSubMenuItem('topbar', 'admin', {
+  function menuConfig(menuService) {
+    menuService.addSubMenuItem('topbar', 'admin', {
       title: 'Manage Users',
       icon: 'fa-users',
       state: 'admin.users'

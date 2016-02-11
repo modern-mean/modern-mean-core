@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 gulp.task('build', function (done) {
   switch (process.env.NODE_ENV) {
     case 'production':
-      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin'], 'clean:build:src', 'inject', done);
+      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin', 'obfuscate'], 'clean:build:src', 'inject', done);
       break;
 
     case 'test':
