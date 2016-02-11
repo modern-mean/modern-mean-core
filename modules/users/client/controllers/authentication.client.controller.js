@@ -14,7 +14,7 @@
     vm.popoverMsg = PasswordValidator.getPopoverMsg();
 
     // Get an eventual error defined in the URL query string:
-    $scope.error = $location.search().err;
+    vm.error = $location.search().err;
 
     // If user is signed in then redirect back home
     if (vm.authentication.user) {
@@ -22,7 +22,7 @@
     }
 
     vm.signup = function (isValid) {
-      $scope.error = null;
+      vm.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -38,12 +38,12 @@
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        $scope.error = response.message;
+        vm.error = response.message;
       });
     };
 
     vm.signin = function (isValid) {
-      $scope.error = null;
+      vm.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -59,7 +59,7 @@
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {
-        $scope.error = response.message;
+        vm.error = response.message;
       });
     };
 

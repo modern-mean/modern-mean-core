@@ -48,7 +48,7 @@
     // Called after the user has successfully uploaded a new picture
     vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
       // Show success message
-      $scope.success = true;
+      vm.success = true;
 
       // Populate user object
       vm.user = Authentication.user = response;
@@ -63,13 +63,13 @@
       vm.cancelUpload();
 
       // Show error message
-      $scope.error = response.message;
+      vm.error = response.message;
     };
 
     // Change user profile picture
     vm.uploadProfilePicture = function () {
       // Clear messages
-      $scope.success = $scope.error = null;
+      vm.success = vm.error = null;
 
       // Start upload
       vm.uploader.uploadAll();

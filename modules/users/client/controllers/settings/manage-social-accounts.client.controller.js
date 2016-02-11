@@ -28,7 +28,7 @@
 
     // Remove a user social account
     $scope.removeUserSocialAccount = function (provider) {
-      $scope.success = $scope.error = null;
+      $scope.success = vm.error = null;
 
       $http.delete('/api/users/accounts', {
         params: {
@@ -36,10 +36,10 @@
         }
       }).success(function (response) {
         // If successful show success message and clear form
-        $scope.success = true;
+        vm.success = true;
         vm.user = Authentication.user = response;
       }).error(function (response) {
-        $scope.error = response.message;
+        vm.error = response.message;
       });
     };
   }

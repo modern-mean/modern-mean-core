@@ -41,7 +41,7 @@
           userId: user._id
         });
       }, function (errorResponse) {
-        $scope.error = errorResponse.data.message;
+        vm.error = errorResponse.data.message;
       });
     };
   }
