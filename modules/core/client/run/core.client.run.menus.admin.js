@@ -5,10 +5,10 @@
     .module('core.admin')
     .run(menuConfig);
 
-  menuConfig.$inject = ['Menus'];
+  menuConfig.$inject = ['menuService'];
 
-  function menuConfig(Menus) {
-    Menus.addMenuItem('topbar', {
+  function menuConfig(menuService) {
+    menuService.addMenuItem('topbar', {
       title: 'Admin',
       state: 'admin',
       type: 'dropdown',

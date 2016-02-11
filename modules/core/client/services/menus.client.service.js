@@ -1,42 +1,185 @@
-(function() {
+(function () {
   'use strict';
 
-  //Menu service used for managing  menus
   angular
     .module('core')
-    .service('Menus', Menus);
+    .factory('menuService', menuService);
 
-  function Menus() {
-    // Define a set of default roles
-    this.defaultRoles = ['user', 'admin'];
+  function menuService() {
+    var shouldRender;
+    var service = {
+      addMenu: addMenu,
+      addMenuItem: addMenuItem,
+      addSubMenuItem: addSubMenuItem,
+      defaultRoles: ['user', 'admin'],
+      getMenu: getMenu,
+      menus: {},
+      removeMenu: removeMenu,
+      removeMenuItem: removeMenuItem,
+      removeSubMenuItem: removeSubMenuItem,
+      validateMenuExistance: validateMenuExistance
+    };
 
-    // Define the menus object
-    this.menus = {};
+    init();
 
-    // A private function for rendering decision
-    var shouldRender = function (user) {
-      if (!!~this.roles.indexOf('*')) {
-        return true;
-      } else {
-        if(!user) {
-          return false;
+    return service;
+
+    // Add new menu object by menu id
+    function addMenu(menuId, options) {
+      options = options || {};
+
+      // Create the new menu
+      service.menus[menuId] = {
+        roles: options.roles || service.defaultRoles,
+        items: options.items || [],
+        shouldRender: shouldRender
+      };
+
+      // Return the menu object
+      return service.menus[menuId];
+    }
+
+    // Add menu item object
+    function addMenuItem(menuId, options) {
+      options = options || {};
+
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Push new menu item
+      service.menus[menuId].items.push({
+        title: options.title || '',
+        state: options.state || '',
+        icon: options.icon || '',
+        type: options.type || 'item',
+        class: options.class,
+        roles: ((options.roles === null || typeof options.roles === 'undefined') ? service.defaultRoles : options.roles),
+        position: options.position || 0,
+        items: [],
+        shouldRender: shouldRender
+      });
+
+      // Add submenu items
+      if (options.items) {
+        for (var i in options.items) {
+          service.addSubMenuItem(menuId, options.state, options.icon, options.items[i]);
         }
-        for (var userRoleIndex in user.roles) {
-          for (var roleIndex in this.roles) {
-            if (this.roles[roleIndex] === user.roles[userRoleIndex]) {
-              return true;
+      }
+
+      // Return the menu object
+      return service.menus[menuId];
+    }
+
+    // Add submenu item object
+    function addSubMenuItem(menuId, parentItemState, options) {
+      options = options || {};
+
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Search for menu item
+      for (var itemIndex in service.menus[menuId].items) {
+        if (service.menus[menuId].items[itemIndex].state === parentItemState) {
+          // Push new submenu item
+          service.menus[menuId].items[itemIndex].items.push({
+            title: options.title || '',
+            state: options.state || '',
+            icon: options.icon || '',
+            roles: ((options.roles === null || typeof options.roles === 'undefined') ? service.menus[menuId].items[itemIndex].roles : options.roles),
+            position: options.position || 0,
+            shouldRender: shouldRender
+          });
+        }
+      }
+
+      // Return the menu object
+      return service.menus[menuId];
+    }
+
+    // Get the menu object by menu id
+    function getMenu(menuId) {
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Return the menu object
+      return service.menus[menuId];
+    }
+
+    function init() {
+      // A private function for rendering decision
+      shouldRender = function (user) {
+        if (!!~this.roles.indexOf('*')) {
+          return true;
+        } else {
+          if (!user) {
+            return false;
+          }
+
+          for (var userRoleIndex in user.roles) {
+            for (var roleIndex in this.roles) {
+              if (this.roles[roleIndex] === user.roles[userRoleIndex]) {
+                return true;
+              }
             }
+          }
+        }
+
+        return false;
+      };
+
+      //Adding the topbar menu
+      addMenu('topbar', {
+        roles: ['*']
+      });
+    }
+
+    // Remove existing menu object by menu id
+    function removeMenu(menuId) {
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Return the menu object
+      delete service.menus[menuId];
+    }
+
+    // Remove existing menu object by menu id
+    function removeMenuItem(menuId, menuItemState) {
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Search for menu item to remove
+      for (var itemIndex in service.menus[menuId].items) {
+        if (service.menus[menuId].items[itemIndex].state === menuItemState) {
+          service.menus[menuId].items.splice(itemIndex, 1);
+        }
+      }
+
+      // Return the menu object
+      return service.menus[menuId];
+    }
+
+    // Remove existing menu object by menu id
+    function removeSubMenuItem(menuId, submenuItemState) {
+      // Validate that the menu exists
+      service.validateMenuExistance(menuId);
+
+      // Search for menu item to remove
+      for (var itemIndex in service.menus[menuId].items) {
+        for (var subitemIndex in service.menus[menuId].items[itemIndex].items) {
+          if (service.menus[menuId].items[itemIndex].items[subitemIndex].state === submenuItemState) {
+            service.menus[menuId].items[itemIndex].items.splice(subitemIndex, 1);
           }
         }
       }
 
-      return false;
-    };
+      // Return the menu object
+      return service.menus[menuId];
+    }
 
     // Validate menu existance
-    this.validateMenuExistance = function (menuId) {
+    function validateMenuExistance(menuId) {
       if (menuId && menuId.length) {
-        if (this.menus[menuId]) {
+        if (service.menus[menuId]) {
           return true;
         } else {
           throw new Error('Menu does not exist');
@@ -46,135 +189,6 @@
       }
 
       return false;
-    };
-
-    // Get the menu object by menu id
-    this.getMenu = function (menuId) {
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    // Add new menu object by menu id
-    this.addMenu = function (menuId, options) {
-      options = options || {};
-
-      // Create the new menu
-      this.menus[menuId] = {
-        roles: options.roles || this.defaultRoles,
-        items: options.items || [],
-        shouldRender: shouldRender
-      };
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    // Remove existing menu object by menu id
-    this.removeMenu = function (menuId) {
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Return the menu object
-      delete this.menus[menuId];
-    };
-
-    // Add menu item object
-    this.addMenuItem = function (menuId, options) {
-      options = options || {};
-
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Push new menu item
-      this.menus[menuId].items.push({
-        title: options.title || '',
-        icon: options.icon || '',
-        state: options.state || '',
-        type: options.type || 'item',
-        class: options.class,
-        roles: ((options.roles === null || typeof options.roles === 'undefined') ? this.defaultRoles : options.roles),
-        position: options.position || 0,
-        items: [],
-        shouldRender: shouldRender
-      });
-
-      // Add submenu items
-      if (options.items) {
-        for (var i in options.items) {
-          this.addSubMenuItem(menuId, options.state, options.icon, options.items[i]);
-        }
-      }
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    // Add submenu item object
-    this.addSubMenuItem = function (menuId, parentItemState, options) {
-      options = options || {};
-
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Search for menu item
-      for (var itemIndex in this.menus[menuId].items) {
-        if (this.menus[menuId].items[itemIndex].state === parentItemState) {
-          // Push new submenu item
-          this.menus[menuId].items[itemIndex].items.push({
-            title: options.title || '',
-            icon: options.icon || '',
-            state: options.state || '',
-            roles: ((options.roles === null || typeof options.roles === 'undefined') ? this.menus[menuId].items[itemIndex].roles : options.roles),
-            position: options.position || 0,
-            shouldRender: shouldRender
-          });
-        }
-      }
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    // Remove existing menu object by menu id
-    this.removeMenuItem = function (menuId, menuItemState) {
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Search for menu item to remove
-      for (var itemIndex in this.menus[menuId].items) {
-        if (this.menus[menuId].items[itemIndex].state === menuItemState) {
-          this.menus[menuId].items.splice(itemIndex, 1);
-        }
-      }
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    // Remove existing menu object by menu id
-    this.removeSubMenuItem = function (menuId, submenuItemState) {
-      // Validate that the menu exists
-      this.validateMenuExistance(menuId);
-
-      // Search for menu item to remove
-      for (var itemIndex in this.menus[menuId].items) {
-        for (var subitemIndex in this.menus[menuId].items[itemIndex].items) {
-          if (this.menus[menuId].items[itemIndex].items[subitemIndex].state === submenuItemState) {
-            this.menus[menuId].items[itemIndex].items.splice(subitemIndex, 1);
-          }
-        }
-      }
-
-      // Return the menu object
-      return this.menus[menuId];
-    };
-
-    //Adding the topbar menu
-    this.addMenu('topbar', {
-      roles: ['*']
-    });
+    }
   }
 })();

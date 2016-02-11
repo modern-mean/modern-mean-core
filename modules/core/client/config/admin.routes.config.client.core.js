@@ -1,14 +1,13 @@
-(function() {
+(function () {
   'use strict';
 
-  // Setting up route
   angular
     .module('core.admin.routes')
-    .config(menuConfig);
+    .config(routeConfig);
 
-  menuConfig.$inject = ['$stateProvider'];
+  routeConfig.$inject = ['$stateProvider'];
 
-  function menuConfig($stateProvider) {
+  function routeConfig($stateProvider) {
     $stateProvider
       .state('admin', {
         abstract: true,
