@@ -3,7 +3,7 @@
 
   window.modernMeanApplication = {
     name: 'modernMean',
-    dependencies: ['ngResource', 'ngAnimate', 'ui.router', 'ngMessages', 'ui.bootstrap', 'ui.utils', 'angularFileUpload', 'ngSanitize', 'angularMoment'],
+    dependencies: ['ngResource', 'ui.router', 'ngSanitize', 'ngMaterial'],
     registerModule: registerModule
   };
 
