@@ -26,7 +26,7 @@ gulp.task('build', function (done) {
 
 // Run the project tests
 gulp.task('test', function (done) {
-  runSequence('clean:coverage', 'env:test', 'build', 'stripDebug', 'copy:localConfig', 'nodemon', ['mocha', 'karma', 'protractor'], done);
+  runSequence('clean:coverage', 'env:test', 'build', 'stripDebug', 'copy:localConfig', ['mocha'], done);
 });
 
 gulp.task('test:server', function (done) {
@@ -42,7 +42,7 @@ gulp.task('test:server:watch', function (done) {
 });
 
 gulp.task('test:client', function (done) {
-  runSequence('clean:coverage', 'env:test', 'build', 'karma', done);
+  runSequence('clean:coverage', 'env:test', 'build', 'stripDebug', 'karma', done);
 });
 
 gulp.task('test:e2e', function (done) {
