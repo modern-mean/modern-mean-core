@@ -14,7 +14,7 @@
 
     // Update a user profile
     vm.updateUserProfile = function (isValid) {
-      $scope.success = $scope.error = null;
+      vm.success = vm.error = null;
 
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'userForm');
@@ -27,10 +27,10 @@
       user.$update(function (response) {
         $scope.$broadcast('show-errors-reset', 'userForm');
 
-        $scope.success = true;
+        vm.success = true;
         Authentication.user = response;
       }, function (response) {
-        $scope.error = response.data.message;
+        vm.error = response.data.message;
       });
     };
   }
