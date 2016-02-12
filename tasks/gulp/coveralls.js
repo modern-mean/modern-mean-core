@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-  concat = require('gulp-concat')
+  concat = require('gulp-concat'),
   coveralls = require('gulp-coveralls');
 
 // Lint CSS and JavaScript files.

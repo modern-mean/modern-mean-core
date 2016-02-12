@@ -9,7 +9,6 @@
 
   function registerModule(moduleName, dependencies) {
     // Create angular module
-    console.log('Load');
     angular.module(moduleName, dependencies || []);
 
     // Add the module to the AngularJS configuration file
