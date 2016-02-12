@@ -10,7 +10,7 @@
     mainBowerFiles = require('main-bower-files');
 
   if (testConfig.coverage) {
-    //karmaReporters.push('coverage');
+    karmaReporters.push('coverage');
   }
 
   // Karma configuration
@@ -43,7 +43,6 @@
 
       preprocessors: {
         'modules/*/client/views/**/*.html': ['ng-html2js'],
-        'modules/*/client/**/*.js': ['coverage'],
         'modules/*/client/**/!(*spec).js': ['coverage']
       },
 
@@ -67,7 +66,7 @@
         dir : '.coverdata',
         reporters: [
           // Reporters not supporting the `file` property
-          { type: 'lcov'},
+          { type: 'lcov', subdir: 'client'},
           // Output coverage to console
           { type: 'text' }
         ],
