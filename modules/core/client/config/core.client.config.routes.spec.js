@@ -3,13 +3,13 @@
 
   var $state;
 
-  beforeEach(module('core.routes'));
-
-  beforeEach(inject(function(_$state_) {
-    $state = _$state_;
-  }));
-
   describe('core.client.config.routes.js', function () {
+
+    beforeEach(module('core.routes'));
+
+    beforeEach(inject(function(_$state_) {
+      $state = _$state_;
+    }));
 
     it('should have a home state', function () {
       var state = $state.get('home');
