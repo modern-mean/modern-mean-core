@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core')
+    .module('users.routes')
     .factory('authInterceptor', authInterceptor);
 
   authInterceptor.$inject = ['$q', '$injector'];

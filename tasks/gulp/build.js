@@ -42,7 +42,7 @@ gulp.task('test:server:watch', function (done) {
 });
 
 gulp.task('test:client', function (done) {
-  runSequence('clean:coverage', 'env:test', 'karma', done);
+  runSequence('clean:coverage', 'env:test', 'lint:js','karma', done);
 });
 
 gulp.task('test:e2e', function (done) {

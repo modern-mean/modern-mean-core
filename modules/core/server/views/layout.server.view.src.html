@@ -36,7 +36,7 @@
 
 </head>
 <body class="ng-cloak" layout="column">
-  <md-toolbar ng-include="'modules/core/client/views/core.client.views.toolbar.html'" class="md-toolbar-tools"></md-toolbar>
+  <md-toolbar ng-controller="HeaderController as vm" ng-include="'modules/core/client/views/core.client.views.toolbar.html'" class="md-toolbar-tools"></md-toolbar>
   <div layout="row" flex>
     <md-sidenav ng-include="'modules/core/client/views/core.client.views.sidenav.html'" class="md-toolbar-left" flex="15" md-is-locked-open="true"></md-sidenav>
     <div layout="column" flex>

@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
   concat = require('gulp-concat'),
   filter = require('gulp-filter'),
-  debug = require('gulp-debug');
+  debug = require('gulp-debug'),
   series = require('stream-series'),
   mainBowerFiles = require('main-bower-files'),
   runSequence = require('run-sequence');
