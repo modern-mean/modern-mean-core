@@ -15,8 +15,8 @@ gulp.task('concat:js', function () {
 });
 
 gulp.task('concat:js:application', function () {
-  var appConfig = gulp.src(['modules/core/client/app/loader.js']);
-  var app = gulp.src(['modules/*/client/**/*.js', '!modules/core/client/app/*.js']);
+  var appConfig = gulp.src(['modules/core/client/app/core.client.app.loader.js']);
+  var app = gulp.src(['modules/*/client/**/!(*.spec).js', '!modules/core/client/app/*.js']);
 
   return series(appConfig, app)
     .pipe(concat('application.js'))
