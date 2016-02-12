@@ -5,34 +5,50 @@
    * Module dependencies.
    */
   var _ = require('lodash'),
-    defaultAssets = require('./config/assets/default'),
-    testAssets = require('./config/assets/test'),
     testConfig = require('./config/env/test'),
-    karmaReporters = ['progress'];
+    karmaReporters = ['progress'],
+    mainBowerFiles = require('main-bower-files');
 
   if (testConfig.coverage) {
-    karmaReporters.push('coverage');
+    //karmaReporters.push('coverage');
   }
 
   // Karma configuration
   module.exports = function (karmaConfig) {
+    var karmaFiles = [];
+
+    var cwd = process.cwd();
+    //console.log('Karma::CWD::' + cwd);
+
+    mainBowerFiles(['**/*.js'], { includeDev: true })
+      .forEach(function (file) {
+        karmaFiles.push({ pattern: file, watched: false, included: true });
+      });
+    karmaFiles.push('modules/core/client/app/core.client.app.loader.js');
+    karmaFiles.push('modules/*/client/**/*.module.js');
+    karmaFiles.push('modules/*/client/**/!(*spec).js');
+    karmaFiles.push('modules/*/client/**/*.spec.js');
+    //karmaFiles.push('modules/core/client/app/core.client.app.loader.js');
+    //karmaFiles.push('modules/core/client/app/core.client.app.loader.spec.js');
+    //console.log('Karma::Files', karmaFiles);
+
     karmaConfig.set({
+      client: {
+        captureConsole: false,
+      },
+
+
       // Frameworks to use
-      frameworks: ['jasmine'],
+      frameworks: ['mocha', 'chai-spies', 'chai'],
 
       preprocessors: {
         'modules/*/client/views/**/*.html': ['ng-html2js'],
-        'modules/core/client/app/config.js': ['coverage'],
-        'modules/core/client/app/init.js': ['coverage'],
-        'modules/*/client/*.js': ['coverage'],
-        'modules/*/client/config/*.js': ['coverage'],
-        'modules/*/client/controllers/*.js': ['coverage'],
-        'modules/*/client/directives/*.js': ['coverage'],
-        'modules/*/client/services/*.js': ['coverage']
+        'modules/*/client/**/*.js': ['coverage'],
+        'modules/*/client/**/!(*spec).js': ['coverage']
       },
 
       ngHtml2JsPreprocessor: {
-        moduleName: 'mean',
+        moduleName: 'modernMean',
 
         cacheIdFromPath: function (filepath) {
           return filepath;
@@ -40,7 +56,7 @@
       },
 
       // List of files / patterns to load in the browser
-      files: ['public/dist/core.js', 'public/dist/application.js', 'public/dist/vendor.js', 'public/dist/templates.js', 'modules/*/tests/client/**/*.js'],
+      files: karmaFiles,
 
       // Test results reporter to use
       // Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
@@ -68,7 +84,7 @@
 
       // Level of logging
       // Possible values: karmaConfig.LOG_DISABLE || karmaConfig.LOG_ERROR || karmaConfig.LOG_WARN || karmaConfig.LOG_INFO || karmaConfig.LOG_DEBUG
-      logLevel: karmaConfig.LOG_INFO,
+      logLevel: karmaConfig.LOG_DISABLE,
 
       // Enable / disable watching file and executing tests whenever any file changes
       autoWatch: true,

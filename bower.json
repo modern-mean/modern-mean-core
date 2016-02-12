@@ -11,5 +11,8 @@
     "angular-material": "^1.0.5",
     "angular-ui-router": "^0.2.18"
   },
-  "overrides": {}
+  "overrides": {},
+  "devDependencies": {
+    "angular-mocks": "^1.5.0"
+  }
 }
