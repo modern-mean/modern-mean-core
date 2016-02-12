@@ -1,26 +1,14 @@
-<section ng-controller="SettingsController as vm">
-  <div class="page-header">
-    <h1>Settings</h1>
-  </div>
-  <div class="row">
-    <nav class="col-sm-3 col-md-3">
-      <ul class="nav nav-pills nav-stacked">
-        <li ui-sref-active="active">
-          <a ui-sref="settings.profile">Edit Profile</a>
-        </li>
-        <li ui-sref-active="active">
-          <a ui-sref="settings.picture">Change Profile Picture</a>
-        </li>
-        <li ui-sref-active="active" ng-show="vm.user.provider === 'local'">
-          <a ui-sref="settings.password">Change Password</a>
-        </li>
-        <li ui-sref-active="active">
-          <a ui-sref="settings.accounts">Manage Social Accounts</a>
-        </li>
-      </ul>
-    </nav>
-    <div class="col-sm-9 col-md-8 settings-view">
-      <div ui-view></div>
+<md-content>
+  <h1 class="md-display-2">Settings</h1>
+  <div layout="row" flex layout-xs="column">
+    <div flex>
+      <md-list>
+        <md-list-item ui-sref-active="active" ui-sref="settings.profile" flex><span>Edit Profile</span></md-list-item>
+        <md-list-item ui-sref-active="active" ui-sref="settings.picture" flex><span>Change Profile Picture</span></md-list-item>
+        <md-list-item ui-sref-active="active" ng-show="vm.user.provider === 'local'" ui-sref="settings.password" flex><span>Change Password<span></md-list-item>
+        <md-list-item ui-sref-active="active" ui-sref="settings.accounts" flex><span>Manage Social Accounts</span></md-list-item>
+      </md-list>
     </div>
+    <div flex ui-view></div>
   </div>
-</section>
+</md-content>

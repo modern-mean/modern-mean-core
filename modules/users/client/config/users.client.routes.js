@@ -15,6 +15,8 @@
         abstract: true,
         url: '/settings',
         templateUrl: 'modules/users/client/views/settings/settings.client.view.html',
+        controller: 'SettingsController',
+        controllerAs: 'vm',
         data: {
           roles: ['user', 'admin']
         }
@@ -52,15 +54,12 @@
       })
       .state('authentication.signup', {
         url: '/signup',
-        templateUrl: 'modules/users/client/views/authentication/signup.client.view.html',
-        controller: 'AuthenticationController',
-        controllerAs: 'vm'
+        templateUrl: 'modules/users/client/views/authentication/signup.client.view.html'
       })
       .state('authentication.signin', {
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/signin.client.view.html',
-        controller: 'AuthenticationController',
-        controlerAs: 'vm'
+        controller: 'AuthenticationController'
       })
       .state('password', {
         abstract: true,
