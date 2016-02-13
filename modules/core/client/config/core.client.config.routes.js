@@ -20,27 +20,27 @@
     $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: 'modules/core/client/views/home.client.view.html',
+      templateUrl: 'modules/core/client/views/core.client.views.home.html',
       controller: 'HomeController',
       controllerAs: 'vm'
     })
     .state('not-found', {
       url: '/not-found',
-      templateUrl: 'modules/core/client/views/404.client.view.html',
+      templateUrl: 'modules/core/client/views/core.client.views.404.html',
       data: {
         ignoreState: true
       }
     })
     .state('bad-request', {
       url: '/bad-request',
-      templateUrl: 'modules/core/client/views/400.client.view.html',
+      templateUrl: 'modules/core/client/views/core.client.views.400.html',
       data: {
         ignoreState: true
       }
     })
     .state('forbidden', {
       url: '/forbidden',
-      templateUrl: 'modules/core/client/views/403.client.view.html',
+      templateUrl: 'modules/core/client/views/core.client.views.403.html',
       data: {
         ignoreState: true
       }

@@ -1,23 +1,23 @@
 <md-content>
-  <h1 class="md-display">Edit Profile</h1>
+  <h1 class="md-display-1">Edit Profile</h1>
   <form name="userForm" ng-submit="vm.updateUserProfile(userForm.$valid)" novalidate autocomplete="off">
     <md-input-container class="md-block">
       <input type="text" id="firstName" name="firstName" ng-model="vm.user.firstName" placeholder="First Name" required>
       <div ng-messages="userForm.firstName.$error" role="alert">
-        <p class="help-block error-text" ng-message="required">First name is required.</p>
+        <div ng-message="required">First name is required.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
       <input type="text" id="lastName" name="lastName" ng-model="vm.user.lastName" placeholder="Last Name" required>
       <div ng-messages="userForm.lastName.$error" role="alert">
-        <p class="help-block error-text" ng-message="required">Last name is required.</p>
+        <div ng-message="required">Last name is required.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
       <input type="email" id="email" name="email" ng-model="vm.user.email" placeholder="Email" lowercase required>
       <div ng-messages="userForm.email.$error" role="alert">
-        <p class="help-block error-text" ng-message="required">Email address is required.</p>
-        <p class="help-block error-text" ng-message="email">Email address is invalid.</p>
+        <div ng-message="required">Email address is required.</div>
+        <div ng-message="email">Email address is invalid.</div>
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">

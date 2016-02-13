@@ -1,0 +1,19 @@
+<section layout="row" flex>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')">
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Settings Menu</h1>
+    </md-toolbar>
+    <md-content>
+      <md-list>
+        <md-list-item ui-sref-active="active" ui-sref="settings.profile" ng-click="close()"><span>Edit Profile</span></md-list-item>
+        <md-list-item ui-sref-active="active" ui-sref="settings.picture" ng-click="close()"><span>Change Profile Picture</span></md-list-item>
+        <md-list-item ui-sref-active="active" ng-show="vm.user.provider === 'local'" ui-sref="settings.password" ng-click="close()"><span>Change Password</span></md-list-item>
+        <md-list-item ui-sref-active="active" ui-sref="settings.accounts" ng-click="close()"><span>Manage Social Accounts</span></md-list-item>
+      </md-list>
+     </md-content>
+  </md-sidenav>
+  <md-content flex>
+    <md-button class="md-primary" aria-label="settings-menu" ng-click="toggleLeft()" hide-gt-xs><ng-md-icon icon="menu"></ng-md-icon> Settings Menu</md-button>
+    <div layout-padding ui-view></div>
+  </md-content>
+</section>

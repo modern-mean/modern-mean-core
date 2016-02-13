@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "~1.5",
     "angular-animate": "~1.5",
+    "angular-aria": "~1.5",
     "angular-file-upload": "1.1.5",
     "angular-resource": "~1.5",
     "angular-sanitize": "~1.5",
@@ -18,5 +19,8 @@
   "devDependencies": {
     "angular": "~1.5",
     "angular-mocks": "^1.5.0"
+  },
+  "resolutions": {
+    "angular": "~1.5"
   }
 }

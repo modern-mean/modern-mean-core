@@ -3,14 +3,15 @@
 
   angular
     .module('core')
-    .controller('HeaderController', HeaderController);
+    .controller('SideNavController', SideNavController);
 
-  HeaderController.$inject = ['Authentication', 'menuService', '$state', '$mdSidenav'];
+  SideNavController.$inject = ['Authentication', 'menuService', '$state', '$mdSidenav'];
 
-  function HeaderController(Authentication, menuService, $state, $mdSidenav) {
+  function SideNavController(Authentication, menuService, $state, $mdSidenav) {
     var vm = this;
 
     var originatorEv;
+
     this.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
       $mdOpenMenu(ev);
@@ -20,6 +21,6 @@
     vm.authentication = Authentication;
     vm.menu = menuService.getMenu('topbar');
 
-    console.log('HeaderController::Init', vm);
+    console.log('SideNavController::Init', vm);
   }
 })();

@@ -5,9 +5,9 @@
     $scope,
     $rootScope,
     Authentication,
-    HeaderController;
+    ToolbarController;
 
-  describe('core.client.controller.header.js', function () {
+  describe('core.client.controller.toolbar.js', function () {
 
     beforeEach(module('core'));
 
@@ -17,12 +17,12 @@
       $state = _$state_;
       Authentication = _Authentication_;
 
-      HeaderController = $controller('HeaderController as vm', {
+      ToolbarController = $controller('ToolbarController as vm', {
         $scope: $scope
       });
     }));
 
-    describe('HeaderController', function () {
+    describe('ToolbarController', function () {
 
       it('should have a vm variable', function () {
         expect($scope.vm).to.be.an('object');
