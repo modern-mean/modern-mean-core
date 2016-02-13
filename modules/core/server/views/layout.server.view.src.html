@@ -35,17 +35,13 @@
   <!-- endinject -->
 
 </head>
-<body class="ng-cloak" layout="column">
-  <md-toolbar ng-controller="HeaderController as vm" ng-include="'modules/core/client/views/core.client.views.toolbar.html'" class="md-toolbar-tools"></md-toolbar>
-  <div layout="row" flex>
-    <md-sidenav ng-include="'modules/core/client/views/core.client.views.sidenav.html'" class="md-toolbar-left" flex="15" md-is-locked-open="true"></md-sidenav>
-    <div layout="column" flex>
-      <md-content layout="column" class="md-padding" flex>
-        {% block content %}{% endblock %}
-      </md-content>
-    </div>
+<body class="ng-cloak">
+  <div flex layout-fill layout="column">
+    <header data-ng-include="'modules/core/client/views/core.client.views.toolbar.html'"></header>
+    <md-content layout-padding>
+      {% block content %}{% endblock %}
+    </md-content>
   </div>
-
   <!--Load The Socket.io File-->
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 

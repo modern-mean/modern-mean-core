@@ -21,28 +21,27 @@
 
     menuService.addSubMenuItem('account', 'settings', {
       title: 'Edit Profile',
-      icon: 'fa-edit',
+      icon: 'create',
       state: 'settings.profile'
     });
 
     menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile Picture',
-      icon: 'fa-camera',
+      title: 'Change Profile Picture',
+      icon: 'photo_camera',
       state: 'settings.picture'
     });
 
     menuService.addSubMenuItem('account', 'settings', {
-      title: 'Manage Social Accounts',
-      icon: 'fa-users',
-      state: 'settings.accounts'
-    });
-
-    menuService.addSubMenuItem('account', 'settings', {
       title: 'Change Password',
-      icon: 'fa-key',
+      icon: 'vpn_key',
       state: 'settings.password'
     });
 
+    menuService.addSubMenuItem('account', 'settings', {
+      title: 'Manage Social Accounts',
+      icon: 'people',
+      state: 'settings.accounts'
+    });
   }
 
 })();
