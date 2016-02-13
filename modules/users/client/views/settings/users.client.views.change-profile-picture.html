@@ -1,0 +1,22 @@
+<md-content>
+  <h1 class="md-display-1">Change Profile Picture</h1>
+  <form class="signin form-horizontal">
+    <div class="form-group text-center">
+      <img ng-src="{{vm.imageURL}}" alt="{{vm.user.displayName}}" class="img-thumbnail user-profile-picture">
+    </div>
+    <md-input-container class="md-block">
+      <input type="file" nv-file-select uploader="vm.uploader">
+      <div ng-hide="vm.uploader.queue.length"></div>
+    </md-input-container>
+    <section layout="row" layout-align="center center" ng-show="vm.uploader.queue.length">
+      <md-button class="md-raised md-primary" aria-label="Upload" ng-click="vm.uploadProfilePicture();">Upload</md-button>
+      <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="vm.cancelUpload();">Cancel</md-button>
+    </section>
+    <section layout="row" layout-align="center center" ng-show="success">
+      Profile Picture Changed Successfully
+    </section>
+    <section layout="row" layout-align="center center" ng-show="vm.error">
+      <strong ng-bind="vm.error"></strong>
+    </section>
+  </form>
+</md-content>

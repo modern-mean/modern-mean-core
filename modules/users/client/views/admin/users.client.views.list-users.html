@@ -1,4 +1,4 @@
-<section>
+<md-content>
   <div class="page-header">
     <div class="row">
       <div class="col-md-4">
@@ -17,5 +17,5 @@
     </a>
   </div>
 
-  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
-</section>
+  <md-pagination item-total="vm.filterLength" goto-page="vm.pageChanged()" position="center" current-page="vm.currentPage" step="vm.itemsPerPage"></md-pagination>
+</md-content>

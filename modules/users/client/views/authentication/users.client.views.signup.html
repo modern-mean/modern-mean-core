@@ -1,0 +1,41 @@
+<md-content>
+  <h2 class="md-display-1">Or sign up using your email</h2>
+  <form name="userForm" ng-submit="vm.signup(userForm.$valid)" novalidate autocomplete="off">
+    <md-input-container class="md-block">
+      <input type="text" id="firstName" name="firstName" ng-model="vm.credentials.firstName" placeholder="First Name" required>
+      <div ng-messages="userForm.firstName.$error" role="alert">
+        <div ng-message="required">First name is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="text" id="lastName" name="lastName" ng-model="vm.credentials.lastName" placeholder="Last Name" required>
+      <div ng-messages="userForm.lastName.$error" role="alert">
+        <div ng-message="required">Last name is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="Email address" lowercase required>
+      <div ng-messages="userForm.email.$error" role="alert">
+        <div ng-message="required">Email address is required.</div>
+        <div ng-message="email">Email address is invalid.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="password" id="password" name="password" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.popoverMsg}}" uib-popover-trigger="focus" password-validator required>
+      <div ng-messages="userForm.password.$error" role="alert">
+        <div ng-message="required">Password is required.</div>
+        <div ng-repeat="passwordError in passwordErrors">
+          <div ng-show="userForm.password.$error.requirements">{{passwordError}}</div>
+        </div>
+      </div>
+    </md-input-container>
+    <section layout="row" layout-align="center center">
+      <md-button type="submit" class="md-raised md-primary" aria-label="Sign Up">Sign up</md-button>
+      &nbsp; or&nbsp;
+      <md-button ui-sref="authentication.signin" class="md-raised md-default" aria-label="Sign In"> Sign in</md-button>
+    </section>
+    <section layout="row" layout-align="center center" ng-show="vm.error">
+      <strong ng-bind="vm.error"></strong>
+    </section>
+  </form>
+</md-content>

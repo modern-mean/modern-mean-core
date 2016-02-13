@@ -3,9 +3,9 @@
 
   var $state;
 
-  describe('core.client.config.routes.js', function () {
+  describe('user.client.routes.js', function () {
 
-    beforeEach(module('core.routes'));
+    beforeEach(module('users'));
 
     beforeEach(inject(function(_$state_) {
       $state = _$state_;

@@ -1,5 +1,5 @@
-<section class="row">
-  <h3 class="col-md-12 text-center" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Connected social accounts:</h3>
+<md-content>
+  <h1 class="md-display-1" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Connected social accounts:</h1>
   <div class="col-md-12 text-center">
     <div ng-repeat="(providerName, providerData) in vm.user.additionalProvidersData" class="social-account-container">
       <img ng-src="/dist/img/users/client/img/buttons/{{providerName}}.png">
@@ -8,7 +8,7 @@
       </a>
     </div>
   </div>
-  <h3 class="col-md-12 text-center" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Unconnected social accounts:</h3>
+  <h1 class="md-display-1" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Unconnected social accounts:</h1>
   <div class="col-md-12 text-center">
     <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('facebook')">
       <img ng-src="/dist/img/users/client/img/buttons/facebook.png">

@@ -1,0 +1,28 @@
+<md-content>
+  <h2 class="md-display-1">Or with your account</h2>
+  <form name="userForm" ng-submit="vm.signin(userForm.$valid)" novalidate autocomplete="off">
+    <md-input-container class="md-block">
+      <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="email address" lowercase required>
+      <div ng-messages="userForm.email.$error" role="alert">
+        <div ng-message="required">email is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="password" id="password" name="password" ng-model="vm.credentials.password" placeholder="password" required>
+      <div ng-messages="userForm.password.$error" role="alert">
+        <div ng-message="required">Password is required.</div>
+      </div>
+    </md-input-container>
+    <section layout="row" layout-align="center center">
+      <md-button type="submit" class="md-raised md-primary" aria-label="Sign In">Sign in</md-button>
+      &nbsp; or&nbsp;
+      <md-button ui-sref="authentication.signup" class="md-raised md-default" aria-label="Sign Up">Sign up</a>
+    </section>
+    <section layout="row" layout-align="center center">
+      <a ui-sref="password.forgot">Forgot your password?</a>
+    </section>
+    <section layout="row" layout-align="center center" ng-show="vm.error">
+      <span ng-bind="vm.error"></span>
+    </section>
+  </form>
+</md-content>
