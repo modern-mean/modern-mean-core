@@ -1,12 +1,12 @@
-<md-toolbar class="md-toolbar-tools" ng-controller="HeaderController as vm">
+<md-toolbar class="md-toolbar-tools" ng-controller="ToolbarController as vm">
   <md-button class="md-icon-button" aria-label="menu" ui-sref="home" hide-gt-xs><ng-md-icon icon="menu"></ng-md-icon></md-button>
   <a ui-sref="home" hide-xs>Modern-MEAN</a>
   <span flex></span>
   <md-button ui-sref="authentication.signup" aria-label="Sign Up" ng-hide="vm.authentication.user">
-    <ng-md-icon icon="timer_auto"></ng-md-icon>   Sign Up
+    <ng-md-icon icon="timer_auto"></ng-md-icon>Sign Up
   </md-button>
   <md-button ui-sref="authentication.signin" aria-label="Sign In" ng-hide="vm.authentication.user">
-    <ng-md-icon icon="login"></ng-md-icon>   Sign In
+    <ng-md-icon icon="login"></ng-md-icon>Sign In
   </md-button>
   <md-menu md-position-mode="target-right target" ng-show="vm.authentication.user">
     <md-button aria-label="User Menu" ng-click="$mdOpenMenu($event)">
