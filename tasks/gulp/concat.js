@@ -46,7 +46,7 @@ gulp.task('concat:js:vendor', function () {
 gulp.task('concat:js:core', function () {
 
   return gulp.src(mainBowerFiles(['**/angular.js']))
-    .pipe(concat('core.js'))
+    .pipe(concat('angular.js'))
     .pipe(gulp.dest('public/dist'));
 
 });
