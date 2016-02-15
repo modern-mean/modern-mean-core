@@ -22,27 +22,33 @@
       url: '/',
       templateUrl: 'modules/core/client/views/core.client.views.home.html',
       controller: 'HomeController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      data: {
+        pageTitle: 'Welcome'
+      }
     })
     .state('not-found', {
       url: '/not-found',
       templateUrl: 'modules/core/client/views/core.client.views.404.html',
       data: {
-        ignoreState: true
+        ignoreState: true,
+        pageTitle: 'Page not found'
       }
     })
     .state('bad-request', {
       url: '/bad-request',
       templateUrl: 'modules/core/client/views/core.client.views.400.html',
       data: {
-        ignoreState: true
+        ignoreState: true,
+        pageTitle: 'Bad request'
       }
     })
     .state('forbidden', {
       url: '/forbidden',
       templateUrl: 'modules/core/client/views/core.client.views.403.html',
       data: {
-        ignoreState: true
+        ignoreState: true,
+        pageTitle: 'Not authorized'
       }
     });
 
