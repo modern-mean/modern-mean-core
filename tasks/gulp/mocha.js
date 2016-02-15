@@ -34,6 +34,6 @@ gulp.task('mocha', function (done) {
       })
       .pipe(plugins.coverage.gather())
       .pipe(plugins.coverage.format({ reporter: 'lcov', outFile: 'lcov.info' }))
-      .pipe(gulp.dest('.coverdata'));
+      .pipe(gulp.dest('.coverdata/server'));
   });
 });

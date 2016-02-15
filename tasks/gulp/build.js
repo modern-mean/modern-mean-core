@@ -26,7 +26,7 @@ gulp.task('build', function (done) {
 
 // Run the project tests
 gulp.task('test', function (done) {
-  runSequence('clean:coverage', 'env:test', 'build', 'copy:localConfig', 'mocha', 'karma', done);
+  runSequence('clean:coverage', 'env:test', 'build', 'copy:localConfig', 'mocha', 'karma', 'coveralls', done);
 });
 
 gulp.task('test:server', function (done) {
