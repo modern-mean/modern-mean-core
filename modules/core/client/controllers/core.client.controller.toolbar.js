@@ -17,9 +17,9 @@
       $mdOpenMenu(ev);
     };
 
-    vm.accountMenu = menuService.getMenu('account').items[0];
+    //vm.accountMenu = menuService.toolbar;
     vm.authentication = Authentication;
-    vm.menu = menuService.getMenu('topbar');
+    vm.menus = menuService.toolbar.items;
 
     console.log('ToolbarController::Init', vm);
   }

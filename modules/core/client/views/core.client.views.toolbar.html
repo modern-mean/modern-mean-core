@@ -1,4 +1,27 @@
-<md-toolbar class="md-toolbar-tools" ng-controller="ToolbarController as vm">
+<md-toolbar ng-controller="ToolbarController as vm" class="md-toolbar-tools" >
+  <span ng-repeat="menu in vm.menus | orderBy: order" flex="{{menu.flex}}" ng-if="menu.show">
+    <md-menu ng-if="menu.type === 'menu'">
+      <md-button  aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">
+        <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
+        {{menu.title}}
+      </md-button>
+      <md-menu-content>
+        <md-menu-item ng-repeat="item in menu.items">
+          <md-button ui-sref="{{item.state}}" aria-label="{{item.title}}">
+            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            <span flex></span>
+            {{item.title}}
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <md-button ng-if="menu.type === 'button'" ui-sref="{{menu.state}}" aria-label="{{menu.aria}}">
+      <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
+      {{menu.title}}
+    </md-button>
+  </span>
+
+  <!--
   <md-button class="md-icon-button" aria-label="menu" ui-sref="home" hide-gt-xs><ng-md-icon icon="menu"></ng-md-icon></md-button>
   <a ui-sref="home" hide-xs>Modern-MEAN</a>
   <span flex></span>
@@ -6,7 +29,7 @@
     <ng-md-icon icon="timer_auto"></ng-md-icon>Sign Up
   </md-button>
   <md-button ui-sref="authentication.signin" aria-label="Sign In" ng-hide="vm.authentication.user">
-    <ng-md-icon icon="login"></ng-md-icon>Sign In
+    <ng-md-icon icon="login"></ng-md-icon>{{item.title}}
   </md-button>
   <md-menu md-position-mode="target-right target" ng-show="vm.authentication.user">
     <md-button aria-label="User Menu" ng-click="$mdOpenMenu($event)">
@@ -19,4 +42,5 @@
       <md-button ng-click="vm.authentication.signout()" class="md-raised md-primary"><ng-md-icon icon="logout"></ng-md-icon><span flex></span>Sign Out</md-button>
     </md-menu-content>
   </md-menu>
+  -->
 </md-toolbar>

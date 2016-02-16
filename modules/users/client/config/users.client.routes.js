@@ -60,6 +60,10 @@
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html'
       })
+      .state('signout', {
+        url: '/signout',
+        templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html'
+      })
       .state('password', {
         abstract: true,
         url: '/password',
