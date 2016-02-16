@@ -46,6 +46,7 @@
     function refresh() {
       return $q(function(resolve, reject) {
         readyPromise = $q.defer();
+        service.ready = readyPromise.promise;
         $resource('api/users/me').get().$promise
           .then(function (user) {
             setUser(user);
@@ -72,10 +73,13 @@
       } else {
         readyPromise.resolve(service);
       }
+      console.log('AuthenticationService::Init', service);
     }
 
     //Run init
     init();
+
+
 
     return service;
   }

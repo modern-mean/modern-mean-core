@@ -9,10 +9,12 @@
   menuConfig.$inject = ['menuService'];
 
   function menuConfig(menuService) {
+    /*
     menuService.addSubMenuItem('topbar', 'admin', {
       title: 'Manage Users',
       icon: 'fa-users',
       state: 'admin.users'
     });
+    */
   }
 })();
