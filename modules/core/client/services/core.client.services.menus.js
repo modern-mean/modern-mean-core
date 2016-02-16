@@ -7,12 +7,6 @@
 
   function menuService() {
 
-    var item = {
-      title: 'test',
-      type: 'button',
-      state: 'home'
-    }
-
     var service = {
       toolbar: {
         items: [],

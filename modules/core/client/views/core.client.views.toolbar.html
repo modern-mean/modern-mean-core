@@ -1,6 +1,6 @@
 <md-toolbar ng-controller="ToolbarController as vm" class="md-toolbar-tools" >
-  <div ng-repeat="menu in vm.menus">
-    <md-menu ng-if="menu.type === 'menu'" ng-show="menu.show" >
+  <span ng-repeat="menu in vm.menus | orderBy: order" flex="{{menu.flex}}" ng-if="menu.show">
+    <md-menu ng-if="menu.type === 'menu'">
       <md-button  aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">
         <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
         {{menu.title}}
@@ -15,11 +15,11 @@
         </md-menu-item>
       </md-menu-content>
     </md-menu>
-    <md-button ng-if="menu.type === 'button'" ui-sref="{{menu.state}}" aria-label="{{menu.aria}}" ng-show="menu.show">
+    <md-button ng-if="menu.type === 'button'" ui-sref="{{menu.state}}" aria-label="{{menu.aria}}">
       <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
       {{menu.title}}
     </md-button>
-  </div>
+  </span>
 
   <!--
   <md-button class="md-icon-button" aria-label="menu" ui-sref="home" hide-gt-xs><ng-md-icon icon="menu"></ng-md-icon></md-button>

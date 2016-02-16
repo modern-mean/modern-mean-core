@@ -38,6 +38,7 @@
           icon: 'more_vert',
           type: 'menu',
           aria: 'User Menu',
+          flex: 15,
           show: authenticated,
           items: [{
             title: 'Edit Profile',
@@ -62,9 +63,11 @@
           {
             title: 'Signout',
             icon: 'people',
-            state: 'settings.accounts'
+            state: 'signout'
           }]
         });
+
+        console.log('User::MenuService::Toolbar', menuService.toolbar);
 
 
 

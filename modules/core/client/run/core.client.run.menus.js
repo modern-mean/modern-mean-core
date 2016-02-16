@@ -10,13 +10,22 @@
   function menuConfig(menuService) {
 
     menuService.toolbar.addItem({
-      title: 'Modern-Mean',
-      state: 'home',
-      icon: 'menu',
       aria: 'Home',
+      flex: 15,
+      icon: 'menu',
+      order: 1,
+      state: 'home',
       show: true,
+      title: 'Modern-Mean',
       type: 'button'
     });
+
+    menuService.toolbar.addItem({
+      flex: 100,
+      order: 2,
+      show: true
+    });
+
 
   }
 })();
