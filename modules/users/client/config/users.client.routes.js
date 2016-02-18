@@ -48,17 +48,19 @@
       .state('authentication', {
         abstract: true,
         url: '/authentication',
-        templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html',
-        controller: 'AuthenticationController',
-        controllerAs: 'vm'
+        templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html'
       })
       .state('authentication.signup', {
         url: '/signup',
-        templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html'
+        templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html',
+        controller: 'AuthenticationController',
+        controllerAs: 'vm'
       })
       .state('authentication.signin', {
         url: '/signin?err',
-        templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html'
+        templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html',
+        controller: 'AuthenticationController',
+        controllerAs: 'vm'
       })
       .state('signout', {
         url: '/signout',
