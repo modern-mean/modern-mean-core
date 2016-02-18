@@ -5,9 +5,9 @@
     .module('core')
     .controller('ToolbarController', ToolbarController);
 
-  ToolbarController.$inject = ['Authentication', 'menuService', '$state', '$mdSidenav'];
+  ToolbarController.$inject = ['menuService', '$state', '$mdSidenav', '$timeout'];
 
-  function ToolbarController(Authentication, menuService, $state, $mdSidenav) {
+  function ToolbarController(menuService, $state, $mdSidenav, $timeout) {
     var vm = this;
 
     var originatorEv;
@@ -17,10 +17,11 @@
       $mdOpenMenu(ev);
     };
 
-    //vm.accountMenu = menuService.toolbar;
-    vm.authentication = Authentication;
     vm.menus = menuService.toolbar.items;
 
     console.log('ToolbarController::Init', vm);
+    $timeout(function () {
+      console.log('ToolbarController::Init::Timeout', vm);
+    }, 2000);
   }
 })();

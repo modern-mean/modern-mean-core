@@ -62,7 +62,10 @@
       })
       .state('signout', {
         url: '/signout',
-        templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html'
+        templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html',
+        data: {
+          ignoreState: true
+        }
       })
       .state('password', {
         abstract: true,

@@ -5,9 +5,9 @@
     .module('core')
     .controller('SideNavController', SideNavController);
 
-  SideNavController.$inject = ['Authentication', 'menuService', '$state', '$mdSidenav'];
+  SideNavController.$inject = ['menuService', '$state', '$mdSidenav'];
 
-  function SideNavController(Authentication, menuService, $state, $mdSidenav) {
+  function SideNavController(menuService, $state, $mdSidenav) {
     var vm = this;
 
     var originatorEv;
@@ -17,9 +17,7 @@
       $mdOpenMenu(ev);
     };
 
-    vm.accountMenu = menuService.getMenu('account').items[0];
-    vm.authentication = Authentication;
-    vm.menu = menuService.getMenu('topbar');
+    vm.menus = menuService.leftnav.items;
 
     console.log('SideNavController::Init', vm);
   }

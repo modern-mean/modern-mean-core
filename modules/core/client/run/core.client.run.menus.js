@@ -23,7 +23,7 @@
     menuService.toolbar.addItem({
       flex: 100,
       order: 2,
-      show: true
+      show: true,
     });
 
 
