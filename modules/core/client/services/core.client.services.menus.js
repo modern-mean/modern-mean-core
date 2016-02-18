@@ -30,6 +30,11 @@
     };
 
     function addItem(item) {
+      var menu = this.getItem(item);
+      if (menu) {
+        console.log('Menu Exists:' , menu);
+        return menu;
+      }
       item.addItem = addItem;
       item.getItem = getItem;
       item.removeItem = removeItem;
