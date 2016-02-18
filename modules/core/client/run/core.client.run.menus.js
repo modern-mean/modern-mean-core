@@ -11,7 +11,6 @@
 
     menuService.toolbar.addItem({
       aria: 'Home',
-      flex: 15,
       icon: 'menu',
       order: 1,
       state: 'home',
