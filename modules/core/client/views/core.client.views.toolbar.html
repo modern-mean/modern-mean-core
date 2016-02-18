@@ -1,8 +1,9 @@
 <md-toolbar ng-controller="ToolbarController as vm" class="md-toolbar-tools">
   <span ng-repeat="menu in vm.menus | orderBy: order" flex="{{menu.flex}}" ng-show="menu.show">
     <md-menu md-position-mode="{{menu.position}}" ng-if="menu.type === 'menu'">
-      <md-button  aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">
-        {{menu.title}}
+      <md-button aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">
+        <img ng-if="menu.image" class="header-profile-image" alt="{{menu.title}}" ng-src="{{menu.image}}">
+        <span>{{menu.title}}</span>
         <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
       </md-button>
       <md-menu-content width="4">
