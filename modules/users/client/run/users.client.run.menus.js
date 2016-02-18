@@ -37,7 +37,6 @@
           icon: 'more_vert',
           type: 'menu',
           aria: 'User Menu',
-          flex: 15,
           show: true,
           items: [{
             title: 'Edit Profile',
