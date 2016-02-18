@@ -5,9 +5,10 @@
     .module('users')
     .service('Authentication', Authentication);
 
-  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state'];
+  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', '$rootScope', 'AUTH_EVENTS'];
 
-  function Authentication($q, $resource, $http, $location, $state) {
+  function Authentication($q, $resource, $http, $location, $state, $rootScope, AUTH_EVENTS) {
+
 
     var readyPromise = $q.defer();
 
@@ -24,7 +25,10 @@
       setUser(user);
       setToken(token);
       setHeader();
+      service.authenticated = true;
       readyPromise.resolve(service);
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
     }
 
     function setUser(user) {
@@ -40,7 +44,7 @@
       localStorage.removeItem('token');
       service.user = null;
       service.token = null;
-      $state.go('home', { reload: true });
+      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
     }
 
     function refresh() {
@@ -52,6 +56,7 @@
             setUser(user);
             readyPromise.resolve(service);
             resolve(service);
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
           });
       });
 
@@ -82,5 +87,6 @@
 
 
     return service;
+
   }
 })();
