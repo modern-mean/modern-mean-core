@@ -21,10 +21,10 @@
 
   //Then define the init function for starting up the application
   angular
-    .element(document.body)
+    .element(document)
     .ready(function () {
       angular
-        .bootstrap(document.body, [window.modernMeanApplication.name]);
+        .bootstrap(document, [window.modernMeanApplication.name]);
     });
 
 })(window, document, angular);

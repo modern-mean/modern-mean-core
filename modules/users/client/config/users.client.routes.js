@@ -25,7 +25,10 @@
         url: '/profile',
         templateUrl: 'modules/users/client/views/settings/users.client.views.edit-profile.html',
         controller: 'EditProfileController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Edit Profile'
+        }
       })
       .state('settings.password', {
         url: '/password',
