@@ -34,6 +34,7 @@
         menuService.toolbar.addItem({
           id: 'usermenu',
           title: Authentication.user.displayName,
+          image: Authentication.user.profileImageURL,
           icon: 'more_vert',
           type: 'menu',
           aria: 'User Menu',
