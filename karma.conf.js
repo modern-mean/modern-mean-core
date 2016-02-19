@@ -28,6 +28,7 @@
     karmaFiles.push('modules/*/client/**/*.module.js');
     karmaFiles.push('modules/*/client/**/!(*spec).js');
     karmaFiles.push('modules/*/client/**/*.spec.js');
+    karmaFiles.push('public/dist/templates.js');
     //karmaFiles.push('modules/core/client/app/core.client.app.loader.js');
     //karmaFiles.push('modules/core/client/app/core.client.app.loader.spec.js');
     //console.log('Karma::Files', karmaFiles);

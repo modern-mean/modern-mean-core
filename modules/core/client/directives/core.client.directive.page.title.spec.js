@@ -22,7 +22,7 @@
       $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
       var element = $compile('<div page-title></div>')($rootScope);
       $rootScope.$digest();
-      expect(element.html()).to.equal('Welcome');
+      expect(element.html()).to.equal('Modern MEAN - Welcome');
     });
 
     it('should inject the core page title constant into DOM if page title doesnt exist on the state', function() {

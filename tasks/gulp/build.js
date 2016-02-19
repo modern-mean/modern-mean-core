@@ -10,7 +10,7 @@ gulp.task('build', function (done) {
       break;
 
     case 'test':
-      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin'], 'clean:build:src', 'inject', done);
+      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], 'clean:build:src', 'inject', done);
       break;
 
     case 'development':
@@ -42,7 +42,7 @@ gulp.task('test:server:watch', function (done) {
 });
 
 gulp.task('test:client', function (done) {
-  runSequence('clean:coverage', 'env:test', 'lint:js','karma', done);
+  runSequence('clean:coverage', 'env:test', 'lint:js','build', 'karma', done);
 });
 
 gulp.task('test:e2e', function (done) {
