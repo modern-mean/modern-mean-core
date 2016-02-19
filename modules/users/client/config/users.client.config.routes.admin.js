@@ -22,11 +22,7 @@
         controller: 'UserController',
         controllerAs: 'vm',
         resolve: {
-          userResolve: ['$stateParams', 'Admin', function ($stateParams, Admin) {
-            return Admin.get({
-              userId: $stateParams.userId
-            });
-          }]
+          userResolve: getUser
         }
       })
       .state('admin.user-edit', {
@@ -35,12 +31,13 @@
         controller: 'UserController',
         controllerAs: 'vm',
         resolve: {
-          userResolve: ['$stateParams', 'Admin', function ($stateParams, Admin) {
-            return Admin.get({
-              userId: $stateParams.userId
-            });
-          }]
+          userResolve: getUser
         }
       });
+
+    getUser.$inject = ['$stateParams', 'Admin'];
+    function getUser($stateParams, Admin) {
+      return Admin.get({ userId: $stateParams.userId });
+    }
   }
 })();
