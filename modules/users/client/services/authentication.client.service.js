@@ -13,13 +13,21 @@
     var readyPromise = $q.defer();
 
     var service = {
-      ready: readyPromise.promise,
-      user: null,
-      token: null,
+      forgotPassword: forgotPassword,
       login: login,
+      passwordReset: passwordReset,
+      ready: readyPromise.promise,
+      refresh: refresh,
       signout: signout,
-      refresh: refresh
+      signup: signup,
+      signin: signin,
+      token: undefined,
+      user: undefined,
     };
+
+    function forgotPassword(credentials) {
+      return $resource('/api/auth/forgot').save(credentials);
+    }
 
     function login(user, token) {
       setUser(user);
@@ -31,20 +39,8 @@
 
     }
 
-    function setUser(user) {
-      service.user = user;
-    }
-
-    function setToken(token) {
-      service.token = token;
-      localStorage.setItem('token', token);
-    }
-
-    function signout() {
-      localStorage.removeItem('token');
-      service.user = null;
-      service.token = null;
-      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+    function passwordReset(token, credentials) {
+      return $resource('/api/auth/reset').save(credentials);
     }
 
     function refresh() {
@@ -66,6 +62,32 @@
       $http.defaults.headers.common.Authorization = 'JWT ' + service.token;
     }
 
+    function setToken(token) {
+      service.token = token;
+      localStorage.setItem('token', token);
+    }
+
+    function setUser(user) {
+      service.user = user;
+    }
+
+    function signout() {
+      localStorage.removeItem('token');
+      service.user = null;
+      service.token = null;
+      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+    }
+
+    function signin(credentials) {
+      return $resource('/api/auth/signin').save(credentials);
+    }
+
+    function signup(credentials) {
+      return $resource('/api/auth/signup').save(credentials);
+    }
+
+
+
     function init() {
       service.token = localStorage.getItem('token') || $location.search().token || null;
 
@@ -83,7 +105,6 @@
 
     //Run init
     init();
-
 
 
     return service;
