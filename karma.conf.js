@@ -83,7 +83,7 @@
 
       // Level of logging
       // Possible values: karmaConfig.LOG_DISABLE || karmaConfig.LOG_ERROR || karmaConfig.LOG_WARN || karmaConfig.LOG_INFO || karmaConfig.LOG_DEBUG
-      logLevel: karmaConfig.LOG_DISABLE,
+      logLevel: process.env.KARMA_LOG || karmaConfig.LOG_DISABLE,
 
       // Enable / disable watching file and executing tests whenever any file changes
       autoWatch: true,

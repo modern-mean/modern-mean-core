@@ -97,9 +97,12 @@
             expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.not.exist;
           });
 
-        });
+          it('should return undefined no items', function () {
+            menuService.toolbar.items = undefined;
+            expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.not.exist;
+          });
 
-        //TODO finalize after menu rewrite
+        });
 
       });
 

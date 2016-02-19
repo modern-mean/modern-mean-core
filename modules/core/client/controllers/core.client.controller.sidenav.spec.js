@@ -22,11 +22,11 @@
 
     describe('SideNavController', function () {
 
-      it('should have a vm variable', function () {
+      it('should have a vm variable that is an object', function () {
         expect($scope.vm).to.be.an('object');
       });
 
-      it('should have a vm.menu variable', function () {
+      it('should have a vm.menu variable that is an array', function () {
         expect($scope.vm.menus).to.be.an('array');
       });
 
