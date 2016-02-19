@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -30,28 +30,20 @@
 
   <!-- Fav Icon -->
   <link href="{{favicon}}" rel="shortcut icon" type="image/x-icon">
-
   <!-- inject:css -->
   <!-- endinject -->
-
 </head>
 <body class="ng-cloak">
-  <div flex layout-fill layout="column">
-    <header data-ng-include="'modules/core/client/views/core.client.views.toolbar.html'"></header>
-    <md-content>
-      {% block content %}{% endblock %}
-    </md-content>
+  <div layout="column" layout-fill flex>
+    <section data-ng-include="'modules/core/client/views/core.client.views.toolbar.html'"></section>
+    <section data-ng-include="'modules/core/client/views/core.client.views.sidenav.html'"></section>
+    <md-content>{% block content %}{% endblock %}</md-content>
   </div>
-  <!--Load The Socket.io File-->
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-
   <!-- inject:js -->
   <!-- endinject -->
-
   {% if livereload %}
   <!--Livereload script rendered -->
   <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
   {% endif %}
 </body>
-
 </html>

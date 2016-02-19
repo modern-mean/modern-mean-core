@@ -12,12 +12,3 @@
   opacity: 0.8;
   margin-bottom: -10px;
 }
-.open .header-profile-image,
-a:hover .header-profile-image {
-  opacity: 1;
-}
-.md-pagination .paginate-button {
-	width: 50px;
-	min-width: 50px;
-	margin: 5px;
-}

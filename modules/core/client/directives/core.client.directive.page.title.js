@@ -19,7 +19,7 @@
 
       function listener(event, toState) {
         if (toState.data && toState.data.pageTitle) {
-          element.html(toState.data.pageTitle);
+          element.html(CORE_CONSTANTS.page.title + ' - ' + toState.data.pageTitle);
         } else {
           element.html(CORE_CONSTANTS.page.title);
         }

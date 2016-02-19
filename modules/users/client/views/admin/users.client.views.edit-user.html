@@ -1,0 +1,31 @@
+<md-content layout-padding>
+  <h1 class="md-display-1">Edit User: <span ng-bind="vm.user.email"></span></h1>
+  <form name="userForm" ng-submit="vm.update(userForm.$valid)" novalidate>
+    <md-input-container class="md-block">
+      <input type="text" id="firstName" name="firstName" ng-model="vm.user.firstName" placeholder="First Name" required>
+      <div ng-messages="userForm.firstName.$error" role="alert">
+        <div ng-message="required">First name is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="text" id="lastName" name="lastName" ng-model="vm.user.lastName" placeholder="Last Name" required>
+      <div ng-messages="userForm.lastName.$error" role="alert">
+        <div ng-message="required">Last name is required.</div>
+      </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <input type="text" name="roles" ng-model="vm.user.roles" id="roles" placeholder="Roles" ng-list required>
+      <div ng-messages="userForm.roles.$error" role="alert">
+        <div ng-message="required">At least one role is required.</div>
+      </div>
+    </md-input-container>
+    <section layout="row" layout-align="center center">
+      <md-button type="submit" value="Update" class="md-raised md-primary" aria-label="Update"> Update </md-button>
+      or
+      <md-button ui-sref="admin.user({userId: vm.user._id})" class="md-raised" aria-label="Go back">go back</md-button>
+    </section>
+    <section layout="row" layout-align="center center" ng-show="vm.error">
+      <strong ng-bind="vm.error"></strong>
+    </section>
+  </form>
+</md-content>

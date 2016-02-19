@@ -17,8 +17,8 @@
       </md-menu-content>
     </md-menu>
     <md-button ng-if="menu.type === 'button'" ui-sref="{{menu.state}}" aria-label="{{menu.aria}}">
-      <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
-      {{menu.title}}
+      <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}" show-xs></ng-md-icon>
+      <span hide-xs>{{menu.title}}</span>
     </md-button>
   </span>
 </md-toolbar>
