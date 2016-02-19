@@ -1,51 +1,61 @@
-<md-content>
-  <div class="page-header">
-    <div class="row">
-      <div class="col-md-6">
-        <h1 ng-bind="vm.user.email"></h1>
-      </div>
-      <div class="col-md-4">
-        <a class="btn btn-primary" ui-sref="admin.user-edit({userId: vm.user._id})">
-          <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn btn-primary" ng-click="vm.remove();" ng-if="user._id !== vm.authentication.user._id">
-          <i class="glyphicon glyphicon-trash"></i>
-        </a>
+<md-content layout-padding>
+  <div layout="row">
+    <div layout="column" flex>
+      <h1 class="md-display-1" ng-bind="vm.user.email"></h1>
+    </div>
+    <div layout="column">
+      <div layout="row" style="padding-top: 1em;">
+        <md-button class="md-fab md-raised md-accent" aria-label="Edit" ui-sref="admin.user-edit({userId: vm.user._id})">
+          <ng-md-icon icon="edit"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab md-raised md-warn" aria-label="Remove" ng-click="vm.remove();" ng-if="user._id !== vm.authentication.user._id">
+          <ng-md-icon icon="delete"><ng-md-icon>
+        </md-button>
       </div>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-3"><strong>First Name</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.firstName"></div>
+  <md-list>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">First Name</h3>
+        <h4 ng-bind="vm.user.firstName"></h4>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Last Name</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.lastName"></div>
+    </md-list-item>
+    <md-divider ></md-divider>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">Last Name</h3>
+        <h4 ng-bind="vm.user.lastName"></h4>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Email</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.email"></div>
+    </md-list-item>
+    <md-divider ></md-divider>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">Email</h3>
+        <h4 ng-bind="vm.user.email"></h4>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Provider</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.provider"></div>
+    </md-list-item>
+    <md-divider ></md-divider>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">Provider</h3>
+        <h4 ng-bind="vm.user.provider"></h4>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Created</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.created"></div>
+    </md-list-item>
+    <md-divider ></md-divider>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">Created</h3>
+        <h4 ng-bind="vm.user.created"></h4>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Roles</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.roles"></div>
+    </md-list-item>
+    <md-divider ></md-divider>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text" layout="column">
+        <h3 class="md-title">Roles</h3>
+        <h4 ng-bind="vm.user.roles"></h4>
       </div>
-    </div>
-  </div>
+    </md-list-item>
+  </md-list>
+  <md-button ui-sref="admin.users" class="md-raised" aria-label="Go back">go back</md-button>
 </md-content>

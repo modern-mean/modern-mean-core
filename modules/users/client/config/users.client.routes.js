@@ -34,19 +34,28 @@
         url: '/password',
         templateUrl: 'modules/users/client/views/settings/users.client.views.change-password.html',
         controller: 'ChangePasswordController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Change Password'
+        }
       })
       .state('settings.accounts', {
         url: '/accounts',
         templateUrl: 'modules/users/client/views/settings/users.client.views.manage-social-accounts.html',
         controller: 'SocialAccountsController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Manage Social Accounts'
+        }
       })
       .state('settings.picture', {
         url: '/picture',
         templateUrl: 'modules/users/client/views/settings/users.client.views.change-profile-picture.html',
         controller: 'ChangeProfilePictureController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Change Profile Picture'
+        }
       })
       .state('authentication', {
         abstract: true,
@@ -57,19 +66,26 @@
         url: '/signup',
         templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html',
         controller: 'AuthenticationController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Account Sign Up'
+        }
       })
       .state('authentication.signin', {
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html',
         controller: 'AuthenticationController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Account Sign In'
+        }
       })
       .state('signout', {
         url: '/signout',
         templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html',
         data: {
-          ignoreState: true
+          ignoreState: true,
+          pageTitle: 'Signed Out'
         }
       })
       .state('password', {
@@ -81,7 +97,10 @@
         url: '/forgot',
         templateUrl: 'modules/users/client/views/password/users.client.views.forgot-password.html',
         controller: 'PasswordController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Forgot Password'
+        }
       })
       .state('password.reset', {
         abstract: true,
@@ -100,7 +119,10 @@
         url: '/:token',
         templateUrl: 'modules/users/client/views/password/users.client.views.reset-password.html',
         controller: 'PasswordController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Password Reset Form'
+        }
       });
 
     console.log('Users::Routes::Loaded', $stateProvider);
