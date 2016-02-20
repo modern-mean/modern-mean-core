@@ -4,12 +4,12 @@
   //TODO this should be Users service
   angular
     .module('users.admin')
-    .factory('Admin', Admin);
+    .factory('UserAdmin', UserAdmin);
 
-  Admin.$inject = ['$resource'];
+  UserAdmin.$inject = ['$resource'];
 
-  function Admin($resource) {
-    return $resource('api/admin/users/:userId', {
+  function UserAdmin($resource) {
+    return $resource('/api/admin/users/:userId', {
       userId: '@_id'
     }, {
       update: {

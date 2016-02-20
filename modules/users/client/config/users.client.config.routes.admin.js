@@ -35,9 +35,9 @@
         }
       });
 
-    getUser.$inject = ['$stateParams', 'Admin'];
-    function getUser($stateParams, Admin) {
-      return Admin.get({ userId: $stateParams.userId });
+    getUser.$inject = ['$stateParams', 'UserAdmin'];
+    function getUser($stateParams, UserAdmin) {
+      return UserAdmin.get({ userId: $stateParams.userId });
     }
   }
 })();

@@ -57,14 +57,14 @@
     });
 
     it('should resolve a user id', function () {
-      $httpBackend.expectGET('api/admin/users/test').respond(200, { id: 'sure' });
+      $httpBackend.expectGET('/api/admin/users/test').respond(200, { _id: 'sure' });
       //$httpBackend.expectGET('modules/users/client/views/admin/users.client.views.view-user.html').respond(200, '<div></div>');
       //$httpBackend.expectGET('modules/core/client/views/core.client.views.home.html').respond(200, '<div></div>');
       //TODO HERE
       $location.url('/admin/users/test');
       $rootScope.$digest();
       $httpBackend.flush();
-      console.log(JSON.stringify($state.current));
+
       expect($stateParams.userId).to.equal('test');
     });
 
