@@ -57,12 +57,12 @@
           },
           {
             title: 'Manage Social Accounts',
-            icon: 'logout',
+            icon: 'people',
             state: 'settings.accounts'
           },
           {
             title: 'Signout',
-            icon: 'people',
+            icon: 'logout',
             state: 'signout'
           }]
         });
