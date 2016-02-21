@@ -78,7 +78,7 @@
           $httpBackend.flush();
 
           //TODO This doesn't work for some reason.
-          //expect($scope.vm.error).to.equal('Error');
+          expect($scope.vm.error).to.equal('Error');
           expect($scope.vm.credentials).to.equal(undefined);
         });
       });

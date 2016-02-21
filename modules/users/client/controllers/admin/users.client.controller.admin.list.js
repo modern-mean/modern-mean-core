@@ -5,15 +5,17 @@
     .module('users.admin')
     .controller('UserListController', UserListController);
 
-  UserListController.$inject = ['Admin', '$filter'];
+  UserListController.$inject = ['UserAdmin'];
 
-  function UserListController(Admin, $filter) {
+  function UserListController(UserAdmin) {
     var vm = this;
 
-    Admin.query(function (data) {
-      vm.users = data;
-      vm.buildPager();
+    UserAdmin.query(function (users) {
+      vm.users = users;
+      //vm.buildPager();
     });
+
+    /*
 
     vm.buildPager = function () {
       vm.pagedItems = [];
@@ -35,5 +37,6 @@
     vm.pageChanged = function () {
       vm.figureOutItemsToDisplay();
     };
+    */
   }
 })();

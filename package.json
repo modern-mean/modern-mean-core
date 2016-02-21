@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-spies": "^0.7.1",
+    "chai-spies": "~0.7.1",
     "coveralls": "~2.11.6",
     "gulp": "~3.9.0",
     "gulp-angular-templatecache": "~1.8.0",

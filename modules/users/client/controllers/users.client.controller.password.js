@@ -14,7 +14,7 @@
     vm.authentication = Authentication;
     vm.popoverMsg = PasswordValidator.getPopoverMsg();
     vm.resetUserPassword = resetUserPassword;
-    
+
 
     function askForPasswordReset() {
       vm.success = vm.error = undefined;
@@ -28,7 +28,8 @@
           },
           function (err) {
             vm.credentials = undefined;
-            vm.error = err.message;
+            console.log(JSON.stringify(err));
+            vm.error = err.data.message;
           }
         );
     }
