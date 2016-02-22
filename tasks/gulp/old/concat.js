@@ -6,19 +6,12 @@ var gulp = require('gulp'),
   mainBowerFiles = require('main-bower-files'),
   runSequence = require('run-sequence');
 
-gulp.task('concat', function () {
-  runSequence(['concat:js', 'concat:css']);
-});
+gulp.task('concat', ['concat:js', 'concat:css']);
 
-gulp.task('concat:js', function () {
-  runSequence(['concat:js:application', 'concat:js:vendor', 'concat:js:core']);
-});
+gulp.task('concat:js', ['concat:js:application', 'concat:js:vendor', 'concat:js:core']);
 
 gulp.task('concat:js:application', function () {
-  var appConfig = gulp.src(['modules/core/client/app/core.client.app.loader.js']);
-  var app = gulp.src(['modules/*/client/**/!(*.spec).js', '!modules/core/client/app/*.js']);
-
-  return series(appConfig, app)
+  return gulp.src(['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/!(*.spec).js'])
     .pipe(concat('application.js'))
     .pipe(gulp.dest('public/dist'));
 });

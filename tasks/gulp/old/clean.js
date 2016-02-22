@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
 gulp.task('clean', function () {
   return del([
-    'public/dist/*',
+    'public/dist',
     '.coverdata'
   ]);
 });

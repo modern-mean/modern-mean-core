@@ -22,7 +22,7 @@
 
       Authentication.user = {
         roles: ['admin']
-      }
+      };
     }));
 
     it('should have an admin.users state', function () {

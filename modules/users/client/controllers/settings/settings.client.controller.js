@@ -12,13 +12,13 @@
 
     vm.user = Authentication.user;
 
-    $scope.toggleLeft = buildDelayedToggler('left')
+    $scope.toggleLeft = buildDelayedToggler('left');
     $scope.isOpenLeft = function(){
       return $mdSidenav('left').isOpen();
     };
 
     $scope.close = function () {
-      $mdSidenav('left').close()
+      $mdSidenav('left').close();
     };
 
     function debounce(func, wait, context) {
@@ -43,7 +43,7 @@
         $mdSidenav(navID)
           .toggle()
           .then(function () {
-            $log.debug('toggle ' + navID + ' is done');
+            //$log.debug('toggle ' + navID + ' is done');
           });
       }, 200);
     }
@@ -53,9 +53,9 @@
         $mdSidenav(navID)
           .toggle()
           .then(function () {
-            $log.debug('toggle ' + navID + ' is done');
+            //$log.debug('toggle ' + navID + ' is done');
           });
-      }
+      };
     }
   }
 })();
