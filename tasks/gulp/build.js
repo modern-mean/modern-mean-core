@@ -1,65 +1,105 @@
-
 var gulp = require('gulp'),
-  runSequence = require('run-sequence');
+  concat = require('gulp-concat'),
+  filter = require('gulp-filter'),
+  debug = require('gulp-debug'),
+  mainBowerFiles = require('main-bower-files'),
+  rename = require('gulp-rename'),
+  templateCache = require('gulp-angular-templatecache'),
+  path = require('path'),
+  endOfLine = require('os').EOL,
+  inject = require('gulp-inject'),
+  imagemin = require('imagemin'),
+  pngquant = require('imagemin-pngquant'),
+  del = require('del');
 
-// Lint project files and minify them into two production files.
-gulp.task('build', function (done) {
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], ['uglify', 'cssmin', 'obfuscate'], 'clean:build:src', 'inject', done);
-      break;
 
-    case 'test':
-      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], 'clean:build:src', 'inject', done);
-      break;
 
-    case 'development':
-      runSequence('clean:build', ['lint', 'concat', 'templatecache', 'imagemin'], 'inject', done);
-      break;
+function angular() {
+  var angularJS = filter(['**/angular.js'], { restore: true });
+  return gulp.src(mainBowerFiles())
+          .pipe(angularJS)
+          .pipe(gulp.dest('./public/dist'));
+}
 
-    default:
+function application() {
+  var filterJS = filter(['**/*.js'], { restore: true }),
+    filterCSS = filter(['**/*.css'], { restore: true });
 
-      break;
-  }
+  return gulp.src(['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/!(*.spec).{js,css}'])
+    .pipe(filterJS)
+    .pipe(concat('application.js'))
+    .pipe(gulp.dest('public/dist'))
+    .pipe(filterJS.restore)
+    .pipe(filterCSS)
+    .pipe(concat('application.css'))
+    .pipe(gulp.dest('public/dist'));
+}
 
-});
+function clean() {
+  return del([
+    'public/dist',
+    '.coverdata'
+  ]);
+}
 
-// Run the project tests
-gulp.task('test', function (done) {
-  runSequence('clean:coverage', 'env:test', 'build', 'copy:localConfig', 'mocha', 'karma', 'coveralls', done);
-});
+function images() {
+  return gulp.src(['modules/*/client/**/*.{jpg,png,gif,ico}'])
+    //.pipe(plugins.imagemin({
+    //  progressive: true,
+    //  svgoPlugins: [{ removeViewBox: false }],
+    //  use: [pngquant()]
+    //}))
+    .pipe(gulp.dest('public/dist/img'));
+}
+images.displayName = 'Build Images';
 
-gulp.task('test:server', function (done) {
-  runSequence('env:test', 'lint', 'mocha', done);
-});
+function injectLayout() {
+  return gulp.src('modules/core/server/views/layout.server.view.src.html')
+    .pipe(inject(gulp.src(['public/dist/angular.js', 'public/dist/**/*.{js,css}']), {
+      ignorePath: '/public'
+    }))
+    .pipe(rename('layout.server.view.html'))
+    .pipe(gulp.dest('modules/core/server/views'));
+}
 
-// Watch all server files for changes & run server tests (test:server) task on changes
-// optional arguments:
-//    --onlyChanged - optional argument for specifying that only the tests in a changed Server Test file will be run
-// example usage: gulp test:server:watch --onlyChanged
-gulp.task('test:server:watch', function (done) {
-  runSequence('clean:coverage', 'test:server', 'watch', done);
-});
+function templates() {
+  return gulp.src(['modules/*/client/**/*.html'])
+    .pipe(templateCache('templates.js', {
+      root: 'modules/',
+      module: 'core',
+      templateHeader: '(function () {' + endOfLine + '	\'use strict\';' + endOfLine + endOfLine + '	angular' + endOfLine + '		.module(\'<%= module %>\'<%= standalone %>)' + endOfLine + '		.run(templates);' + endOfLine + endOfLine + '	templates.$inject = [\'$templateCache\'];' + endOfLine + endOfLine + '	function templates($templateCache) {' + endOfLine,
+      templateBody: '		$templateCache.put(\'<%= url %>\', \'<%= contents %>\');',
+      templateFooter: '	}' + endOfLine + '})();' + endOfLine,
+    }))
+    .pipe(gulp.dest('./public/dist'));
+}
 
-gulp.task('test:client', function (done) {
-  runSequence('clean:coverage', 'env:test', 'lint:js','build', 'karma', done);
-});
 
-gulp.task('test:e2e', function (done) {
-  runSequence('clean:coverage', 'env:test', 'dropdb', 'nodemon', 'protractor', done);
-});
+function vendor() {
+  var filterJS = filter(['**/*.js', '!**/angular.js'], { restore: true }),
+    filterCSS = filter(['**/*.css'], { restore: true }),
+    filterFonts = filter('**/*.{svg,woff,woff2,eot,ttf}', { restore: true });
 
-// Run the project in development mode
-gulp.task('default', function (done) {
-  runSequence('env:dev', 'build', 'stripDebug', ['copy:localConfig', 'nodemon', 'watch'], done);
-});
+  return gulp.src(mainBowerFiles())
+    .pipe(filterJS)
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest('./public/dist'))
+    .pipe(filterJS.restore)
+    .pipe(filterCSS)
+    .pipe(gulp.dest('./public/dist/css'))
+    .pipe(filterCSS.restore)
+    .pipe(filterFonts)
+    .pipe(gulp.dest('./public/dist/fonts'));
+}
 
-// Run the project in debug mode
-gulp.task('debug', function (done) {
-  runSequence('env:dev', 'build', ['copy:localConfig', 'nodemon', 'watch'], done);
-});
 
-// Run the project in production mode
-gulp.task('prod', function (done) {
-  runSequence('env:prod', 'build', 'stripDebug', ['copy:localConfig', 'nodemon', 'watch'], done);
-});
+
+
+var build = gulp.series(gulp.parallel(application, vendor, angular, templates, images), injectLayout);
+
+
+
+module.exports = {
+  build: build,
+  clean: clean
+};

@@ -39,8 +39,8 @@
 
           it('should add an object to items', function () {
             menuService.toolbar.addItem({ id: 'test', state: 'whatever' });
-            var menu = menuService.toolbar.getItem({ id: 'test' })
-            expect(menu).to.exist;
+            var menu = menuService.toolbar.getItem({ id: 'test' });
+            expect(menu).to.not.equal(undefined);
             expect(menu.id).to.equal('test');
           });
 
@@ -66,13 +66,13 @@
 
           it('should return a menu item', function () {
             var menu = menuService.toolbar.getItem({ state: 'home' });
-            expect(menu).to.exist;
+            expect(menu).to.not.equal(undefined);
             expect(menu.state).to.equal('home');
           });
 
           it('should return undefined if not found', function () {
             var menu = menuService.toolbar.getItem({ state: 'asdfasdfasfdasdf' });
-            expect(menu).to.not.exist;
+            expect(menu).to.equal(undefined);
           });
 
         });
@@ -94,12 +94,12 @@
           });
 
           it('should return undefined if not found', function () {
-            expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.not.exist;
+            expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.equal(undefined);
           });
 
           it('should return undefined no items', function () {
             menuService.toolbar.items = undefined;
-            expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.not.exist;
+            expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.equal(undefined);
           });
 
         });

@@ -33,7 +33,7 @@
             vm.error = err.data.message;
           }
         );
-    };
+    }
 
     function signin () {
       vm.error = undefined;
@@ -50,7 +50,7 @@
             vm.error = err.data.message;
           }
         );
-    };
+    }
 
     function callOauthProvider (url) {
       if ($state.previous && $state.previous.href) {
@@ -58,8 +58,8 @@
       }
       console.log('URL IS', url);
       $location.path(url);
-    };
+    }
 
-    console.log('AuthenticationController::Init', vm);
+    console.log('AuthenticationController::Init::vm', vm);
   }
 })();
