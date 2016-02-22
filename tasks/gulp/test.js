@@ -19,13 +19,20 @@ function lint() {
 }
 lint.displayName = 'lint';
 
-function karma(done) {
+function karmaSingle(done) {
   new KarmaServer({
     configFile: process.cwd() + '/karma.conf.js',
     singleRun: true
   }, done).start();
 }
-karma.displayName = 'karma';
+karmaSingle.displayName = 'karma';
+
+function karmaWatch(done) {
+  new KarmaServer({
+    configFile: process.cwd() + '/karma.conf.js'
+  }, done).start();
+}
+karmaWatch.displayName = 'karmaWatch';
 
 
 function mochaTest(done) {
@@ -67,7 +74,10 @@ function sendCoveralls(done) {
 
 
 module.exports = {
-  client: karma,
+  client: {
+    single: karmaSingle,
+    watch: karmaWatch
+  },
   coveralls: sendCoveralls,
   lint: lint,
   server: mochaTest

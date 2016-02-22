@@ -24,7 +24,7 @@ gulp.task(defaultTask);
 
 //Gulp test
 var preTest = gulp.parallel(build.clean, setTest, test.lint);
-var testTask = gulp.series(preTest, build.build, test.client, test.server, test.coveralls);
+var testTask = gulp.series(preTest, build.build, test.client.single, test.server, test.coveralls);
 testTask.displayName = 'test';
 gulp.task(testTask);
 
@@ -34,6 +34,6 @@ testServerTask.displayName = 'test:server';
 gulp.task(testServerTask);
 
 //Gulp test:client
-var testClientTask = gulp.series(setTest, build.build, test.client);
+var testClientTask = gulp.series(setTest, build.build, test.client.watch);
 testClientTask.displayName = 'test:client';
 gulp.task(testClientTask);

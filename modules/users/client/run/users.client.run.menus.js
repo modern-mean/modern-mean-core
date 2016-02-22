@@ -29,7 +29,6 @@
 
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
-      console.log('User::Run::Login::Event', Authentication);
       if (Authentication.user) {
         menuService.toolbar.addItem({
           id: 'usermenu',
@@ -74,15 +73,11 @@
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      console.log('User::Run::Logout::Event', menuService.toolbar);
-
       menuService.toolbar.getItem({ state: 'authentication.signup' }).show = true;
       menuService.toolbar.getItem({ state: 'authentication.signin' }).show = true;
-
       menuService.toolbar.removeItem({ id: 'usermenu' });
-
     });
-      
+
   }
 
 })();
