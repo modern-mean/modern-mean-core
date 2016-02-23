@@ -23,7 +23,8 @@ lint.displayName = 'lint';
 function karmaSingle(done) {
   new KarmaServer({
     configFile: process.cwd() + '/karma.conf.js',
-    singleRun: true
+    singleRun: true,
+    autoWatch: true
   }, done).start();
 }
 karmaSingle.displayName = 'karma';
