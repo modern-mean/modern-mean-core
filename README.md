@@ -5,7 +5,7 @@
 [![dependencies](https://david-dm.org/modern-mean/modern-mean-core.svg)](https://david-dm.org/modern-mean/modern-mean-core)
 [![Coverage Status](https://coveralls.io/repos/github/modern-mean/modern-mean-core/badge.svg?branch=master)](https://coveralls.io/github/modern-mean/modern-mean-core?branch=master)
 
-Modern-MEAN is a full-stack JavaScript open-source solution, which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. The idea is to solve the common issues with connecting those frameworks, build a robust framework to support daily development needs, and help developers use better practices while working with popular JavaScript components.
+Modern-MEAN is a full-stack JavaScript open-source solution, forked originally from MEAN.js which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. The idea is to solve the common issues with connecting those frameworks, build a robust framework to support daily development needs, and help developers use better practices while working with popular JavaScript components.
 
 modern-mean-core is the essential building block for your application, the core functionality of Modern-MEAN! We are planning on releasing additional modules at a later point in our development and maturity of Modern-MEAN. Modules will have their own repository and/or be branched off the modern-mean-core.
 
@@ -13,7 +13,7 @@ One of main goals is to always be current, be it by features, by dependencies, o
 
 
 ## Before You Begin
-Before you begin we recommend you read about the basic building blocks that assemble a SHACKAPP application:
+Before you begin we recommend you read about the basic building blocks that assemble a Modern-MEAN application:
 * MongoDB - Go through [MongoDB Official Website](http://mongodb.org/) and proceed to their [Official Manual](http://docs.mongodb.org/manual/), which should help you understand NoSQL and MongoDB better.
 * Express - The best way to understand express is through its [Official Website](http://expressjs.com/), which has a [Getting Started](http://expressjs.com/starter/installing.html) guide, as well as an [ExpressJS Guide](http://expressjs.com/guide/error-handling.html) guide for general express topics. You can also go through this [StackOverflow Thread](http://stackoverflow.com/questions/8144214/learning-express-for-node-js) for more resources.
 * AngularJS - Angular's [Official Website](http://angularjs.org/) is a great starting point. You can also use [Thinkster Popular Guide](http://www.thinkster.io/), and the [Egghead Videos](https://egghead.io/).
@@ -32,11 +32,20 @@ Make sure you have installed all of the following prerequisites on your developm
 $ npm install -g bower
 ```
 
-* Gulp - You may use Gulp for Live Reload, Linting, and SASS or LESS.
+* Gulp4 - We use Gulp4 for Live Reload, Linting, and SASS or LESS.
+
+If you have gulp installed, this needs to be uninstalled via:
+
+```
+$ npm uninstall -g gulp
+```
+
+Then after you have gulp removed, you can now install Gulp4:
 
 ```bash
-$ npm install -g gulp
+$ npm install -g gulpjs/gulp-cli#4.0
 ```
+
 ## Downloading Modern-MEAN
 There are several ways you can get the Modern-MEAN boilerplate:
 
@@ -79,7 +88,7 @@ This command does a few things:
 
 
 ## Running Your Application
-After the install process is over, you'll be able to run your application using Gulp, just run Gulp default task:
+After the install process is over, you'll be able to run your application using Gulp4, just run Gulp4 default task:
 
 ```
 $ gulp
@@ -120,11 +129,11 @@ $ sh ./scripts/generate-ssl-certs.sh
 Windows users can follow instructions found [here](http://www.websense.com/support/article/kbarticle/How-to-use-OpenSSL-and-Microsoft-Certification-Authority).
 After you've generated the key and certificate, place them in the *config/sslcerts* folder.
 
-Finally, execute gulp's prod task `gulp prod`
+Finally, execute gulp4's prod task `gulp prod`
 * enable/disable SSL mode in production environment change the `secure` option in `config/env/production.js`
 
 
-## Running your application with Gulp
+## Running your application with Gulp4
 
 After the install process, you can easily run your project with:
 
@@ -140,7 +149,7 @@ $ gulp default
 The server is now running on http://localhost:3000 if you are using the default settings.
 
 
-### Running Gulp Development Environment
+### Running Gulp4 Development Environment
 
 Start the development environment with:
 
@@ -150,14 +159,14 @@ $ gulp dev
 
 
 ### Running in Production mode
-To run your application with *production* environment configuration, execute gulp as follows:
+To run your application with *production* environment configuration, execute gulp4 as follows:
 
 ```bash
 $ gulp prod
 ```
 
 
-### Testing Your Application with Gulp
+### Testing Your Application with Gulp4
 Using the full test suite included with Modern-MEAN with the test task:
 
 ### Run all tests
@@ -173,11 +182,6 @@ gulp test:server
 ### Run client tests
 ```bash
 gulp test:client
-```
-
-### Run e2e tests
-```bash
-gulp test:e2e
 ```
 
 
