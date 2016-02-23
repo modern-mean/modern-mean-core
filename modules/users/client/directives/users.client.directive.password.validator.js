@@ -12,6 +12,7 @@
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         ngModel.$validators.requirements = function (password) {
+          console.log('Users::Directive::passwordValidator::Init', password);
           var status = true;
           if (password) {
             var result = PasswordValidator.getResult(password);
@@ -25,10 +26,12 @@
               { color: 'primary', progress: '80' },
               { color: 'success', progress: '100' }
             ];
-
+            /*
+            //commented out during test creation.  Not sure how this would ever happen
             if (result.errors.length < requirementsMeter.length) {
               requirementsIdx = requirementsMeter.length - result.errors.length - 1;
             }
+            */
 
             scope.requirementsColor = requirementsMeter[requirementsIdx].color;
             scope.requirementsProgress = requirementsMeter[requirementsIdx].progress;
@@ -45,6 +48,7 @@
           }
           return status;
         };
+
       }
     };
   }

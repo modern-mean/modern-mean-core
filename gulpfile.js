@@ -37,3 +37,6 @@ gulp.task(testServerTask);
 var testClientTask = gulp.series(setTest, build.build, test.client.watch);
 testClientTask.displayName = 'test:client';
 gulp.task(testClientTask);
+
+//Lint test
+gulp.task(test.lint);

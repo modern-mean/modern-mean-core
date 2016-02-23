@@ -55,7 +55,6 @@
 
     // Filtering to upload only images
     upload.fileFilter = profileUploadFileFilter;
-
     if (user) {
       upload(req, res, function (uploadError) {
         if(uploadError) {

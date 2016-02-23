@@ -1,6 +1,6 @@
 <md-content>
   <h1 class="md-display-1">Edit Profile</h1>
-  <form name="userForm" ng-submit="vm.updateUserProfile(userForm.$valid)" novalidate autocomplete="off">
+  <form name="userForm" ng-submit="vm.update()" novalidate autocomplete="off">
     <md-input-container class="md-block">
       <input type="text" id="firstName" name="firstName" ng-model="vm.user.firstName" placeholder="First Name" required>
       <div ng-messages="userForm.firstName.$error" role="alert">

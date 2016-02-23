@@ -15,7 +15,8 @@ function lint() {
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
     .pipe(eslint())
-    .pipe(eslint.format());
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 }
 lint.displayName = 'lint';
 

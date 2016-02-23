@@ -6,7 +6,7 @@
     it('should have created the main users module', function () {
       expect(angular.module('users')).to.be.an('object');
       expect(angular.module('users').name).to.equal('users');
-      expect(angular.module('users').requires.length).to.equal(1);
+      expect(angular.module('users').requires.length).to.equal(2);
     });
 
     it('should have created the users.routes module', function () {

@@ -22,11 +22,9 @@
       vm.error = undefined;
 
       Authentication
-        .signup(vm.credentials).$promise
+        .signup(vm.credentials)
         .then(
           function (response) {
-            console.log('IN SUCCESS', response);
-            Authentication.login(response.user, response.token);
             $state.go($state.previous.state.name || 'home', $state.previous.params);
           },
           function (err) {
@@ -39,11 +37,9 @@
       vm.error = undefined;
 
       Authentication
-        .signin(vm.credentials).$promise
+        .signin(vm.credentials)
         .then(
           function (response) {
-            console.log('IN SUCCESS', response);
-            Authentication.login(response.user, response.token);
             $state.go($state.previous.state.name || 'home', $state.previous.params);
           },
           function (err) {
@@ -56,7 +52,7 @@
       if ($state.previous && $state.previous.href) {
         url += '?redirect_to=' + encodeURIComponent($state.previous.href);
       }
-      console.log('URL IS', url);
+      
       $location.path(url);
     }
 

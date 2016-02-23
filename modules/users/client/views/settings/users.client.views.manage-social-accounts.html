@@ -1,49 +1,23 @@
+<md-toolbar class="md-warn">
+  <div class="md-toolbar-tools">
+    <h2 class="md-flex">Social Accounts do not work.  Server side needs to be reworked for JWT</h2>
+  </div>
+</md-toolbar>
 <md-content>
-  <h1 class="md-display-1" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Connected social accounts:</h1>
+  <h1 class="md-display-1" ng-show="vm.user.additionalProvidersData">Connected social accounts:</h1>
   <div class="col-md-12 text-center">
-    <div ng-repeat="(providerName, providerData) in vm.user.additionalProvidersData" class="social-account-container">
+    <div  class="social-account-container">
       <img ng-src="/dist/img/users/client/img/buttons/{{providerName}}.png">
       <a class="btn btn-danger btn-remove-account" ng-click="vm.removeUserSocialAccount(providerName)">
         <i class="glyphicon glyphicon-trash"></i>
       </a>
     </div>
   </div>
-  <h1 class="md-display-1" ng-show="vm.hasConnectedAdditionalSocialAccounts()">Unconnected social accounts:</h1>
+  <h1 class="md-display-1">Unconnected social accounts:</h1>
   <div class="col-md-12 text-center">
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('facebook')">
-      <img ng-src="/dist/img/users/client/img/buttons/facebook.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/facebook" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('twitter')">
-      <img ng-src="/dist/img/users/client/img/buttons/twitter.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/twitter" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('google')">
-      <img ng-src="/dist/img/users/client/img/buttons/google.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/google" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('linkedin')">
-      <img ng-src="/dist/img/users/client/img/buttons/linkedin.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/linkedin" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('github')">
-      <img ng-src="/dist/img/users/client/img/buttons/github.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/github" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </div>
-    <div class="social-account-container" ng-hide="vm.isConnectedSocialAccount('paypal')">
-      <img ng-src="/dist/img/users/client/img/buttons/paypal.png">
-      <a class="btn btn-success btn-remove-account" href="/api/auth/paypal" target="_self">
-        <i class="glyphicon glyphicon-plus"></i>
+    <div class="social-account-container" ng-repeat="provider in vm.providers">
+      <a class="btn btn-success" ng-href="/api/auth/{{provider.name}}" target="_self">
+        <i class="glyphicon glyphicon-plus"></i><img ng-src="{{provider.image}}">
       </a>
     </div>
   </div>
