@@ -64,10 +64,10 @@
 
       // Configure the coverage reporter
       coverageReporter: {
-        dir : '.coverdata',
+        dir: '.coverdata/client',
         reporters: [
           // Reporters not supporting the `file` property
-          { type: 'lcov', subdir: 'client'},
+          { type: 'lcov' },
           // Output coverage to console
           { type: 'text' }
         ],
@@ -102,7 +102,7 @@
       // If browser does not capture in given timeout [ms], kill it
       captureTimeout: 60000,
 
-      
+
     });
   };
 })();
