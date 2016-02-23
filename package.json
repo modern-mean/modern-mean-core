@@ -95,7 +95,7 @@
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "~4.2.0",
     "istanbul": "~0.4.2",
-    "karma": "0.13.9",
+    "karma": "~0.13.21",
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "~0.2.2",

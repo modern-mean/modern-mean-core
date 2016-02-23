@@ -13,8 +13,8 @@
         if (!rejection.config.ignoreAuthModule) {
           switch (rejection.status) {
             case 401:
-              var auth = $injector.get('Authentication');
-              auth.signout();
+              //var auth = $injector.get('Authentication');
+              //auth.signout();
               $injector.get('$state').transitionTo('authentication.signin');
               break;
             case 403:

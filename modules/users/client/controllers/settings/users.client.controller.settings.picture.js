@@ -5,17 +5,34 @@
     .module('users')
     .controller('ChangeProfilePictureController', ChangeProfilePictureController);
 
-  ChangeProfilePictureController.$inject = ['Authentication', 'FileUploader', '$timeout', '$window', '$scope'];
+  ChangeProfilePictureController.$inject = ['Authentication', 'Upload', '$timeout', '$window', '$scope'];
 
-  function ChangeProfilePictureController(Authentication, FileUploader, $timeout, $window, $scope) {
+  function ChangeProfilePictureController(Authentication, Upload, $timeout, $window, $scope) {
     var vm = this;
 
+    vm.upload = upload;
     vm.user = Authentication.user;
-    vm.imageURL = vm.user.profileImageURL;
 
+    function upload(file) {
+      vm.success = vm.error = undefined;
+      Upload.upload({
+        url: '/api/users/picture',
+        data: { newProfilePicture: vm.file },
+        headers: {
+          Authorization: 'JWT ' + Authentication.token
+        }
+      })
+      .then(function (response) {
+        vm.success = response.data.message;
+        vm.file = undefined;
+      }, function (err) {
+        vm.error = err.data.message;
+      });
+    }
+    /*
     // Create file uploader instance
     vm.uploader = new FileUploader({
-      url: 'api/users/picture',
+      url: '/api/users/picture',
       alias: 'newProfilePicture',
       headers: {
         Authorization: 'JWT ' + Authentication.token
@@ -80,5 +97,6 @@
       vm.uploader.clearQueue();
       vm.imageURL = vm.user.profileImageURL;
     };
+    */
   }
 })();
