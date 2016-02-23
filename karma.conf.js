@@ -67,7 +67,8 @@
         dir: '.coverdata/client',
         reporters: [
           // Reporters not supporting the `file` property
-          { type: 'lcov' },
+          { type: 'html', subdir: 'report-html' },
+          { type: 'lcov', subdir: 'report-lcov' },
           // Output coverage to console
           { type: 'text' }
         ],
@@ -87,7 +88,6 @@
       logLevel: process.env.KARMA_LOG || karmaConfig.LOG_DISABLE,
 
       // Enable / disable watching file and executing tests whenever any file changes
-      autoWatch: true,
 
       // Start these browsers, currently available:
       // - Chrome
