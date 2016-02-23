@@ -40,7 +40,13 @@ If you have gulp installed, this needs to be uninstalled via:
 $ npm uninstall -g gulp
 ```
 
-Then after you have gulp removed, you can now install Gulp4:
+If you have gulp-cli installed, this needs to be uninstalled via:
+
+```
+$ npm uninstall -g gulp-cli
+```
+
+Then after you have gulp and/or gulp-cli removed, you can now install Gulp4:
 
 ```bash
 $ npm install -g gulpjs/gulp-cli#4.0
