@@ -36,9 +36,14 @@
 </head>
 <body class="ng-cloak">
   <div layout="column" layout-fill flex>
-    <section data-ng-include="'modules/core/client/views/core.client.views.toolbar.html'"></section>
-    <section data-ng-include="'modules/core/client/views/core.client.views.sidenav.html'"></section>
-    <md-content>{% block content %}{% endblock %}</md-content>
+    <section ui-view="header"></section>
+
+    <section layout="row" flex>
+      <section ui-view="leftnav"></section>
+      <section layout-padding flex ui-view="main"></section>
+      <section ui-view="rightnav"></section>
+    </section>
+
   </div>
   <!-- inject:js -->
   <!-- endinject -->

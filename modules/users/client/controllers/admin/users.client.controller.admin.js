@@ -18,7 +18,7 @@
       vm.error = undefined;
       vm.user.$remove(
         function () {
-          $state.go('admin.users');
+          $state.go('root.admin.users');
         },
         function (err) {
           vm.error = err.data.message;
@@ -30,7 +30,7 @@
 
       vm.user.$update(
         function (user) {
-          $state.go('admin.user', {
+          $state.go('root.admin.user', {
             userId: user._id
           });
         },
@@ -40,6 +40,6 @@
       );
     }
 
-    console.log('Users.Admin::UserController::Init', JSON.stringify(vm));
+    console.log('Users.Admin::UserController::Init', vm);
   }
 })();

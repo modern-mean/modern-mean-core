@@ -12,10 +12,10 @@
       responseError: function(rejection) {
         switch (rejection.status) {
           case 401:
-            $injector.get('$state').transitionTo('authentication.signin');
+            $injector.get('$state').transitionTo('root.user.authentication.signin');
             break;
           case 403:
-            $injector.get('$state').transitionTo('forbidden');
+            $injector.get('$state').transitionTo('root.forbidden');
             break;
         }
         return $q.reject(rejection);

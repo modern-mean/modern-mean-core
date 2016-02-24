@@ -25,7 +25,7 @@
         .signup(vm.credentials)
         .then(
           function (response) {
-            $state.go($state.previous.state.name || 'home', $state.previous.params);
+            $state.go($state.previous.state.name || 'root.home', $state.previous.params);
           },
           function (err) {
             vm.error = err.data.message;
@@ -40,7 +40,7 @@
         .signin(vm.credentials)
         .then(
           function (response) {
-            $state.go($state.previous.state.name || 'home', $state.previous.params);
+            $state.go($state.previous.state.name || 'root.home', $state.previous.params);
           },
           function (err) {
             vm.error = err.data.message;
@@ -52,7 +52,7 @@
       if ($state.previous && $state.previous.href) {
         url += '?redirect_to=' + encodeURIComponent($state.previous.href);
       }
-      
+
       $location.path(url);
     }
 

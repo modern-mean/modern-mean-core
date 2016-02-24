@@ -12,10 +12,9 @@
     }));
 
     it('should have a home state', function () {
-      var state = $state.get('admin');
+      var state = $state.get('root.admin');
       expect(state).to.be.an('object');
       expect(state.url).to.equal('/admin');
-      expect(state.template).to.equal('<ui-view/>');
       expect(state.data).to.be.an('object');
       expect(state.data.roles).to.be.an('array');
       expect(state.data.roles.length).to.equal(1);

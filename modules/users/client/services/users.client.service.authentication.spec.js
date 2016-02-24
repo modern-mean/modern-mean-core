@@ -222,7 +222,7 @@
           var stateSpy = chai.spy.on($state, 'go');
           var response = Authentication.refresh({});
           $httpBackend.flush();
-          expect(stateSpy).to.have.been.called.with('authentication.signin');
+          expect(stateSpy).to.have.been.called.with('root.user.authentication.signin');
         });
       });
 

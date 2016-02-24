@@ -25,7 +25,7 @@
         User.$me();
         $rootScope.$digest();
         $httpBackend.flush();
-        expect(stateSpy).to.have.been.called.with('authentication.signin');
+        expect(stateSpy).to.have.been.called.with('root.user.authentication.signin');
       });
 
       it('should redirect to forbidden in on 403', function () {
@@ -34,7 +34,7 @@
         User.$me();
         $rootScope.$digest();
         $httpBackend.flush();
-        expect(stateSpy).to.have.been.called.with('forbidden');
+        expect(stateSpy).to.have.been.called.with('root.forbidden');
       });
 
     });

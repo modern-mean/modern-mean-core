@@ -23,16 +23,20 @@ lint.displayName = 'lint';
 function karmaSingle(done) {
   new KarmaServer({
     configFile: process.cwd() + '/karma.conf.js',
-    singleRun: true,
-    autoWatch: true
-  }, done).start();
+    singleRun: true
+  }, function() {
+        done();
+    }).start();
 }
 karmaSingle.displayName = 'karma';
 
 function karmaWatch(done) {
   new KarmaServer({
-    configFile: process.cwd() + '/karma.conf.js'
-  }, done).start();
+    configFile: process.cwd() + '/karma.conf.js',
+    autoWatch: true
+  }, function() {
+        done();
+    }).start();
 }
 karmaWatch.displayName = 'karmaWatch';
 

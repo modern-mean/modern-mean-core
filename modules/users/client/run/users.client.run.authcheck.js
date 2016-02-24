@@ -10,8 +10,14 @@
     // Check authentication before changing state
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-      if (toState.name === 'signout') {
+
+
+      if (toState.name === 'root.signout') {
         Authentication.signout();
+      }
+
+      if (toState.data.ignoreAuth) {
+        return true;
       }
 
       Authentication.ready
@@ -24,13 +30,13 @@
                 return true;
               }
             });
-
+            
             if (!allowed) {
               event.preventDefault();
               if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
-                $state.go('forbidden');
+                $state.go('root.forbidden');
               } else {
-                $state.go('authentication.signin').then(function () {
+                $state.go('root.user.authentication.signin').then(function () {
                   $rootScope.storePreviousState(toState, toParams);
                 });
               }

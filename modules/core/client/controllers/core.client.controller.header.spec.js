@@ -4,9 +4,9 @@
   var $state,
     $scope,
     $rootScope,
-    ToolbarController;
+    HeaderController;
 
-  describe('core.client.controller.toolbar.js', function () {
+  describe('core.client.controller.header.js', function () {
 
     beforeEach(module('core'));
 
@@ -15,12 +15,12 @@
       $scope = $rootScope.$new();
       $state = _$state_;
 
-      ToolbarController = $controller('ToolbarController as vm', {
+      HeaderController = $controller('HeaderController as vm', {
         $scope: $scope
       });
     }));
 
-    describe('ToolbarController', function () {
+    describe('HeaderController', function () {
 
       it('should have a vm variable', function () {
         expect($scope.vm).to.be.an('object');

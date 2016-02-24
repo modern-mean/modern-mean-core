@@ -5,10 +5,12 @@
     .module('users')
     .controller('SettingsController', SettingsController);
 
-  SettingsController.$inject = [];
+  SettingsController.$inject = ['Authentication'];
 
-  function SettingsController() {
+  function SettingsController(Authentication) {
     var vm = this;
+
+    vm.user = Authentication.user;
 
 
   }

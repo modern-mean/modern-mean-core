@@ -59,7 +59,7 @@
           $scope.$digest();
           $httpBackend.flush();
 
-          expect(stateSpy).to.have.been.called.with('admin.users');
+          expect(stateSpy).to.have.been.called.with('root.admin.users');
         });
 
         it('should call the server to delete set an error on error', function () {
@@ -84,7 +84,7 @@
           $scope.$digest();
           $httpBackend.flush();
 
-          expect(stateSpy).to.have.been.called.with('admin.user', { userId: 'testuser' });
+          expect(stateSpy).to.have.been.called.with('root.admin.user', { userId: 'testuser' });
         });
 
         it('should call the server to edit set an error on error', function () {

@@ -13,7 +13,7 @@
       title: 'Sign In',
       icon: 'login',
       type: 'button',
-      state: 'authentication.signin',
+      state: 'root.user.authentication.signin',
       aria: 'User Sign In',
       show: true
     });
@@ -22,7 +22,7 @@
       title: 'Sign Up',
       icon: 'timer_auto',
       type: 'button',
-      state: 'authentication.signup',
+      state: 'root.user.authentication.signup',
       aria: 'User Sign Up',
       show: true
     });
@@ -42,39 +42,39 @@
         items: [{
           title: 'Edit Profile',
           icon: 'create',
-          state: 'settings.profile'
+          state: 'root.user.settings.profile'
         },
         {
           title: 'Change Profile Picture',
           icon: 'photo_camera',
-          state: 'settings.picture'
+          state: 'root.user.settings.picture'
         },
         {
           title: 'Change Password',
           icon: 'vpn_key',
-          state: 'settings.password'
+          state: 'root.user.settings.password'
         },
         {
           title: 'Manage Social Accounts',
           icon: 'people',
-          state: 'settings.accounts'
+          state: 'root.user.settings.accounts'
         },
         {
           title: 'Signout',
           icon: 'logout',
-          state: 'signout'
+          state: 'root.signout'
         }]
       });
 
 
-      menuService.toolbar.getItem({ state: 'authentication.signup' }).show = false;
-      menuService.toolbar.getItem({ state: 'authentication.signin' }).show = false;
+      menuService.toolbar.getItem({ state: 'root.user.authentication.signup' }).show = false;
+      menuService.toolbar.getItem({ state: 'root.user.authentication.signin' }).show = false;
 
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      menuService.toolbar.getItem({ state: 'authentication.signup' }).show = true;
-      menuService.toolbar.getItem({ state: 'authentication.signin' }).show = true;
+      menuService.toolbar.getItem({ state: 'root.user.authentication.signup' }).show = true;
+      menuService.toolbar.getItem({ state: 'root.user.authentication.signin' }).show = true;
       menuService.toolbar.removeItem({ id: 'usermenu' });
     });
 
