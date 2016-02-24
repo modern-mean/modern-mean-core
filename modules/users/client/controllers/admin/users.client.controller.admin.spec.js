@@ -77,6 +77,8 @@
 
         it('should call the server to update and redirect on success', function () {
           $httpBackend.expectPUT('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
+          $httpBackend.expectGET('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
+
           var stateSpy = chai.spy.on($state, 'go');
           $scope.vm.update();
           $scope.$digest();
