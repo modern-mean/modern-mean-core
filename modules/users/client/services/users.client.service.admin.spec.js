@@ -16,7 +16,7 @@
     describe('UserAdmin resource', function () {
 
       it('should have an update method', function () {
-        expect( UserAdmin.$update ).to.be.a('function');
+        expect(UserAdmin.$update).to.be.a('function');
       });
 
     });

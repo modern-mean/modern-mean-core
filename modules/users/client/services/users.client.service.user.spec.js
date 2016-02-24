@@ -16,11 +16,11 @@
     describe('UserAdmin resource', function () {
 
       it('should have an update method', function () {
-        expect( User.$update ).to.be.a('function');
+        expect(User.$update).to.be.a('function');
       });
 
       it('should have an me method', function () {
-        expect( User.$me ).to.be.a('function');
+        expect(User.$me).to.be.a('function');
       });
 
     });
