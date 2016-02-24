@@ -29,43 +29,43 @@
 
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
-      if (Authentication.user) {
-        menuService.toolbar.addItem({
-          id: 'usermenu',
-          title: Authentication.user.displayName,
-          image: Authentication.user.profileImageURL,
-          icon: 'more_vert',
-          type: 'menu',
-          aria: 'User Menu',
-          position: 'target-right target',
-          show: true,
-          items: [{
-            title: 'Edit Profile',
-            icon: 'create',
-            state: 'settings.profile'
-          },
-          {
-            title: 'Change Profile Picture',
-            icon: 'photo_camera',
-            state: 'settings.picture'
-          },
-          {
-            title: 'Change Password',
-            icon: 'vpn_key',
-            state: 'settings.password'
-          },
-          {
-            title: 'Manage Social Accounts',
-            icon: 'people',
-            state: 'settings.accounts'
-          },
-          {
-            title: 'Signout',
-            icon: 'logout',
-            state: 'signout'
-          }]
-        });
-      }
+
+      menuService.toolbar.addItem({
+        id: 'usermenu',
+        title: Authentication.user.displayName,
+        image: Authentication.user.profileImageURL,
+        icon: 'more_vert',
+        type: 'menu',
+        aria: 'User Menu',
+        position: 'target-right target',
+        show: true,
+        items: [{
+          title: 'Edit Profile',
+          icon: 'create',
+          state: 'settings.profile'
+        },
+        {
+          title: 'Change Profile Picture',
+          icon: 'photo_camera',
+          state: 'settings.picture'
+        },
+        {
+          title: 'Change Password',
+          icon: 'vpn_key',
+          state: 'settings.password'
+        },
+        {
+          title: 'Manage Social Accounts',
+          icon: 'people',
+          state: 'settings.accounts'
+        },
+        {
+          title: 'Signout',
+          icon: 'logout',
+          state: 'signout'
+        }]
+      });
+
 
       menuService.toolbar.getItem({ state: 'authentication.signup' }).show = false;
       menuService.toolbar.getItem({ state: 'authentication.signin' }).show = false;

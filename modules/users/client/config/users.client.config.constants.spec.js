@@ -19,11 +19,11 @@
     });
 
     it('should have a property called loginFailed', function () {
-      expect(constants.loginFailed).to.equal(window.modernMeanApplication.name + 'auth-login-failed');
+      expect(constants.loginFailed).to.equal(window.modernMeanApplication.name + '-auth-login-failed');
     });
 
     it('should have a property called logoutSuccess', function () {
-      expect(constants.logoutSuccess).to.equal(window.modernMeanApplication.name + 'auth-logout-success');
+      expect(constants.logoutSuccess).to.equal(window.modernMeanApplication.name + '-auth-logout-success');
     });
 
   });
