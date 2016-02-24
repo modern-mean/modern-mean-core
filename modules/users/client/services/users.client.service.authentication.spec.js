@@ -24,7 +24,7 @@
 
         beforeEach(function () {
           localStorage.setItem('token', 'testtoken');
-          module('users')
+          module('users');
         });
 
         beforeEach(inject(function(_$rootScope_, _$httpBackend_, _AUTH_EVENTS_, _$http_, _Authentication_) {
@@ -219,7 +219,7 @@
 
         it('should redirect to authentication.signin on error', function () {
           $httpBackend.expectGET('/api/users/me').respond(400);
-          var stateSpy = chai.spy.on($state, 'go')
+          var stateSpy = chai.spy.on($state, 'go');
           var response = Authentication.refresh({});
           $httpBackend.flush();
           expect(stateSpy).to.have.been.called.with('authentication.signin');
