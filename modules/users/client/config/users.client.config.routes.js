@@ -27,9 +27,6 @@
             controllerAs: 'vm',
             templateUrl: 'modules/users/client/views/settings/users.client.views.settings.html',
           }
-        },
-        data: {
-          roles: ['user', 'admin']
         }
       })
       .state('root.user.settings.profile', {
@@ -89,7 +86,9 @@
         url: '/authentication',
         views: {
           'main@': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html'
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html',
+            controller: 'AuthenticationController',
+            controllerAs: 'vm'
           }
         }
       })
@@ -97,9 +96,7 @@
         url: '/signup',
         views: {
           'authform@root.user.authentication': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html',
-            controller: 'AuthenticationController',
-            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html'
           }
         },
         data: {
@@ -111,9 +108,7 @@
         url: '/signin?err',
         views: {
           'authform@root.user.authentication': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html',
-            controller: 'AuthenticationController',
-            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html'
           }
         },
         data: {
@@ -129,7 +124,7 @@
           }
         },
         data: {
-          ignoreState: true,
+          ignoreAuth: true,
           pageTitle: 'Signed Out'
         }
       })
@@ -137,7 +132,7 @@
         abstract: true,
         url: '/password'
       })
-      .state('password.forgot', {
+      .state('root.user.password.forgot', {
         url: '/forgot',
         views: {
           'main@': {
