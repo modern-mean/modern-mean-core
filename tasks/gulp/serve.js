@@ -7,8 +7,9 @@ var nodemonInstance;
 
 function start(done) {
   nodemonInstance = nodemon({
-    script: 'server.js',
-    watch: ['noop']
+    script: './build/core/server/app/server.js',
+    watch: ['noop'],
+
   });
   return done();
 }
@@ -24,13 +25,18 @@ restart.displayName = 'Nodemon Restart Server';
 
 function watch(done) {
   livereload.listen();
-  gulp.watch(['modules/**/client/**/*.{js,css,html}'], gulp.series(build.build, livereloadChanged));
+  gulp.watch(['modules/**/*.{js,css,html}', '!**/layout.server.view.html'], gulp.series(build.build, restart, livereloadChanged));
   return done();
 }
 
 function livereloadChanged(done) {
-  livereload.changed('Restart Client');
+
+  setTimeout(function () {
+    livereload.changed('Restart Client');
+  }, 1000);
   return done();
+
+
 }
 
 

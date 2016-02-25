@@ -5,13 +5,12 @@
    * Module dependencies.
    */
   var _ = require('lodash'),
-    testConfig = require('./config/env/test'),
     karmaReporters = ['progress'],
     mainBowerFiles = require('main-bower-files');
 
-  if (testConfig.coverage) {
-    karmaReporters.push('coverage');
-  }
+
+  karmaReporters.push('coverage');
+
 
   // Karma configuration
   module.exports = function (karmaConfig) {

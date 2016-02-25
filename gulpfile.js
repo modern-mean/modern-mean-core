@@ -8,11 +8,13 @@ var gulp = require('gulp'),
 
 function setDevelopment(done) {
   process.env.NODE_ENV = 'development';
+  process.env.NODE_PATH = process.cwd();
   return done();
 }
 
 function setTest(done) {
   process.env.NODE_ENV = 'test';
+  process.env.NODE_PATH = process.cwd();
   return done();
 }
 

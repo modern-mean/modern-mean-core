@@ -79,28 +79,6 @@
           pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
         }
       }
-    },
-    seedDB: {
-      seed: process.env.MONGO_SEED === 'true' ? true : false,
-      options: {
-        logResults: process.env.MONGO_SEED_LOG_RESULTS === 'false' ? false : true,
-        seedUser: {
-          provider: 'local',
-          email: process.env.MONGO_SEED_USER_EMAIL || 'user@localhost.com',
-          firstName: 'User',
-          lastName: 'Local',
-          displayName: 'User Local',
-          roles: ['user']
-        },
-        seedAdmin: {
-          provider: 'local',
-          email: process.env.MONGO_SEED_ADMIN_EMAIL || 'admin@localhost.com',
-          firstName: 'Admin',
-          lastName: 'Local',
-          displayName: 'Admin Local',
-          roles: ['user', 'admin']
-        }
-      }
     }
   };
 })();
