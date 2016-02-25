@@ -26,34 +26,40 @@
     }));
 
     it('should have an admin.users state', function () {
-      var state = $state.get('admin.users');
+      var state = $state.get('root.admin.users');
       expect(state).to.be.an('object');
       expect(state.url).to.equal('/users');
-      expect(state.templateUrl).to.equal('modules/users/client/views/admin/users.client.views.list-users.html');
-      expect(state.controller).to.equal('UserListController');
-      expect(state.controllerAs).to.equal('vm');
+      expect(state.views).to.be.an('object');
+      expect(state.views['main@']).to.be.an('object');
+      expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/admin/users.client.views.list-users.html');
+      expect(state.views['main@'].controller).to.equal('UserListController');
+      expect(state.views['main@'].controllerAs).to.equal('vm');
     });
 
     it('should have an admin.user state', function () {
-      var state = $state.get('admin.user');
+      var state = $state.get('root.admin.user');
       expect(state).to.be.an('object');
       expect(state.url).to.equal('/users/:userId');
-      expect(state.templateUrl).to.equal('modules/users/client/views/admin/users.client.views.view-user.html');
-      expect(state.controller).to.equal('UserController');
-      expect(state.controllerAs).to.equal('vm');
-      expect(state.resolve).to.be.an('object');
-      expect(state.resolve.userResolve).to.be.a('function');
+      expect(state.views).to.be.an('object');
+      expect(state.views['main@']).to.be.an('object');
+      expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/admin/users.client.views.view-user.html');
+      expect(state.views['main@'].controller).to.equal('UserController');
+      expect(state.views['main@'].controllerAs).to.equal('vm');
+      expect(state.views['main@'].resolve).to.be.an('object');
+      expect(state.views['main@'].resolve.userResolve).to.be.a('function');
     });
 
     it('should have an admin.user-edit state', function () {
-      var state = $state.get('admin.user-edit');
+      var state = $state.get('root.admin.user-edit');
       expect(state).to.be.an('object');
       expect(state.url).to.equal('/users/:userId/edit');
-      expect(state.templateUrl).to.equal('modules/users/client/views/admin/users.client.views.edit-user.html');
-      expect(state.controller).to.equal('UserController');
-      expect(state.controllerAs).to.equal('vm');
-      expect(state.resolve).to.be.an('object');
-      expect(state.resolve.userResolve).to.be.a('function');
+      expect(state.views).to.be.an('object');
+      expect(state.views['main@']).to.be.an('object');
+      expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/admin/users.client.views.edit-user.html');
+      expect(state.views['main@'].controller).to.equal('UserController');
+      expect(state.views['main@'].controllerAs).to.equal('vm');
+      expect(state.views['main@'].resolve).to.be.an('object');
+      expect(state.views['main@'].resolve.userResolve).to.be.a('function');
     });
 
     it('should resolve a user id', function () {

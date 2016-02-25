@@ -65,9 +65,9 @@
           }));
 
           it('should return a menu item', function () {
-            var menu = menuService.toolbar.getItem({ state: 'home' });
+            var menu = menuService.toolbar.getItem({ state: 'root.home' });
             expect(menu).to.not.equal(undefined);
-            expect(menu.state).to.equal('home');
+            expect(menu.state).to.equal('root.home');
           });
 
           it('should return undefined if not found', function () {

@@ -57,7 +57,7 @@
               resolve(service);
             },
             function () {
-              $state.go('authentication.signin');
+              $state.go('root.user.authentication.signin');
             });
 
       });

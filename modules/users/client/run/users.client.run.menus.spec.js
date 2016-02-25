@@ -27,11 +27,11 @@
     describe('Users Menu', function () {
 
       it('should inject signin button into toolbar', function () {
-        expect(menuService.toolbar.getItem({ state: 'authentication.signin' })).to.not.equal(undefined);
+        expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signin' })).to.not.equal(undefined);
       });
 
       it('should inject signup button into toolbar', function () {
-        expect(menuService.toolbar.getItem({ state: 'authentication.signup' })).to.not.equal(undefined);
+        expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signup' })).to.not.equal(undefined);
       });
 
       describe('user login event', function () {
@@ -48,11 +48,11 @@
         });
 
         it('should set signin button to hidden', function () {
-          expect(menuService.toolbar.getItem({ state: 'authentication.signin' }).show).to.equal(false);
+          expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signin' }).show).to.equal(false);
         });
 
         it('should set signup button to hidden', function () {
-          expect(menuService.toolbar.getItem({ state: 'authentication.signup' }).show).to.equal(false);
+          expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signup' }).show).to.equal(false);
         });
       });
 
@@ -70,11 +70,11 @@
         });
 
         it('should set signin button to show', function () {
-          expect(menuService.toolbar.getItem({ state: 'authentication.signin' }).show).to.equal(true);
+          expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signin' }).show).to.equal(true);
         });
 
         it('should set signup button to show', function () {
-          expect(menuService.toolbar.getItem({ state: 'authentication.signup' }).show).to.equal(true);
+          expect(menuService.toolbar.getItem({ state: 'root.user.authentication.signup' }).show).to.equal(true);
         });
       });
 

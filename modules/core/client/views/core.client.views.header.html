@@ -1,4 +1,4 @@
-<md-toolbar ng-controller="ToolbarController as vm" class="md-toolbar-tools">
+<md-toolbar class="md-toolbar-tools">
   <span ng-repeat="menu in vm.menus | orderBy: order" flex="{{menu.flex}}" ng-show="menu.show">
     <md-menu md-position-mode="{{menu.position}}" ng-if="menu.type === 'menu'">
       <md-button aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">

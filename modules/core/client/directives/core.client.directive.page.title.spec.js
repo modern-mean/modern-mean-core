@@ -27,8 +27,8 @@
 
     it('should inject the core page title constant into DOM if page title doesnt exist on the state', function() {
       $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
-      $state.get('home').data.pageTitle = undefined;
-      $state.transitionTo('home');
+      $state.get('root.home').data.pageTitle = undefined;
+      $state.transitionTo('root.home');
       var element = $compile('<div page-title></div>')($rootScope);
       $scope.$digest();
 

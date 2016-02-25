@@ -11,41 +11,76 @@
     // Redirect to 404 when route not found
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
-      $injector.get('$state').transitionTo('not-found', null, {
+      $injector.get('$state').transitionTo('root.not-found', null, {
         location: false
       });
     });
 
     // Home state routing
     $stateProvider
-    .state('home', {
+    .state('root', {
+      url: '',
+      views: {
+        'header': {
+          controller: 'HeaderController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.header.html'
+        },
+        'main': {
+
+        },
+        'leftnav': {
+          
+        },
+        'rightnav': {
+
+        }
+      }
+    })
+    .state('root.home', {
       url: '/',
-      templateUrl: 'modules/core/client/views/core.client.views.home.html',
-      controller: 'HomeController',
-      controllerAs: 'vm',
+      views: {
+        'main@': {
+          controller: 'HomeController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.home.html'
+        }
+      },
       data: {
         pageTitle: 'Welcome'
       }
     })
-    .state('not-found', {
+    .state('root.not-found', {
       url: '/not-found',
-      templateUrl: 'modules/core/client/views/core.client.views.404.html',
+      views: {
+        'main@': {
+          templateUrl: 'modules/core/client/views/core.client.views.404.html'
+        }
+      },
       data: {
         ignoreState: true,
         pageTitle: 'Page not found'
       }
     })
-    .state('bad-request', {
+    .state('root.bad-request', {
       url: '/bad-request',
-      templateUrl: 'modules/core/client/views/core.client.views.400.html',
+      views: {
+        'main@': {
+          templateUrl: 'modules/core/client/views/core.client.views.400.html'
+        }
+      },
       data: {
         ignoreState: true,
         pageTitle: 'Bad request'
       }
     })
-    .state('forbidden', {
+    .state('root.forbidden', {
       url: '/forbidden',
-      templateUrl: 'modules/core/client/views/core.client.views.403.html',
+      views: {
+        'main@': {
+          templateUrl: 'modules/core/client/views/core.client.views.403.html'
+        }
+      },
       data: {
         ignoreState: true,
         pageTitle: 'Not authorized'

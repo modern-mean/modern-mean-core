@@ -10,28 +10,40 @@
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('admin.users', {
+      .state('root.admin.users', {
         url: '/users',
-        templateUrl: 'modules/users/client/views/admin/users.client.views.list-users.html',
-        controller: 'UserListController',
-        controllerAs: 'vm'
-      })
-      .state('admin.user', {
-        url: '/users/:userId',
-        templateUrl: 'modules/users/client/views/admin/users.client.views.view-user.html',
-        controller: 'UserController',
-        controllerAs: 'vm',
-        resolve: {
-          userResolve: getUser
+        views: {
+          'main@': {
+            templateUrl: 'modules/users/client/views/admin/users.client.views.list-users.html',
+            controller: 'UserListController',
+            controllerAs: 'vm'
+          }
         }
       })
-      .state('admin.user-edit', {
+      .state('root.admin.user', {
+        url: '/users/:userId',
+        views: {
+          'main@': {
+            templateUrl: 'modules/users/client/views/admin/users.client.views.view-user.html',
+            controller: 'UserController',
+            controllerAs: 'vm',
+            resolve: {
+              userResolve: getUser
+            }
+          }
+        }
+      })
+      .state('root.admin.user-edit', {
         url: '/users/:userId/edit',
-        templateUrl: 'modules/users/client/views/admin/users.client.views.edit-user.html',
-        controller: 'UserController',
-        controllerAs: 'vm',
-        resolve: {
-          userResolve: getUser
+        views: {
+          'main@': {
+            templateUrl: 'modules/users/client/views/admin/users.client.views.edit-user.html',
+            controller: 'UserController',
+            controllerAs: 'vm',
+            resolve: {
+              userResolve: getUser
+            }
+          }
         }
       });
 

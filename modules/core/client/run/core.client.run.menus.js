@@ -13,7 +13,7 @@
       aria: 'Home',
       icon: 'menu',
       order: 1,
-      state: 'home',
+      state: 'root.home',
       show: true,
       title: 'Modern-Mean',
       type: 'button'

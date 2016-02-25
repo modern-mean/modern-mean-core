@@ -25,21 +25,21 @@
 
       it('should store previous state on transitions', function () {
 
-        $rootScope.$broadcast('$stateChangeSuccess', $state.get('not-found'), { test: 'test' }, $state.get('home'), { test: 'test' });
+        $rootScope.$broadcast('$stateChangeSuccess', $state.get('root.not-found'), { test: 'test' }, $state.get('root.home'), { test: 'test' });
 
         expect($state.previous).to.be.an('object');
-        expect($state.previous.state.name).to.equal('home');
+        expect($state.previous.state.name).to.equal('root.home');
         expect($state.previous.params.test).to.equal('test');
         expect($state.previous.href).to.equal('/');
       });
 
       it('should not store previous state if ignored', function () {
 
-        $rootScope.$broadcast('$stateChangeSuccess', $state.get('not-found'), { test: 'test' }, $state.get('home'), { test: 'test' });
-        $rootScope.$broadcast('$stateChangeSuccess', $state.get('home'), { test: 'test' }, $state.get('not-found'), { test: 'test' });
+        $rootScope.$broadcast('$stateChangeSuccess', $state.get('root.not-found'), { test: 'test' }, $state.get('root.home'), { test: 'test' });
+        $rootScope.$broadcast('$stateChangeSuccess', $state.get('root.home'), { test: 'test' }, $state.get('root.not-found'), { test: 'test' });
 
         expect($state.previous).to.be.an('object');
-        expect($state.previous.state.name).to.equal('home');
+        expect($state.previous.state.name).to.equal('root.home');
         expect($state.previous.params.test).to.equal('test');
         expect($state.previous.href).to.equal('/');
       });
