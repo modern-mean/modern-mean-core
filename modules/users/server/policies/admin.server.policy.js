@@ -12,7 +12,7 @@
   /**
    * Invoke Admin Permissions
    */
-  exports.invokeRolesPolicies = function () {
+  module.exports.invokeRolesPolicies = function () {
     acl.allow([{
       roles: ['admin'],
       allows: [{
@@ -28,7 +28,7 @@
   /**
    * Check If Admin Policy Allows
    */
-  exports.isAllowed = function (req, res, next) {
+  module.exports.isAllowed = function (req, res, next) {
     var roles = (req.user) ? req.user.roles : ['guest'];
 
     // Check for user roles
