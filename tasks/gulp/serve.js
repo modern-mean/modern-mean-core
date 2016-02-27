@@ -9,7 +9,6 @@ function start(done) {
   nodemonInstance = nodemon({
     script: './build/core/server/app/server.js',
     watch: ['noop'],
-
   });
   return done();
 }
@@ -30,17 +29,11 @@ function watch(done) {
 }
 
 function livereloadChanged(done) {
-
   setTimeout(function () {
     livereload.changed('Restart Client');
   }, 1000);
   return done();
-
-
 }
-
-
-
 
 module.exports = {
   start: start,
