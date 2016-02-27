@@ -15,10 +15,6 @@ let gulp = require('gulp'),
   del = require('del'),
   babel = require('gulp-babel');
 
-
-
-
-
   function angular() {
     var angularJS = filter(['**/angular.js'], { restore: true });
     return gulp.src(mainBowerFiles())
@@ -72,7 +68,6 @@ let gulp = require('gulp'),
       .pipe(gulp.dest('./public/dist'));
   }
 
-
   function vendor() {
     var filterJS = filter(['**/*.js', '!**/angular.js'], { restore: true }),
       filterCSS = filter(['**/*.css'], { restore: true }),
@@ -90,7 +85,6 @@ let gulp = require('gulp'),
       .pipe(gulp.dest('./public/dist/fonts'));
   }
 
-
 function server() {
   var filterJS = filter(['**/*.js'], { restore: true });
   return gulp.src(['./modules/*/server/**/*.{js,html}'])
@@ -100,7 +94,6 @@ function server() {
     }))
     .pipe(filterJS.restore)
     .pipe(gulp.dest('./build'));
-
 }
 
 function clean() {
@@ -111,14 +104,7 @@ function clean() {
   ]);
 }
 
-
-
-
-
 let build = gulp.series(gulp.parallel(server, application, vendor, angular, templates, images), injectLayout);
-
-
-
 
 module.exports = {
   build: build,
