@@ -7,7 +7,6 @@ var gulp = require('gulp'),
   concat = require('gulp-concat'),
   coveralls = require('gulp-coveralls');
 
-
 function lint() {
   return gulp.src(['modules/**/*.js'])
     //.pipe(jshint())
@@ -38,7 +37,6 @@ function karmaWatch(done) {
     }).start();
 }
 karmaWatch.displayName = 'karmaWatch';
-
 
 function mochaTest(done) {
   return done(); //TODO remove when I figure out server side testing.
@@ -76,7 +74,6 @@ function sendCoveralls(done) {
     .pipe(concat('lcov.info'))
     .pipe(coveralls());
 }
-
 
 module.exports = {
   client: {
