@@ -5,12 +5,16 @@
 [![dependencies](https://david-dm.org/modern-mean/modern-mean-core.svg)](https://david-dm.org/modern-mean/modern-mean-core)
 [![Coverage Status](https://coveralls.io/repos/github/modern-mean/modern-mean-core/badge.svg?branch=master)](https://coveralls.io/github/modern-mean/modern-mean-core?branch=master)
 
-Modern-MEAN is a full-stack JavaScript open-source solution, forked originally from MEAN.js which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. The idea is to solve the common issues with connecting those frameworks, build a robust framework to support daily development needs, and help developers use better practices while working with popular JavaScript components.
+Modern-MEAN is a full-stack JavaScript open-source solution, forked originally from MEAN.js which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications.
 
-modern-mean-core is the essential building block for your application, the core functionality of Modern-MEAN! We are planning on releasing additional modules at a later point in our development and maturity of Modern-MEAN. Modules will have their own repository and/or be branched off the modern-mean-core.
+##Technology
+* Gulp 4
+* Babel -write your modules in ES6 now
+* Angular Material Design
 
-One of main goals is to always be current, be it by features, by dependencies, or by community input! Let's make this the last and best script you have been looking for! Happy coding!
-
+## Documentation
+Visit our <a href="https://github.com/modern-mean/modern-mean-core/tree/master/docs">documentation folder</a> for up to date documentation
+* <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/quickstart.md">Getting Started Guide</a>
 
 ## Community
 * Use [Gitter.IM](https://gitter.im/modern-mean)
