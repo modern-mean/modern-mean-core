@@ -22,9 +22,7 @@ function karmaSingle(done) {
   new KarmaServer({
     configFile: process.cwd() + '/karma.conf.js',
     singleRun: true
-  }, function() {
-        done();
-    }).start();
+  }, done).start();
 }
 karmaSingle.displayName = 'karma';
 
