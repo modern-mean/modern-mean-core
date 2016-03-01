@@ -18,5 +18,5 @@
       .accentPalette('purple', {
         'default': '500'
       });
-    });
+  }
 })();
