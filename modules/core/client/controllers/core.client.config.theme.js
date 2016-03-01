@@ -3,8 +3,12 @@
 
   angular
     .module('core')
-    .config(function($mdThemingProvider) {
-      $mdThemingProvider.theme('default')
+    .config('theme');
+
+  theme.$inject = ['$mdThemingProvider'];
+
+  function theme($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
       .primaryPalette('blue-grey', {
         'default': '900',
         'hue-1': '600',
