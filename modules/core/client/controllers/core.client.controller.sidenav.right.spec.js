@@ -31,7 +31,7 @@
       it('vm has a property close that is a function', function () {
         var menuSpy = chai.spy.on($mdSidenav, 'close')
 
-        scope.vm.close('left')
+        scope.vm.close('right')
 
         expect(menuSpy).to.have.been.called.with('right');
       });
