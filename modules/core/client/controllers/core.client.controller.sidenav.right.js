@@ -5,19 +5,19 @@
     .module('core')
     .controller('SideNavRightController', SideNavRightController);
 
-    SideNavRightController.$inject = ['Authentication', 'menuService', '$mdSidenav'];
+  SideNavRightController.$inject = ['Authentication', 'menuService', '$mdSidenav'];
 
-    function SideNavRightController(Authentication, menuService, $mdSidenav) {
-      var vm = this;
+  function SideNavRightController(Authentication, menuService, $mdSidenav) {
+    var vm = this;
 
-      vm.user = Authentication.user;
-      vm.menus = menuService.rightnav.items;
+    vm.user = Authentication.user;
+    vm.menus = menuService.rightnav.items;
 
-      vm.close = function(navID) {
-          $mdSidenav(navID)
-          .close();
-      }
-
-      console.log('SideNavRightController::Init', vm);
+    vm.close = function(navID) {
+      $mdSidenav(navID)
+      .close();
     }
+
+    console.log('SideNavRightController::Init', vm);
+  }
 })();

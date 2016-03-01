@@ -17,7 +17,7 @@
       var timer;
       return function debounced() {
         var context = vm,
-            args = Array.prototype.slice.call(arguments);
+          args = Array.prototype.slice.call(arguments);
         $timeout.cancel(timer);
         timer = $timeout(function() {
           timer = undefined;

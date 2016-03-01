@@ -14,8 +14,8 @@
     vm.menus = menuService.leftnav.items;
 
     vm.close = function(navID) {
-        $mdSidenav(navID)
-        .close();
+      $mdSidenav(navID)
+      .close();
     }
 
     console.log('SideNavLeftController::Init', vm);
