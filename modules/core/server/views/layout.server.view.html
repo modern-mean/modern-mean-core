@@ -36,14 +36,14 @@
 </head>
 <body class="ng-cloak">
   <div layout="column" layout-fill flex>
-    <section ui-view="header"></section>
-
-    <section layout="row" flex>
+    <md-toolbar>
+      <div class="md-toolbar-tools" ui-view="header"></div>
+    </md-toolbar>
+    <md-content layout="row" flex>
       <section ui-view="leftnav"></section>
-      <section layout-padding flex ui-view="main"></section>
+      <section flex ui-view="main"></section>
       <section ui-view="rightnav"></section>
-    </section>
-
+    </md-content>
   </div>
   <!-- inject:js -->
   <!-- endinject -->
