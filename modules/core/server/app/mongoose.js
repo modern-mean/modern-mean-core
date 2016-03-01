@@ -7,15 +7,24 @@ import path from 'path';
 import config from 'config/config';
 
 
-function loadModels() {
+function loadModels(app) {
   return new Promise(function (resolve, reject) {
+    var promises = [];
     glob('./build/*/server/models/*.js')
       .on('match', function (file) {
-        require(path.resolve(file));
+        let mod = require(path.resolve(file)).init();
+        promises.push(mod);
       })
       .on('end', function (files) {
-        console.log(chalk.green('Mongoose::LoadModels::Success'));
-        resolve(files);
+        Promise.all(promises)
+          .then(function () {
+            console.log(chalk.green('Mongoose::LoadModels::Success'));
+            resolve(app);
+          })
+          .catch(function (err) {
+            console.log(chalk.bold.red('Mongoose::LoadModels::Error' + err));
+            reject(err);
+          });
       })
       .on('error', function (err) {
         reject(err);
@@ -74,12 +83,11 @@ function seedDB() {
   });
 }
 
-let service = {
-  connect: connect,
-  disconnect: disconnect,
-  loadModels: loadModels,
-  seed: seedDB
+function setPromise() {
+  return new Promise(function (resolve, reject) {
+    mongoose.Promise = global.Promise;
+    resolve();
+  });
 };
 
-
-module.exports = service;
+export { connect, disconnect, loadModels, seedDB as seed, setPromise };

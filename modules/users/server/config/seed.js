@@ -112,4 +112,4 @@ function start() {
   });
 }
 
-module.exports = start;
+export default start;

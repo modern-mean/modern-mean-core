@@ -1,18 +1,7 @@
-(function() {
-  'use strict';
+'use strict';
 
-  /**
-   * Module dependencies
-   */
-  var _ = require('lodash');
+import * as authentication from './users/users.authentication.server.controller';
+import * as password from './users/users.password.server.controller';
+import * as profile from './users/users.profile.server.controller';
 
-  /**
-   * Extend user's controller
-   */
-  module.exports = _.extend(
-    require('./users/users.authentication.server.controller'),
-    require('./users/users.authorization.server.controller'),
-    require('./users/users.password.server.controller'),
-    require('./users/users.profile.server.controller')
-  );
-})();
+export { authentication, password, profile };

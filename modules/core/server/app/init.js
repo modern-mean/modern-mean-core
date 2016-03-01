@@ -1,8 +1,8 @@
 'use strict';
 
 import chalk from 'chalk';
-import mongoose from './mongoose';
-import express from './express';
+import * as mongoose from './mongoose';
+import * as express from './express';
 import config from 'config/config';
 
 
@@ -10,8 +10,8 @@ function start() {
 
   let db = new Promise(function (resolve, reject) {
     mongoose
-      .loadModels()
-      .then(mongoose.connect)
+      .connect()
+      .then(mongoose.setPromise)
       .then(mongoose.seed)
       .then(function () {
         console.log(chalk.bold.cyan('Mongoose::Done::Success'));
@@ -26,13 +26,15 @@ function start() {
 
   let server = new Promise(function (resolve, reject) {
     express.init()
+      .then(mongoose.loadModels)
       .then(express.variables)
       .then(express.middleware)
       .then(express.engine)
       .then(express.headers)
-      .then(express.moduleconfig)
-      .then(express.policies)
-      .then(express.routes)
+      .then(express.modules)
+      .then(express.core)
+      //.then(express.policies)
+      //.then(express.routes)
       .then(express.listen)
       .then(function (app) {
         console.log(chalk.bold.cyan('Express::Done::Success'));
@@ -51,4 +53,4 @@ let app = {
   start: start
 };
 
-module.exports = app;
+export default app;
