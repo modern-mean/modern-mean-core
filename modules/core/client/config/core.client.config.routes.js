@@ -30,10 +30,14 @@
 
         },
         'leftnav': {
-          
+          controller: 'SideNavLeftController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.sidenav.left.html'
         },
         'rightnav': {
-
+          controller: 'SideNavRightController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.sidenav.right.html'
         }
       }
     })
