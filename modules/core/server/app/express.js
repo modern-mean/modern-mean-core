@@ -96,24 +96,6 @@ function initViewEngine(app) {
 
 
 
-  /**
-   * Invoke modules server configuration
-   */
-function initModulesConfiguration(app) {
-  return new Promise(function (resolve, reject) {
-    glob('./build/*/server/config/express.js')
-      .on('match', function (file) {
-        require(path.resolve(file))(app);
-      })
-      .on('end', function (files) {
-        console.log(chalk.green('Express::ModuleConfig::Success'));
-        resolve(app);
-      })
-      .on('error', function (err) {
-        reject(err);
-      });
-  });
-}
 
 
 function headers(app) {
@@ -135,15 +117,27 @@ function headers(app) {
   });
 }
 
-function policies(app) {
+function modules(app) {
   return new Promise(function (resolve, reject) {
-    glob('./build/*/server/policies/**/*.js')
+    var promises = [];
+    glob('./build/!(*core)/server/*.module.js')
       .on('match', function (file) {
-        require(path.resolve(file)).invokeRolesPolicies();
+        console.log(chalk.yellow('Express::Module::Found::' + file));
+        //TODO This needs to change to System.import when its available
+        let mod = require(path.resolve(file)).default(app);
+        promises.push(mod);
       })
       .on('end', function (files) {
-        console.log(chalk.green('Express::Policies::Success'));
-        resolve(app);
+        Promise.all(promises)
+          .then(function () {
+            console.log(chalk.green('Express::Modules::Success'));
+            resolve(app);
+          })
+          .catch(function (err) {
+            console.log(chalk.bold.red('Express::Modules::Err' + err));
+            reject(err);
+          });
+
       })
       .on('error', function (err) {
         reject(err);
@@ -151,35 +145,18 @@ function policies(app) {
   });
 }
 
-  /**
-   * Configure the modules server routes
-   */
-function routes(app) {
+function core(app) {
   return new Promise(function (resolve, reject) {
-    //TODO CAn this be removed?
-    /*
-    app.use(function (err, req, res, next) {
-      if (!err) {
-        return next();
-      }
-      console.error(err.stack);
-      res.redirect('/server-error');
-    });
-    */
-    app.use('/', express.static(path.resolve('./public')));
-    glob('./build/*/server/routes/**/*.js')
-      .on('match', function (file) {
-        require(path.resolve(file))(app);
-      })
-      .on('end', function (files) {
-        console.log(chalk.green('Express::Routes::Success'));
+    //TODO  Change to System.import when its available
+    require(path.resolve('./build/core/server/core.module.js')).default(app)
+      .then(function (app) {
+        console.log(chalk.green('Express::Core::Success'));
         resolve(app);
-      })
-      .on('error', function (err) {
-        reject(err);
       });
   });
 }
+
+
 
 function listen(app) {
   return new Promise(function (resolve, reject) {
@@ -208,16 +185,13 @@ function init() {
   });
 }
 
-let server = {
-  engine: initViewEngine,
-  headers: headers,
-  init: init,
-  listen: listen,
-  middleware: middleware,
-  moduleconfig: initModulesConfiguration,
-  policies: policies,
-  routes: routes,
-  variables: initLocalVariables
+export {
+  core,
+  initViewEngine as engine,
+  headers,
+  init,
+  listen,
+  middleware,
+  modules,
+  initLocalVariables as variables
 };
-
-module.exports = server;

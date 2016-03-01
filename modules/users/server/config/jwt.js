@@ -1,13 +1,12 @@
-(function() {
-  'use strict';
+'use strict';
 
-  var config = require('../config'),
-    jwt = require('jsonwebtoken'),
-    lodash = require('lodash');
+import config from 'config/config';
+import jwt from 'jsonwebtoken';
+import lodash from 'lodash';
 
-  // export the token auth service
-  exports.signToken = function (user, options) {
-    var payload,
+function signToken(user, options) {
+  return new Promise(function (resolve, reject) {
+    let payload,
       token,
       jwtOptions;
 
@@ -25,6 +24,8 @@
 
     token = jwt.sign(payload, config.jwt.secret, jwtOptions);
 
-    return token;
-  };
-})();
+    resolve(token);
+  });
+}
+
+export { signToken };

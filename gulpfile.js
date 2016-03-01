@@ -7,8 +7,9 @@ var gulp = require('gulp'),
   test = require('./tasks/gulp/test');
 
 function setDevelopment(done) {
+  console.log(process.env.NODE_PATH);
   process.env.NODE_ENV = 'development';
-  process.env.NODE_PATH = process.cwd();
+  process.env.NODE_PATH += (':' + process.cwd());
   return done();
 }
 
