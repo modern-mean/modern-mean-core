@@ -2,84 +2,41 @@
 
 import chalk from 'chalk';
 import mongoose from 'mongoose';
-import glob from 'glob';
+import globby from 'globby';
 import path from 'path';
 import config from 'modernMean/config';
 
 
-function loadModels(app) {
-  return new Promise(function (resolve, reject) {
-    var promises = [];
-    glob('./build/*/server/models/*.js')
-      .on('match', function (file) {
-        let mod = require(path.resolve(file)).init();
-        promises.push(mod);
-      })
-      .on('end', function (files) {
-        Promise.all(promises)
-          .then(function () {
-            console.log(chalk.green('Mongoose::LoadModels::Success'));
-            resolve(app);
-          })
-          .catch(function (err) {
-            console.log(chalk.bold.red('Mongoose::LoadModels::Error' + err));
-            reject(err);
-          });
-      })
-      .on('error', function (err) {
-        reject(err);
-      });
-  });
-}
-
+//Database Connection
+let db;
 
 function connect() {
   return new Promise(function (resolve, reject) {
-    mongoose.connect(config.db.uri, config.db.options, function (err) {
+    db = mongoose.connect(config.db.uri, config.db.options, function (err) {
       if (err) {
-        console.error(chalk.red('Could not connect to MongoDB!'));
         reject(err);
-      } else {
-        // Enabling mongoose debug mode if required
-        mongoose.set('debug', config.db.debug);
-        console.log(chalk.green('Mongoose::Connect::Success'));
-        resolve();
       }
+    });
+
+    mongoose.connection.once('connected', function () {
+      resolve(db);
     });
   });
 }
 
 function disconnect() {
   return new Promise(function (resolve, reject) {
+    if (mongoose.connection.readyState === 0) {
+      resolve();
+    }
     mongoose.disconnect(function (err) {
       if (err) {
         reject(err);
       }
-      console.log(chalk.green('Mongoose::Disconnect::Success'));
-      resolve();
     });
-  });
-
-}
-
-function seedDB() {
-  return new Promise(function (resolve, reject) {
-    if (config.seedDB) {
-      console.log(chalk.cyan('Mongoose::Seed::Start'));
-      glob('./build/*/server/config/seed.js')
-        .on('match', function (file) {
-          require(path.resolve(file)).default();
-        })
-        .on('end', function (files) {
-          console.log(chalk.cyan('Mongoose::Seed::Success'));
-          resolve(files);
-        })
-        .on('error', function (err) {
-          reject(err);
-        });
-    } else {
-      resolve();
-    }
+    mongoose.connection.once('disconnected', function () {
+      resolve(db);
+    });
   });
 }
 
@@ -90,4 +47,8 @@ function setPromise() {
   });
 };
 
-export { connect, disconnect, loadModels, seedDB as seed, setPromise };
+
+let service = { connect: connect, disconnect: disconnect, setPromise: setPromise };
+
+export default service;
+export { connect, disconnect, setPromise };

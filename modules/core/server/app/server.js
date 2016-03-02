@@ -13,4 +13,5 @@ app
   .catch(function (err) {
     console.log(chalk.bold.red('Modern-MEAN start failure'));
     console.log(chalk.bold.red(err));
+    app.stop();
   });

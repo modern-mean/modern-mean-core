@@ -2,11 +2,11 @@
 
 import express from 'express';
 import * as core from '../controllers/core.server.controller';
-import path from 'path';
 
 function init(app) {
   return new Promise(function (resolve, reject) {
-    app.use('/', express.static(path.resolve('./public')));
+
+    app.use('/', express.static('./public'));
 
     // Define error pages
     app.route('/server-error').get(core.renderServerError);

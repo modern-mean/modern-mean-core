@@ -1,10 +1,11 @@
 import adminRoutes from './routes/admin.server.routes';
 import { policy } from './policies/admin.server.policy';
 import chalk from 'chalk';
-import mongoose from 'mongoose';
+
 
 function init(app) {
   return new Promise(function(resolve, reject) {
+    console.log(chalk.green('UsersAdmin::Init::Start'));
     adminRoutes(app)
       .then(policy)
       .then(function () {

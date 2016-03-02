@@ -1,17 +1,26 @@
-var gulp = require('gulp'),
-  eslint = require('gulp-eslint'),
-  KarmaServer = require('karma').Server,
-  argv = require('yargs').argv,
-  coverage = require('gulp-coverage'),
-  mocha = require('gulp-mocha'),
-  concat = require('gulp-concat'),
-  coveralls = require('gulp-coveralls');
+'use strict';
+
+import gulp from 'gulp';
+import gutil from 'gulp-util';
+import eslint from 'gulp-eslint';
+import { Server as KarmaServer } from 'karma';
+import coverage from 'gulp-coverage';
+import mocha from 'gulp-mocha';
+import concat from 'gulp-concat';
+import coveralls from 'gulp-coveralls';
+import istanbul from 'gulp-babel-istanbul';
+import babel from 'gulp-babel';
+import * as build from './build';
+import config from '../../config/config.js';
+import lodash from 'lodash';
+import debug from 'gulp-debug';
+
+
+
+
 
 function lint() {
   return gulp.src(['modules/**/*.js'])
-    //.pipe(jshint())
-    //.pipe(jshint.reporter('default'))
-    //.pipe(jshint.reporter('fail'))
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
@@ -36,49 +45,88 @@ function karmaWatch(done) {
 }
 karmaWatch.displayName = 'karmaWatch';
 
-function mochaTest(done) {
-  return done(); //TODO remove when I figure out server side testing.
-  // Open mongoose connections
-  var mongoose = require('../../config/lib/mongoose.js');
-  var testSuites = Array.isArray(argv.changedTestFiles) && argv.changedTestFiles.length ? argv.changedTestFiles : 'modules/*/tests/server/**/*.js';
-  var error;
-
-  // Connect mongoose
-  return mongoose.connect(function () {
-    mongoose.loadModels();
-    // Run the tests
-    return gulp.src(testSuites)
-      .pipe(coverage.instrument({
-        pattern: ['modules/*/server/**/*.js']
-      }))
-      .pipe(mocha({
-        reporter: 'spec',
-        timeout: 10000
-      }))
-      .pipe(coverage.gather())
-      .pipe(coverage.format([{ reporter: 'lcov', outFile: 'lcov.info' }, { type: 'html', subdir: 'report-html' }]))
-      .pipe(gulp.dest('.coverdata/server'))
-      .once('end', function () {
-        return mongoose.disconnect(function () {
-          return done();
-        });
+function mochaSingle(done) {
+  gulp.src(config.files.server.application)
+  	.pipe(istanbul({
+      includeUntested: true
+    }))
+  	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
+  	.on('finish', function () {
+  	  return gulp.src(config.files.server.tests)
+  		//.pipe(babel())
+  		//.pipe(injectModules())
+  		.pipe(mocha())
+  		.pipe(istanbul.writeReports(
+        {
+          dir: './.coverdata/server',
+          reporters: [ 'lcov', 'html', 'text' ]
+        }
+      ))
+      .once('error', () => {
+        process.exit(1);
+        return done();
+      })
+      .once('end', () => {
+        return done();
       });
-  });
+  	});
 }
+mochaSingle.displayName = 'Test::Mocha::Single';
+
+function mochaWatch(done) {
+  return gulp.src(config.files.server.application)
+  	.pipe(istanbul({
+        includeUntested: true
+      }))
+  	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
+
+  	.on('finish', function () {
+  	  gulp.src(config.files.server.tests)
+    		//.pipe(babel())
+    		//.pipe(injectModules())
+    		.pipe(mocha({
+          timeout: 2000
+        }))
+        .on('error', gutil.log)
+
+    		.pipe(istanbul.writeReports(
+          {
+            dir: './.coverdata/server',
+            reporters: [ 'lcov', 'html', 'text' ]
+          }
+        ))
+
+  	});
+}
+mochaWatch.displayName = 'Test::Mocha::Watch';
+
+function watchServerTests(done) {
+  gulp.watch(lodash.union(config.files.server.tests, config.files.server.application), gulp.series(build.server, mochaWatch));
+  return mochaWatch(done);
+}
+watchServerTests.displayName = 'Test::Watch::Server';
 
 function sendCoveralls(done) {
   if (!process.env.CI) return done();
   return gulp.src('.coverdata/**/lcov.info')
+    .pipe(debug({title: 'coveralls'}))
     .pipe(concat('lcov.info'))
     .pipe(coveralls());
 }
 
-module.exports = {
-  client: {
-    single: karmaSingle,
-    watch: karmaWatch
-  },
-  coveralls: sendCoveralls,
-  lint: lint,
-  server: mochaTest
+let client = {
+  single: karmaSingle,
+  watch: karmaWatch
+};
+
+let server = {
+  single: mochaSingle,
+  watch: watchServerTests
+};
+
+export {
+  client,
+  server,
+  sendCoveralls as coveralls,
+  lint
 };

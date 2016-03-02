@@ -1,7 +1,6 @@
 'use strict';
 
 import lodash from 'lodash';
-import mongoose from 'mongoose';
 import multer from 'multer';
 import config from 'modernMean/config';
 

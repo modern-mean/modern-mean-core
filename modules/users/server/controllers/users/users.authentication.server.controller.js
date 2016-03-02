@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 import passport from 'passport';
 import * as authentication from '../../config/jwt';
-import { get as model } from '../../models/user.server.model';
+import { get as model } from '../../models/users.server.model.user';
 
 // URLs for which user can't be redirected on signin
 let noReturnUrls = [
@@ -11,10 +11,9 @@ let noReturnUrls = [
   '/authentication/signup'
 ];
 
-let User = model();
-
 
 function signup(req, res) {
+  let User = model();
   // For security measurement we remove the roles from the req.body object
   delete req.body.roles;
 

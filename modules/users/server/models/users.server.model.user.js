@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import validator from 'validator';
 import generatePassword from 'generate-password';
 import owasp from 'owasp-password-strength-test';
+import chalk from 'chalk';
 
 
 let Schema = mongoose.Schema;
@@ -207,4 +208,7 @@ function get() {
 }
 
 
+let userModel = { init: init, get: get, schema: UserSchema };
+
+export default userModel;
 export { init, get, UserSchema as schema };

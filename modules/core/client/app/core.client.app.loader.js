@@ -13,7 +13,7 @@
 
     // Add the module to the AngularJS configuration file
     angular.module(window.modernMeanApplication.name).requires.push(moduleName);
-    console.log('Module::Init::' + moduleName, angular.module(moduleName));
+    console.log('Module::Init::a' + moduleName, angular.module(moduleName));
   }
 
   //Start by defining the main module and adding the module dependencies

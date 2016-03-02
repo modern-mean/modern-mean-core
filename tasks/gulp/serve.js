@@ -1,11 +1,14 @@
-var gulp = require('gulp'),
-  nodemon = require('gulp-nodemon'),
-  livereload = require('gulp-livereload')
-  build = require('./build');
+'use strict';
+
+import gulp from 'gulp';
+import nodemon from 'gulp-nodemon';
+import livereload from 'gulp-livereload';
+import * as build from './build';
 
 var nodemonInstance;
 
 function start(done) {
+
   nodemonInstance = nodemon({
     script: './build/core/server/app/server.js',
     watch: ['noop'],
@@ -22,11 +25,21 @@ function restart(done) {
 }
 restart.displayName = 'Nodemon Restart Server';
 
-function watch(done) {
+function watchClient(done) {
   livereload.listen();
-  gulp.watch(['modules/**/*.{js,css,html}'], gulp.series(build.build, restart, livereloadChanged));
+  gulp.watch(['modules/*/client/**/*.{js,css,html}'], gulp.series(terminalClear, build.client, build.inject, restart, livereloadChanged));
   return done();
 }
+watchClient.displayName = 'Serve::Watch::Client';
+
+function watchServer(done) {
+  gulp.watch(['modules/*/server/**/*.{js,css,html}'], gulp.series(terminalClear, build.server, build.inject, restart, livereloadChanged));
+  return done();
+}
+watchServer.displayName = 'Serve::Watch::Server';
+
+
+
 
 function livereloadChanged(done) {
   setTimeout(function () {
@@ -34,9 +47,24 @@ function livereloadChanged(done) {
   }, 1000);
   return done();
 }
+livereloadChanged.displayName = 'Serve::LiveReload::Changed';
 
-module.exports = {
-  start: start,
-  restart: restart,
-  watch: watch
+function terminalClear(done) {
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+  if (done) {
+    return done();
+  }
+}
+
+let watch = {
+  all: gulp.parallel(watchClient, watchServer),
+  client: watchClient,
+  server: watchServer
+}
+
+export {
+  start,
+  restart,
+  watch,
+  terminalClear as clear
 };

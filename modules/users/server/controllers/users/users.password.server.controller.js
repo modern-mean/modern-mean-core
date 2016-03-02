@@ -1,7 +1,7 @@
 'use strict';
 
 
-import { get as model } from '../../models/user.server.model';
+import { get as model } from '../../models/users.server.model.user';
 import config from 'modernMean/config';
 import nodemailer from 'nodemailer';
 import async from 'async';
