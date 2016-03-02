@@ -16,10 +16,9 @@ let gulp = require('gulp'),
   babel = require('gulp-babel');
 
   function angular() {
-    var angularJS = filter(['**/angular.js'], { restore: true });
+    var angularJS = filter(['**/angular.js'], { restore: false });
     return gulp.src(mainBowerFiles())
             .pipe(angularJS)
-            .pipe(angularJS.restore)
             .pipe(gulp.dest('./public/dist'));
   }
   angular.displayName = 'Angular';
