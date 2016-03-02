@@ -105,7 +105,12 @@ function clean() {
   ]);
 }
 
-let build = gulp.series(gulp.parallel(server, application, vendor, angular, templates, images), injectLayout);
+function config() {
+  return gulp.src(['./config/**/*.js'])
+    .pipe(gulp.dest('./node_modules/modernMean'));
+}
+
+let build = gulp.series(gulp.parallel(config, server, application, vendor, angular, templates, images), injectLayout);
 
 module.exports = {
   build: build,

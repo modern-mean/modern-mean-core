@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import mongoose from 'mongoose';
 import glob from 'glob';
 import path from 'path';
-import config from '../../../../config/config';
+import config from 'modernMean/config';
 
 
 function loadModels(app) {

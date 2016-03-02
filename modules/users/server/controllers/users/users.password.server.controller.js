@@ -2,7 +2,7 @@
 
 
 import { get as model } from '../../models/user.server.model';
-import config from '../../../../../config/config';
+import config from 'modernMean/config';
 import nodemailer from 'nodemailer';
 import async from 'async';
 import crypto from 'crypto';
