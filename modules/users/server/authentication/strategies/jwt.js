@@ -2,7 +2,7 @@
 
 import { get as model } from '../../models/user.server.model';
 import passport from 'passport';
-import config from 'config/config';
+import config from '../../../../../config/config';
 import chalk from 'chalk';
 
 let JwtStrategy = require('passport-jwt').Strategy;

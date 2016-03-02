@@ -4,7 +4,7 @@ import _ from 'lodash';
 import mongoose from 'mongoose';
 import chalk from 'chalk';
 import crypto from 'crypto';
-import config from 'config/config';
+import config from '../../../../config/config';
 
 
 // global seed options object
