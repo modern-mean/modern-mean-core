@@ -3,7 +3,7 @@
 import chalk from 'chalk';
 import * as mongoose from './mongoose';
 import * as express from './express';
-import config from 'config/config';
+import config from '../../../../config/config';
 
 
 function start() {

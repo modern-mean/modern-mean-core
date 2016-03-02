@@ -10,7 +10,7 @@ import helmet from 'helmet';
 import consolidate from 'consolidate';
 import path from 'path';
 import glob from 'glob';
-import config from 'config/config';
+import config from '../../../../config/config';
 
 
 function initLocalVariables(app) {
