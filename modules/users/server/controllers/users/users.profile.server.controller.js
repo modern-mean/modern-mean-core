@@ -3,7 +3,7 @@
 import lodash from 'lodash';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import config from '../../../../../config/config';
+import config from 'modernMean/config';
 
 
 function update(req, res) {

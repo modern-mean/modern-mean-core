@@ -2,7 +2,7 @@
 
 
 import passport from 'passport';
-import config from '../../../../config/config';
+import config from 'modernMean/config';
 import { strategy as jwt } from './strategies/jwt';
 import { strategy as local } from './strategies/local';
 import chalk from 'chalk';
