@@ -1,18 +1,12 @@
-(function() {
-  'use strict';
+'use strict';
 
-  /**
-   * Module dependencies
-   */
-  var acl = require('acl');
+import nodeacl from 'acl';
 
-  // Using the memory backend
-  acl = new acl(new acl.memoryBackend());
+// Using the memory backend
+let acl = new nodeacl(new nodeacl.memoryBackend());
 
-  /**
-   * Invoke Admin Permissions
-   */
-  module.exports.invokeRolesPolicies = function () {
+function policy() {
+  return new Promise(function(resolve, reject) {
     acl.allow([{
       roles: ['admin'],
       allows: [{
@@ -23,29 +17,30 @@
         permissions: '*'
       }]
     }]);
-  };
+    resolve();
+  });
+}
 
-  /**
-   * Check If Admin Policy Allows
-   */
-  module.exports.isAllowed = function (req, res, next) {
-    var roles = (req.user) ? req.user.roles : ['guest'];
-
-    // Check for user roles
-    acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase(), function (err, isAllowed) {
-      if (err) {
-        // An authorization error occurred
-        return res.status(500).send('Unexpected authorization error');
+function allowed(req, res, next) {
+  var roles = (req.user) ? req.user.roles : ['guest'];
+  //TODO Need to check this policy.  The resource should probably be /api/users etc.  I am guessing the / may be bad.
+  // Check for user roles
+  acl.areAnyRolesAllowed(roles, req.route.path, req.method.toLowerCase())
+    .then(function (allowed) {
+      if (allowed) {
+        return next();
       } else {
-        if (isAllowed) {
-          // Access granted! Invoke next middleware
-          return next();
-        } else {
-          return res.status(403).json({
-            message: 'User is not authorized'
-          });
-        }
+        return res.status(403).json({
+          message: 'User is not authorized'
+        });
       }
+    })
+    .catch(function (err) {
+      return res.status(500).send('Unexpected authorization error');
     });
-  };
-})();
+}
+
+export {
+  allowed,
+  policy
+};

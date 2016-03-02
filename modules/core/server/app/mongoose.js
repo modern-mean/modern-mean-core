@@ -68,7 +68,7 @@ function seedDB() {
       console.log(chalk.cyan('Mongoose::Seed::Start'));
       glob('./build/*/server/config/seed.js')
         .on('match', function (file) {
-          require(path.resolve(file))();
+          require(path.resolve(file)).default();
         })
         .on('end', function (files) {
           console.log(chalk.cyan('Mongoose::Seed::Success'));

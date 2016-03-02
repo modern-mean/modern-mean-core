@@ -1,33 +1,37 @@
-(function() {
-  'use strict';
+'use strict';
 
-  /**
-   * Module dependencies
-   */
-  var adminPolicy = require('../policies/admin.server.policy'),
-    admin = require('../controllers/admin.server.controller'),
-    passport = require('passport'),
-    express = require('express');
+import passport from 'passport';
+import express from 'express';
+import * as admin from '../controllers/admin.server.controller';
+import * as acl from '../policies/admin.server.policy';
 
-  module.exports = function (app) {
-    var router = express.Router();
+function init(app) {
+  return new Promise(function (resolve, reject) {
+    try {
+      let router = express.Router();
 
-    //Set JWT Auth for all Admin Routes
-    router.all('*', passport.authenticate('jwt', { session: false }));
+      //Set JWT Auth for all user Routes
+      router.all('*', passport.authenticate('jwt', { session: false }));
+      //TODO IMplment policies
+      router.route('/')
+        .get(acl.allowed, admin.list);
 
-    router.route('/')
-      .get(adminPolicy.isAllowed, admin.list);
+      // Single user routes
+      router.route('/:userId')
+        .get(acl.allowed, admin.read)
+        .put(acl.allowed, admin.update)
+        .delete(acl.allowed, admin.remove);
 
-    // Single user routes
-    router.route('/:userId')
-      .get(adminPolicy.isAllowed, admin.read)
-      .put(adminPolicy.isAllowed, admin.update)
-      .delete(adminPolicy.isAllowed, admin.delete);
+      // Finish by binding the user middleware
+      router.param('userId', admin.userByID);
 
-    // Finish by binding the user middleware
-    router.param('userId', admin.userByID);
+      app.use('/api/admin/users', router);
+      resolve(app);
+    } catch(err) {
+      reject(err);
+    }
 
-    app.use('/api/admin/users', router);
+  });
+}
 
-  };
-})();
+export default init;
