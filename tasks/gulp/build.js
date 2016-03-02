@@ -19,8 +19,10 @@ let gulp = require('gulp'),
     var angularJS = filter(['**/angular.js'], { restore: true });
     return gulp.src(mainBowerFiles())
             .pipe(angularJS)
+            .pipe(angularJS.restore)
             .pipe(gulp.dest('./public/dist'));
   }
+  angular.displayName = 'Angular';
 
   function application() {
     var filterJS = filter(['**/*.js'], { restore: true }),
