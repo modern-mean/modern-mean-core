@@ -4,7 +4,7 @@ import lodash from 'lodash';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import config from 'config/config';
-import { model as User } from '../../user.module';
+
 
 function update(req, res) {
   // Init Variables

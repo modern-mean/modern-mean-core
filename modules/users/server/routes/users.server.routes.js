@@ -31,6 +31,4 @@ function init(app) {
   });
 }
 
-
-
 export default init;
