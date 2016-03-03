@@ -11,7 +11,7 @@
       var vm = this;
 
       vm.user = Authentication.user;
-      vm.menus = menuService.leftnav.items;
+      vm.menus = menuService.sidenavleft.items;
 
       vm.close = function(navID) {
           $mdSidenav(navID)

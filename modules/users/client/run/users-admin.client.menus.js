@@ -18,7 +18,7 @@
       var user = Authentication.user;
 
       if (user.roles == 'user,admin') {
-        menuService.mdSidenavLeft.addItem({
+        menuService.sidenavright.addItem({
           id: 'adminmenu',
           title: 'Manage Users',
           state: 'root.admin.users',
@@ -27,14 +27,14 @@
           aria: 'Account Menu',
           show: true
         });
-        menuService.mdSidenavLeft.getItem({ id: 'adminmenu' }).show = true;
+        menuService.sidenavright.getItem({ id: 'adminmenu' }).show = true;
       } else {
-        menuService.mdSidenavLeft.removeItem({ id: 'adminmenu' });
+        menuService.sidenavright.removeItem({ id: 'adminmenu' });
       };
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      menuService.mdSidenavLeft.removeItem({ id: 'adminmenu' });
+      menuService.sidenavright.removeItem({ id: 'adminmenu' });
     });
   }
 })();

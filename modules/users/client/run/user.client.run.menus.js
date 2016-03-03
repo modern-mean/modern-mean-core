@@ -13,7 +13,7 @@
     $state.get('root').views.mdSidenavRight.controller = 'UserSideNavRightController';
     $state.get('root').views.mdSidenavRight.controllerAs = 'vm';
 
-    menuService.mdSidenavRight.addItem({
+    menuService.sidenavright.addItem({
       id: 'accountmenu',
       title: 'User Account Menu',
       image: '',
@@ -35,7 +35,7 @@
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
 
-      menuService.mdSidenavRight.addItem({
+      menuService.sidenavright.addItem({
         id: 'usermenu',
         title: Authentication.user.displayName,
         image: Authentication.user.profileImageURL,
@@ -75,12 +75,12 @@
         }]
       });
 
-      menuService.mdSidenavRight.getItem({ id: 'accountmenu' }).show = false;
+      menuService.sidenavright.getItem({ id: 'accountmenu' }).show = false;
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      menuService.mdSidenavRight.getItem({ id: 'accountmenu' }).show = true;
-      menuService.mdSidenavRight.removeItem({ id: 'usermenu' });
+      menuService.sidenavright.getItem({ id: 'accountmenu' }).show = true;
+      menuService.sidenavright.removeItem({ id: 'usermenu' });
     });
   }
 
