@@ -9,9 +9,9 @@
 
   function menuConfig($state, menuService, Authentication, $rootScope, AUTH_EVENTS) {
 
-    $state.get('root').views.mdSidenavRight.templateUrl = 'modules/users/client/views/users.client.views.sidenav.right.html';
-    $state.get('root').views.mdSidenavRight.controller = 'UserSideNavRightController';
-    $state.get('root').views.mdSidenavRight.controllerAs = 'vm';
+    $state.get('root').views.rightnav.templateUrl = 'modules/users/client/views/users.client.views.sidenav.right.html';
+    $state.get('root').views.rightnav.controller = 'UserSideNavRightController';
+    $state.get('root').views.rightnav.controllerAs = 'vm';
 
     menuService.sidenavright.addItem({
       id: 'accountmenu',

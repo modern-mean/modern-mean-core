@@ -10,9 +10,9 @@
 
   function menuConfig($state, menuService, Authentication, $rootScope, AUTH_EVENTS) {
 
-    $state.get('root').views.mdSidenavLeft.templateUrl = 'modules/users/client/views/users.client.views.sidenav.left.html';
-    $state.get('root').views.mdSidenavLeft.controller = 'UserSideNavLeftController';
-    $state.get('root').views.mdSidenavLeft.controllerAs = 'vm';
+    $state.get('root').views.leftnav.templateUrl = 'modules/users/client/views/users.client.views.sidenav.left.html';
+    $state.get('root').views.leftnav.controller = 'UserSideNavLeftController';
+    $state.get('root').views.leftnav.controllerAs = 'vm';
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
       var user = Authentication.user;
