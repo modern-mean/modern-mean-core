@@ -11,8 +11,8 @@
     var vm = this;
 
     vm.close = function(navID) {
-        $mdSidenav(navID)
-        .close();
+      $mdSidenav(navID)
+      .close();
     }
 
     console.log('SideNavLeftController::Init', vm);

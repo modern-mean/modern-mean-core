@@ -11,10 +11,10 @@
     var vm = this;
 
     vm.close = function(navID) {
-        $mdSidenav(navID)
-        .close();
+      $mdSidenav(navID)
+      .close();
     }
 
-      console.log('SideNavRightController::Init', vm);
+    console.log('SideNavRightController::Init', vm);
   }
 })();
