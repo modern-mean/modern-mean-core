@@ -1,8 +1,14 @@
-<md-content>
-  <h1 class="md-display-3">Forbidden</h1>
-  <div class="alert alert-danger" role="alert">
-    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-    <span class="sr-only">Error:</span>
-    You are not authorized to access this resource, at least that's what we think
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Forbidden</h1>
   </div>
+</md-toolbar>
+<md-content layout-padding>
+  <h3 class="md-title">ERROR: 403</h3>
+  <p>You are not authorized to access that resource, at least that's what we think ;-)</p>
+  <section layout="row" layout-align="center center">
+    <md-button ui-sref="root.home" class="md-raised md-default" aria-label="Back to home">back to homepage</md-button>
+    or
+    <md-button ui-sref="root.user.authentication.signin" class="md-raised md-primary" aria-label="Sign in">Sign In</md-button>
+  </section>
 </md-content>

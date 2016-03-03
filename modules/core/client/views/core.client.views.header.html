@@ -1,24 +1,8 @@
-<md-toolbar class="md-toolbar-tools">
-  <span ng-repeat="menu in vm.menus | orderBy: order" flex="{{menu.flex}}" ng-show="menu.show">
-    <md-menu md-position-mode="{{menu.position}}" ng-if="menu.type === 'menu'">
-      <md-button aria-label="{{menu.aria}}" ng-click="$mdOpenMenu($event)">
-        <img ng-if="menu.image" class="header-profile-image" alt="{{menu.title}}" ng-src="{{menu.image}}">
-        <span>{{menu.title}}</span>
-        <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}"></ng-md-icon>
-      </md-button>
-      <md-menu-content width="4">
-        <md-menu-item ng-repeat="item in menu.items">
-          <md-button ui-sref="{{item.state}}" aria-label="{{item.title}}">
-            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
-            <span flex></span>
-            {{item.title}}
-          </md-button>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
-    <md-button ng-if="menu.type === 'button'" ui-sref="{{menu.state}}" aria-label="{{menu.aria}}">
-      <ng-md-icon ng-if="menu.icon" icon="{{menu.icon}}" show-xs></ng-md-icon>
-      <span hide-xs>{{menu.title}}</span>
-    </md-button>
-  </span>
-</md-toolbar>
+<md-button class="md-fab md-mini md-accent md-raised" aria-label="Leftnav Menu" ng-click="vm.toggle('coreLeftNav')">
+  <ng-md-icon icon="menu"></ng-md-icon>
+</md-button>
+<span flex="none" style="font-weight: 900; font-size: 1.8em;letter-spacing: -.05em" hide-xs hide-sm>MODERN-MEAN</span>
+<span flex></span>
+<md-button class="md-icon-button" aria-label="Rightnav Menu" ng-click="vm.toggle('coreRightNav')">
+  <ng-md-icon icon="more_vert"></ng-md-icon>
+</md-button>
