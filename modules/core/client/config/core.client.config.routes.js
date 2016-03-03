@@ -21,7 +21,7 @@
       url: '',
       views: {
         'header': {
-          controller: 'HeaderToolbar',
+          controller: 'HeaderToolbarController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.header.html'
         },
