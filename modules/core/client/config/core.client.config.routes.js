@@ -20,7 +20,7 @@
     .state('root', {
       url: '',
       views: {
-        'toolbar': {
+        'header': {
           controller: 'HeaderToolbar',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.header.html'
