@@ -21,18 +21,18 @@
       url: '',
       views: {
         'header': {
-          controller: 'HeaderToolbarController',
+          controller: 'HeaderController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.header.html'
         },
         'main': {
         },
-        'mdSidenavLeft': {
+        'leftnav': {
           controller: 'SideNavLeftController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.sidenav.left.html'
         },
-        'mdSidenavRight': {
+        'rightnav': {
           controller: 'SideNavRightController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.sidenav.right.html'

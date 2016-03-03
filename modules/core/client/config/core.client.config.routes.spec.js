@@ -25,14 +25,14 @@
       //Header
       expect(state.views.header).to.be.an('object');
       expect(state.views.header.templateUrl).to.equal('modules/core/client/views/core.client.views.header.html');
-      expect(state.views.header.controller).to.equal('HeaderToolbarController');
+      expect(state.views.header.controller).to.equal('HeaderController');
       expect(state.views.header.controllerAs).to.equal('vm');
       //Main
       expect(state.views.main).to.be.an('object');
       //LeftNav
-      expect(state.views.mdSidenavLeft).to.be.an('object');
+      expect(state.views.leftnav).to.be.an('object');
       //LeftNav
-      expect(state.views.mdSidenavRight).to.be.an('object');
+      expect(state.views.rightnav).to.be.an('object');
       //footer
       expect(state.views.footer).to.be.an('object');
     });

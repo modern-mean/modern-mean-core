@@ -3,11 +3,11 @@
 
   angular
     .module('core')
-    .controller('HeaderToolbarController', HeaderToolbarController);
+    .controller('HeaderController', HeaderController);
 
-  HeaderToolbarController.$inject = ['$timeout', '$mdSidenav', 'lodash'];
+  HeaderController.$inject = ['$timeout', '$mdSidenav', 'lodash'];
 
-  function HeaderToolbarController($timeout, $mdSidenav, lodash) {
+  function HeaderController($timeout, $mdSidenav, lodash) {
     var vm = this;
 
     vm.toggleLeft = buildDelayedToggler('left');
@@ -20,6 +20,6 @@
       }, 200);
     }
 
-    console.log('HeaderToolbarController::Init', vm);
+    console.log('HeaderController::Init', vm);
   }
 })();
