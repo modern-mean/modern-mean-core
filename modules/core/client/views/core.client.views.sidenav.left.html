@@ -1,0 +1,14 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left">
+  <md-toolbar class="md-theme-blue-grey md-hue-3">
+    <h1 class="md-toolbar-tools">
+      <ng-md-icon icon="apps"></ng-md-icon>
+      <span flex></span>
+      <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
+    </h1>
+  </md-toolbar>
+  <md-content>
+    <md-list>
+      <md-list-item ui-sref="root.home" ng-click="vm.close('left')"><ng-md-icon icon="home"></ng-md-icon><span flex></span><span>homepage</span></md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>

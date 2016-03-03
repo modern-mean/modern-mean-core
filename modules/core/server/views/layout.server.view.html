@@ -9,26 +9,9 @@
   <title page-title></title>
   <meta name="description" content="{{description}}">
   <meta name="fragment" content="!">
-
   <!-- Apple META -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <!-- Facebook META -->
-  <meta property="fb:app_id" content="{{facebookAppId}}">
-  <meta property="og:site_name" content="{{title}}">
-  <meta property="og:title" content="{{title}}">
-  <meta property="og:description" content="{{description}}">
-  <meta property="og:url" content="{{url}}">
-  <meta property="og:image" content="{{logo}}">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter META -->
-  <meta name="twitter:title" content="{{title}}">
-  <meta name="twitter:description" content="{{description}}">
-  <meta name="twitter:url" content="{{url}}">
-  <meta name="twitter:image" content="{{logo}}">
-
   <!-- Fav Icon -->
   <link href="{{favicon}}" rel="shortcut icon" type="image/x-icon">
   <!-- inject:css -->
@@ -36,12 +19,15 @@
 </head>
 <body class="ng-cloak">
   <div layout="column" layout-fill flex>
-    <section ui-view="header"></section>
+    <md-toolbar>
+      <div class="md-toolbar-tools" ui-view="toolbar"></div>
+    </md-toolbar>
     <section layout="row" flex>
       <section ui-view="leftnav"></section>
-      <section flex ui-view="main"></section>
+      <md-content flex ui-view="main"></md-content>
       <section ui-view="rightnav"></section>
     </section>
+    <section ui-view="footer"></section>
   </div>
   <!-- inject:js -->
   <!-- endinject -->

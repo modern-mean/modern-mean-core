@@ -4,9 +4,9 @@
   var $state,
     $scope,
     $rootScope,
-    SideNavController;
+    HeaderController;
 
-  describe('core.client.controller.sidenav.js', function () {
+  describe('core.client.controller.toolbar.js', function () {
 
     beforeEach(module('core'));
 
@@ -15,19 +15,15 @@
       $scope = $rootScope.$new();
       $state = _$state_;
 
-      SideNavController = $controller('SideNavController as vm', {
+      ToolbarController = $controller('ToolbarController as vm', {
         $scope: $scope
       });
     }));
 
-    describe('SideNavController', function () {
+    describe('ToolbarController', function () {
 
-      it('should have a vm variable that is an object', function () {
+      it('should have a vm variable', function () {
         expect($scope.vm).to.be.an('object');
-      });
-
-      it('should have a vm.menu variable that is an array', function () {
-        expect($scope.vm.menus).to.be.an('array');
       });
 
     });
