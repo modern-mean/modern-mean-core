@@ -1,7 +1,9 @@
 <md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left">
   <md-toolbar class="md-theme-blue-grey md-hue-3">
     <h1 class="md-toolbar-tools">
-      <ng-md-icon icon="apps"></ng-md-icon>
+      <md-button class="md-fab md-mini md-raised md-default" ng-click="vm.close('left')" aria-label="Close menu">
+        <ng-md-icon icon="close"></ng-md-icon>
+      </md-button>
       <span flex></span>
       <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
     </h1>
