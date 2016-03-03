@@ -3,11 +3,11 @@
 
   angular
     .module('core')
-    .controller('ToolbarController', ToolbarController);
+    .controller('HeaderToolbar', HeaderToolbar);
 
-  ToolbarController.$inject = ['$timeout', '$mdSidenav'];
+  HeaderToolbar.$inject = ['$timeout', '$mdSidenav'];
 
-  function ToolbarController($timeout, $mdSidenav) {
+  function HeaderToolbar($timeout, $mdSidenav) {
     var vm = this;
 
     vm.toggleLeft = buildDelayedToggler('left');
@@ -40,6 +40,6 @@
       }
     }
 
-    console.log('ToolbarController::Init', vm);
+    console.log('HeaderToolbar::Init', vm);
   }
 })();
