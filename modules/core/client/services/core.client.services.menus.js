@@ -15,13 +15,13 @@
         removeItem: removeItem,
         getItem: getItem
       },
-      leftnav: {
+      sidenavleft: {
         items: [],
         addItem: addItem,
         removeItem: removeItem,
         getItem: getItem
       },
-      rightnav: {
+      sidenavright: {
         items: [],
         addItem: addItem,
         removeItem: removeItem,
