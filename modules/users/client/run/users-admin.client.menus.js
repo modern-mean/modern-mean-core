@@ -10,15 +10,15 @@
 
   function menuConfig($state, menuService, Authentication, $rootScope, AUTH_EVENTS) {
 
-    $state.get('root').views.leftnav.templateUrl = 'modules/users/client/views/users.client.views.sidenav.left.html';
-    $state.get('root').views.leftnav.controller = 'UserSideNavLeftController';
-    $state.get('root').views.leftnav.controllerAs = 'vm';
+    $state.get('root').views.mdSidenavLeft.templateUrl = 'modules/users/client/views/users.client.views.sidenav.left.html';
+    $state.get('root').views.mdSidenavLeft.controller = 'UserSideNavLeftController';
+    $state.get('root').views.mdSidenavLeft.controllerAs = 'vm';
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
       var user = Authentication.user;
 
       if (user.roles == 'user,admin') {
-        menuService.leftnav.addItem({
+        menuService.mdSidenavLeft.addItem({
           id: 'adminmenu',
           title: 'Manage Users',
           state: 'root.admin.users',
@@ -27,14 +27,14 @@
           aria: 'Account Menu',
           show: true
         });
-        menuService.leftnav.getItem({ id: 'adminmenu' }).show = true;
+        menuService.mdSidenavLeft.getItem({ id: 'adminmenu' }).show = true;
       } else {
-        menuService.leftnav.removeItem({ id: 'adminmenu' });
+        menuService.mdSidenavLeft.removeItem({ id: 'adminmenu' });
       };
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      menuService.leftnav.removeItem({ id: 'adminmenu' });
+      menuService.mdSidenavLeft.removeItem({ id: 'adminmenu' });
     });
   }
 })();

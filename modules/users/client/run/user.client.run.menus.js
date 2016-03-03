@@ -9,11 +9,11 @@
 
   function menuConfig($state, menuService, Authentication, $rootScope, AUTH_EVENTS) {
 
-    $state.get('root').views.rightnav.templateUrl = 'modules/users/client/views/users.client.views.sidenav.right.html';
-    $state.get('root').views.rightnav.controller = 'UserSideNavRightController';
-    $state.get('root').views.rightnav.controllerAs = 'vm';
+    $state.get('root').views.mdSidenavRight.templateUrl = 'modules/users/client/views/users.client.views.sidenav.right.html';
+    $state.get('root').views.mdSidenavRight.controller = 'UserSideNavRightController';
+    $state.get('root').views.mdSidenavRight.controllerAs = 'vm';
 
-    menuService.rightnav.addItem({
+    menuService.mdSidenavRight.addItem({
       id: 'accountmenu',
       title: 'User Account Menu',
       image: '',
@@ -35,7 +35,7 @@
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
 
-      menuService.rightnav.addItem({
+      menuService.mdSidenavRight.addItem({
         id: 'usermenu',
         title: Authentication.user.displayName,
         image: Authentication.user.profileImageURL,
@@ -75,12 +75,12 @@
         }]
       });
 
-      menuService.rightnav.getItem({ id: 'accountmenu' }).show = false;
+      menuService.mdSidenavRight.getItem({ id: 'accountmenu' }).show = false;
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function () {
-      menuService.rightnav.getItem({ id: 'accountmenu' }).show = true;
-      menuService.rightnav.removeItem({ id: 'usermenu' });
+      menuService.mdSidenavRight.getItem({ id: 'accountmenu' }).show = true;
+      menuService.mdSidenavRight.removeItem({ id: 'usermenu' });
     });
   }
 
