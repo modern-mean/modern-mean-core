@@ -1,6 +1,10 @@
-<md-content>
-  <h1 class="md-display-1">Edit Profile</h1>
-  <form name="userForm" ng-submit="vm.update()" novalidate autocomplete="off">
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Edit Profile</h1>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
+  <form name="userForm" ng-submit="vm.update(userForm.$valid)" novalidate autocomplete="off">
     <md-input-container class="md-block">
       <input type="text" id="firstName" name="firstName" ng-model="vm.user.firstName" placeholder="First Name" required>
       <div ng-messages="userForm.firstName.$error" role="alert">
@@ -21,10 +25,10 @@
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">
-      <md-button type="submit" class="md-raised md-primary" aria-label="Save Profile">Save Profile</md-button>
+      <md-button ng-disabled="userForm.$invalid" type="submit" class="md-raised md-primary" aria-label="Save Profile">Save Profile</md-button>
     </section>
     <section layout="row" layout-align="center center" ng-show="vm.success">
-      <strong>Profile Saved Successfully</strong>
+      <div style="color: green;font-weight:bold">Profile Saved Successfully</div>
     </section>
     <section layout="row" layout-align="center center" ng-show="vm.error">
       <strong ng-bind="vm.error"></strong>

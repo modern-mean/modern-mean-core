@@ -18,67 +18,73 @@
           roles: ['user', 'admin']
         }
       })
-      .state('root.user.settings', {
-        abstract: true,
-        url: '/settings',
+      .state('root.user.dashboard', {
+        url: '/dashboard',
+        data: {
+          pageTitle: "User Dashboard"
+        },
         views: {
-          'leftnav@': {
-            controller: 'SettingsController',
+          'main@': {
+            controller: 'DashboardController',
             controllerAs: 'vm',
-            templateUrl: 'modules/users/client/views/settings/users.client.views.settings.html',
+            templateUrl: 'modules/users/client/views/dashboard/users.client.views.dashboard.html'
           }
         }
       })
+      .state('root.user.settings', {
+        abstract: true,
+        url: '/settings'
+      })
       .state('root.user.settings.profile', {
         url: '/profile',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.edit-profile.html',
-            controller: 'EditProfileController',
-            controllerAs: 'vm',
-          }
-        },
         data: {
           pageTitle: 'Edit Profile'
+        },
+        views: {
+          'main@': {
+            controller: 'EditProfileController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/settings/users.client.views.edit-profile.html'
+          }
         }
       })
       .state('root.user.settings.password', {
         url: '/password',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.change-password.html',
-            controller: 'ChangePasswordController',
-            controllerAs: 'vm',
-          }
-        },
         data: {
           pageTitle: 'Change Password'
+        },
+        views: {
+          'main@': {
+            controller: 'ChangePasswordController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/settings/users.client.views.change-password.html'
+          }
         }
       })
       .state('root.user.settings.accounts', {
         url: '/accounts',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.manage-social-accounts.html',
-            controller: 'SocialAccountsController',
-            controllerAs: 'vm'
-          }
-        },
         data: {
           pageTitle: 'Manage Social Accounts'
+        },
+        views: {
+          'main@': {
+            controller: 'SocialAccountsController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/settings/users.client.views.manage-social-accounts.html'
+          }
         }
       })
       .state('root.user.settings.picture', {
         url: '/picture',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.change-profile-picture.html',
-            controller: 'ChangeProfilePictureController',
-            controllerAs: 'vm'
-          }
-        },
         data: {
           pageTitle: 'Change Profile Picture'
+        },
+        views: {
+          'main@': {
+            controller: 'ChangeProfilePictureController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/settings/users.client.views.change-profile-picture.html'
+          }
         }
       })
       .state('root.user.authentication', {
@@ -86,9 +92,9 @@
         url: '/authentication',
         views: {
           'main@': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html',
             controller: 'AuthenticationController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html'
           }
         }
       })
@@ -118,31 +124,34 @@
       })
       .state('root.signout', {
         url: '/signout',
+        data: {
+          ignoreAuth: true,
+          pageTitle: 'Signed Out'
+        },
         views: {
           'main@': {
             templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html'
           }
-        },
-        data: {
-          ignoreAuth: true,
-          pageTitle: 'Signed Out'
         }
       })
       .state('root.user.password', {
         abstract: true,
-        url: '/password'
+        url: '/password',
+        data: {
+          ignoreAuth: true
+        }
       })
       .state('root.user.password.forgot', {
         url: '/forgot',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/password/users.client.views.forgot-password.html',
-            controller: 'PasswordController',
-            controllerAs: 'vm'
-          }
-        },
         data: {
           pageTitle: 'Forgot Password'
+        },
+        views: {
+          'main@': {
+            controller: 'PasswordController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/password/users.client.views.forgot-password.html'
+          }
         }
       })
       .state('root.user.password.reset', {
@@ -167,15 +176,15 @@
       })
       .state('root.user.password.reset.form', {
         url: '/:token',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/password/users.client.views.reset-password.html',
-            controller: 'PasswordController',
-            controllerAs: 'vm'
-          }
-        },
         data: {
           pageTitle: 'Password Reset Form'
+        },
+        views: {
+          'main@': {
+            controller: 'PasswordController',
+            controllerAs: 'vm',
+            templateUrl: 'modules/users/client/views/password/users.client.views.reset-password.html'
+          }
         }
       });
 

@@ -1,14 +1,11 @@
-<md-content>
-  <md-card>
-    <md-card-header>
-      <md-card-header-text>
-        <span class="md-title">Signout</span>
-      </md-card-header-text>
-    </md-card-header>
-    <md-card-content>
-      <p>
-       You have signed out successfully
-      </p>
-    </md-card-content>
-  </md-card>
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Account Sign out</h1>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
+  <section layout="row" layout-align="center center">
+    <p>You have been successfully signed out.</p>
+    <md-button ui-sref="root.user.authentication.signin" class="md-raised md-default" aria-label="Sign In">Sign in</md-button>
+  </section>
 </md-content>

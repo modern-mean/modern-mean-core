@@ -6,6 +6,7 @@
     .config(usersConfig);
 
   usersConfig.$inject = ['$httpProvider'];
+
   function usersConfig($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
   }

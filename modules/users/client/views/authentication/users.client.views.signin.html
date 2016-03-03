@@ -1,5 +1,9 @@
-<md-content>
-  <h2 class="md-display-1">Or with your account</h2>
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h2 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Account Signin</h2>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
   <form name="userForm" ng-submit="vm.signin(userForm.$valid)" novalidate autocomplete="off">
     <md-input-container class="md-block">
       <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="email address" lowercase required>
@@ -14,12 +18,12 @@
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">
-      <md-button type="submit" class="md-raised md-primary" aria-label="Sign In">Sign in</md-button>
+      <md-button ng-disabled="userForm.$invalid" type="submit" class="md-raised md-primary" aria-label="Sign In">Sign in</md-button>
       &nbsp; or&nbsp;
-      <md-button ui-sref="authentication.signup" class="md-raised md-default" aria-label="Sign Up">Sign up</a>
+      <md-button ui-sref="root.user.authentication.signup" class="md-raised md-default" aria-label="Sign Up">Sign up</a>
     </section>
     <section layout="row" layout-align="center center">
-      <a ui-sref="password.forgot">Forgot your password?</a>
+      <md-button ui-sref="root.user.password.forgot" aria-label="forgot password">Forgot your password?</md-button>
     </section>
     <section layout="row" layout-align="center center" ng-show="vm.error">
       <span ng-bind="vm.error"></span>

@@ -22,7 +22,7 @@
         .changePassword(vm.passwordDetails).$promise
         .then(
           function (response) {
-            vm.success = response.message;
+            vm.success = true;
             vm.passwordDetails = undefined;
           },
           function (err) {

@@ -1,7 +1,7 @@
-<md-content layout-padding>
+<md-content>
   <div layout="row" layout-xs="column">
-    <div layout-align="center center" flex>
-      <md-content flex>
+    <div layout-align="center center"hide-sm hide-xs flex>
+      <md-content layout-padding flex>
         <h2 class="md-title">Sign in using your social accounts</h2>
         <img ng-click="vm.callOauthProvider('/api/auth/facebook')" ng-src="/dist/img/users/client/img/buttons/facebook.png">
         <img ng-click="vm.callOauthProvider('/api/auth/twitter')" ng-src="/dist/img/users/client/img/buttons/twitter.png">

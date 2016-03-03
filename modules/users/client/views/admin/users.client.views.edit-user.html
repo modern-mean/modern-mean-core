@@ -1,5 +1,9 @@
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Edit User</h1>
+  </div>
+</md-toolbar>
 <md-content layout-padding>
-  <h1 class="md-display-1">Edit User: <span ng-bind="vm.user.email"></span></h1>
   <form name="userForm" ng-submit="vm.update(userForm.$valid)" novalidate>
     <md-input-container class="md-block">
       <input type="text" id="firstName" name="firstName" ng-model="vm.user.firstName" placeholder="First Name" required>
@@ -20,9 +24,9 @@
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">
-      <md-button type="submit" value="Update" class="md-raised md-primary" aria-label="Update"> Update </md-button>
+      <md-button ng-disabled="userForm.$invalid" type="submit" value="Update" class="md-raised md-primary" aria-label="Update"> Update </md-button>
       or
-      <md-button ui-sref="admin.user({userId: vm.user._id})" class="md-raised" aria-label="Go back">go back</md-button>
+      <md-button ui-sref="root.admin.user({userId: vm.user._id})" class="md-raised" aria-label="Go back">go back</md-button>
     </section>
     <section layout="row" layout-align="center center" ng-show="vm.error">
       <strong ng-bind="vm.error"></strong>
