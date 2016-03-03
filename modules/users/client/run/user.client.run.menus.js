@@ -17,7 +17,7 @@
       id: 'accountmenu',
       title: 'User Account Menu',
       image: '',
-      icon: 'apps',
+      icon: 'close',
       type: 'menu',
       aria: 'Account Menu',
       show: true,
