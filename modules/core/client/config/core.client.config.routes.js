@@ -27,12 +27,12 @@
         },
         'main': {
         },
-        'leftnav': {
+        'md-sidenav-left': {
           controller: 'SideNavLeftController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.sidenav.left.html'
         },
-        'rightnav': {
+        'md-sidenav-right': {
           controller: 'SideNavRightController',
           controllerAs: 'vm',
           templateUrl: 'modules/core/client/views/core.client.views.sidenav.right.html'
