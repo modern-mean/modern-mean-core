@@ -17,7 +17,7 @@
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
       var user = Authentication.user;
 
-      if (user.roles == 'user,admin') {
+      if (user.roles.indexOf('admin') !== -1) {
         menuService.sidenavleft.addItem({
           id: 'adminmenu',
           title: 'Manage Users',
