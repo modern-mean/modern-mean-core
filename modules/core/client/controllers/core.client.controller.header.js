@@ -5,9 +5,9 @@
     .module('core')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['$timeout', '$mdSidenav', 'lodash'];
+  HeaderController.$inject = ['$mdSidenav', 'lodash'];
 
-  function HeaderController($timeout, $mdSidenav, lodash) {
+  function HeaderController($mdSidenav, lodash) {
     var vm = this;
 
     vm.toggleLeft = buildDelayedToggler('left');
