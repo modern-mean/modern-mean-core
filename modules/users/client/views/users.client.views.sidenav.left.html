@@ -3,13 +3,14 @@
     <h1 class="md-toolbar-tools">
       <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
       <span flex></span>
-      <md-button class="md-fab md-mini md-raised md-default" ng-click="vm.close('left')" aria-label="Close menu">
+      <md-button class="md-icon-button md-mini" ng-click="vm.close('left')" aria-label="Close menu">
         <ng-md-icon icon="close"></ng-md-icon>
       </md-button>
     </h1>
   </md-toolbar>
   <md-content>
     <md-list>
+      <md-list-item ui-sref="root.home" ng-click="vm.close('left')"><ng-md-icon icon="home"></ng-md-icon><span flex></span><span>homepage</span></md-list-item>
       <span ng-repeat="menu in vm.menus | orderBy: order" ng-show="menu.show">
         <md-list-item ui-sref="{{menu.state}}" ng-click="vm.close('left')">
           <ng-md-icon icon="{{menu.icon}}"></ng-md-icon>
@@ -17,7 +18,6 @@
           <span>{{menu.title}}</span>
         </md-list-item>
       </span>
-      <md-list-item ui-sref="root.home" ng-click="vm.close('left')"><ng-md-icon icon="home"></ng-md-icon><span flex></span><span>homepage</span></md-list-item>
     </md-list>
   </md-content>
 </md-sidenav>
