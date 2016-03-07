@@ -9,8 +9,9 @@
 
   function SideNavLeftController($mdSidenav) {
     var vm = this;
+    vm.close = close;
 
-    vm.close = function(navID) {
+    function close(navID) {
       $mdSidenav(navID)
       .close();
     }
