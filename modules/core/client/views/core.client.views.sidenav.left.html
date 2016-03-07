@@ -7,22 +7,13 @@
     </md-button>
   </h1>
 </md-toolbar>
-<span ng-repeat="menu in vm.menus | orderBy:['id', 'title', 'items']:true" ng-show="menu.show">
-  <md-toolbar ng-if="menu.title" class="md-theme-blue-grey md-hue-3 md-whiteframe-z1">
-    <h1 class="md-toolbar-tools">
-      <ng-md-icon icon="{{menu.icon}}"></ng-md-icon>
+<md-list>
+  <span ng-repeat="item in menu.items | orderBy: order">
+    <md-list-item ui-sref="root.home" ng-click="vm.close('left')">
+      <ng-md-icon icon="home"></ng-md-icon>
       <span flex></span>
-      <span style="font-weight: 700;">{{menu.title}}</span>
-    </h1>
-  </md-toolbar>
-  <md-list>
-    <span ng-repeat="item in menu.items | orderBy: order">
-      <md-list-item ui-sref="{{item.state}}" ng-click="vm.close('left')">
-        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
-        <span flex></span>
-        <span>{{item.title}}</span>
-      </md-list-item>
-    </span>
-  </md-list>
-  <md-divider></md-divider>
-</span>
+      <span>homepage</span>
+    </md-list-item>
+  </span>
+</md-list>
+<md-divider></md-divider>

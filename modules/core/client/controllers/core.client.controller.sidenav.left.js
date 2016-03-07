@@ -9,7 +9,6 @@
 
   function SideNavLeftController($mdSidenav) {
     var vm = this;
-    vm.menus = menuFactory.sidenavleft.items;
 
     vm.close = function(navID) {
       $mdSidenav(navID)
