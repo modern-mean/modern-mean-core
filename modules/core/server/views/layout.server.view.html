@@ -17,17 +17,17 @@
   <!-- inject:css -->
   <!-- endinject -->
 </head>
-<body class="ng-cloak">
+<body ng-cloak>
   <div layout="column" layout-fill flex>
-    <md-toolbar>
+    <md-toolbar layout="row" class="md-whiteframe-z2">
       <div class="md-toolbar-tools" ui-view="header"></div>
     </md-toolbar>
-    <section layout="row" flex>
-      <section ui-view="leftnav"></section>
+    <div layout="row" flex>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ui-view="leftnav"></md-sidenav>
       <md-content flex ui-view="main"></md-content>
-      <section ui-view="rightnav"></section>
-    </section>
-    <section ui-view="footer"></section>
+      <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" ui-view="rightnav"></md-sidenav>
+    </div>
+    <footer ui-view="footer"></footer>
   </div>
   <!-- inject:js -->
   <!-- endinject -->

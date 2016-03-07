@@ -1,16 +1,28 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left">
-  <md-toolbar class="md-theme-blue-grey md-hue-3">
+<md-toolbar class="md-theme-blue-grey md-hue-3 md-whiteframe-z2">
+  <h1 class="md-toolbar-tools">
+    <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
+    <span flex></span>
+    <md-button class="md-icon-button md-mini" ng-click="vm.close('left')" aria-label="Close Menu">
+      <ng-md-icon icon="close"></ng-md-icon>
+    </md-button>
+  </h1>
+</md-toolbar>
+<span ng-repeat="menu in vm.menus | orderBy:['id', 'title', 'items']:true" ng-show="menu.show">
+  <md-toolbar ng-if="menu.title" class="md-theme-blue-grey md-hue-3 md-whiteframe-z1">
     <h1 class="md-toolbar-tools">
-      <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
+      <ng-md-icon icon="{{menu.icon}}"></ng-md-icon>
       <span flex></span>
-      <md-button class="md-icon-button md-mini" ng-click="vm.close('left')" aria-label="Close menu">
-        <ng-md-icon icon="close"></ng-md-icon>
-      </md-button>
+      <span style="font-weight: 700;">{{menu.title}}</span>
     </h1>
   </md-toolbar>
-  <md-content>
-    <md-list>
-      <md-list-item ui-sref="root.home" ng-click="vm.close('left')"><ng-md-icon icon="home"></ng-md-icon><span flex></span><span>homepage</span></md-list-item>
-    </md-list>
-  </md-content>
-</md-sidenav>
+  <md-list>
+    <span ng-repeat="item in menu.items | orderBy: order">
+      <md-list-item ui-sref="{{item.state}}" ng-click="vm.close('left')">
+        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+        <span flex></span>
+        <span>{{item.title}}</span>
+      </md-list-item>
+    </span>
+  </md-list>
+  <md-divider></md-divider>
+</span>
