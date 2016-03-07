@@ -26,7 +26,7 @@
       });
 
       it('should have a vm.close variable that is a function', function () {
-        expect($scope.vm.close).to.be.an('function');
+        expect($scope.vm.close).to.be.a('function');
       });
     });
   });
