@@ -9,6 +9,7 @@
 
   function SideNavRightController($mdSidenav) {
     var vm = this;
+    vm.menus = menuFactory.sidenavright.items;
 
     vm.close = function(navID) {
       $mdSidenav(navID)
