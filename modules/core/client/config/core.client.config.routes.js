@@ -9,7 +9,6 @@
 
   function routeConfig($stateProvider, $urlRouterProvider) {
     // Redirect to 404 when route not found
-
     $urlRouterProvider.otherwise(function ($injector, $location) {
       $injector.get('$state').transitionTo('root.not-found', null, {
         location: false
@@ -27,13 +26,19 @@
           templateUrl: 'modules/core/client/views/core.client.views.header.html'
         },
         'main': {
-
         },
         'leftnav': {
-          
+          controller: 'SideNavLeftController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.sidenav.left.html'
         },
         'rightnav': {
-
+          controller: 'SideNavRightController',
+          controllerAs: 'vm',
+          templateUrl: 'modules/core/client/views/core.client.views.sidenav.right.html'
+        },
+        'footer': {
+          templateUrl: 'modules/core/client/views/core.client.views.footer.html'
         }
       }
     })
@@ -89,5 +94,4 @@
 
     console.log('Core::Routes::Loaded', $stateProvider);
   }
-
 })();

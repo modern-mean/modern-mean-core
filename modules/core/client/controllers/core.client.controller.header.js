@@ -5,13 +5,20 @@
     .module('core')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['menuService', '$state', '$mdSidenav'];
+  HeaderController.$inject = ['$mdSidenav', 'lodash'];
 
-  function HeaderController(menuService, $state, $mdSidenav) {
+  function HeaderController($mdSidenav, lodash) {
     var vm = this;
 
-    vm.menus = menuService.toolbar.items;
+    vm.toggleLeft = buildDelayedToggler('left');
+    vm.toggleRight = buildDelayedToggler('right');
 
+    function buildDelayedToggler(navID) {
+      return lodash.debounce(function() {
+        $mdSidenav(navID)
+          .toggle()
+      }, 200);
+    }
 
     console.log('HeaderController::Init', vm);
   }

@@ -1,7 +1,12 @@
-<md-content>
-  <h1 class="md-display-3">Page Not Found</h1>
-  <div class="alert alert-danger" role="alert">
-    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-    <span class="sr-only">Error:</span> Page Not Found
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Page Not Found</h1>
   </div>
+</md-toolbar>
+<md-content layout-padding>
+  <h3 class="md-title">ERROR: 404</h3>
+  <p>Page not found</p>
+  <section layout="row" layout-align="center center">
+    Perhaps try <md-button ui-sref="root.home" class="md-raised md-default" aria-label="Back to home">homepage</md-button>
+  </section>
 </md-content>

@@ -33,7 +33,8 @@
       expect(state.views.leftnav).to.be.an('object');
       //LeftNav
       expect(state.views.rightnav).to.be.an('object');
-
+      //footer
+      expect(state.views.footer).to.be.an('object');
     });
 
     it('should have a home state', function () {
