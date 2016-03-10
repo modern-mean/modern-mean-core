@@ -14,7 +14,6 @@
     };
 
     function link(scope, element) {
-
       $rootScope.$on('$stateChangeSuccess', listener);
 
       function listener(event, toState) {

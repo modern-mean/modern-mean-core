@@ -20,8 +20,11 @@
 
     it('should inject the state.data.pageTitle into DOM', function() {
       $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
+
       var element = $compile('<div page-title></div>')($rootScope);
+
       $rootScope.$digest();
+
       expect(element.html()).to.equal('Modern MEAN - Welcome');
     });
 
@@ -29,7 +32,9 @@
       $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
       $state.get('root.home').data.pageTitle = undefined;
       $state.transitionTo('root.home');
+
       var element = $compile('<div page-title></div>')($rootScope);
+
       $scope.$digest();
 
       expect(element.html()).to.equal('Modern MEAN');

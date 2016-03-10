@@ -6,16 +6,12 @@
 
     beforeEach(module('core'));
 
-
     beforeEach(inject(function(_menuService_) {
       menuService = _menuService_;
     }));
 
-
     describe('Core Menu', function () {
-
       describe('Toolbar', function () {
-
         beforeEach(inject(function(_menuService_) {
           menuService = _menuService_;
         }));
@@ -50,10 +46,7 @@
             menuService.toolbar.addItem({ state: 'whatever' });
             expect(menuService.toolbar.items.length).to.equal(prevLen + 1);
           });
-
         });
-
-
 
         it('should have property getItem that is a function', function () {
           expect(menuService.toolbar.getItem).to.be.a('function');
@@ -64,17 +57,17 @@
             menuService = _menuService_;
           }));
 
-          it('should return a menu item', function () {
-            var menu = menuService.toolbar.getItem({ state: 'root.home' });
-            expect(menu).to.not.equal(undefined);
-            expect(menu.state).to.equal('root.home');
-          });
+          // This is removed from core menu system
+          // it('should return a menu item', function () {
+          //   var menu = menuService.toolbar.getItem({ state: 'root.home' });
+          //   expect(menu).to.not.equal(undefined);
+          //   expect(menu.state).to.equal('root.home');
+          // });
 
           it('should return undefined if not found', function () {
             var menu = menuService.toolbar.getItem({ state: 'asdfasdfasfdasdf' });
             expect(menu).to.equal(undefined);
           });
-
         });
 
         it('should have property removeItem that is a function', function () {
@@ -101,14 +94,8 @@
             menuService.toolbar.items = undefined;
             expect(menuService.toolbar.removeItem({ state: 'okiedokie' })).to.equal(undefined);
           });
-
         });
-
       });
-
-
-
     });
-
   });
 })();

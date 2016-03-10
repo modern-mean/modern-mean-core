@@ -3,11 +3,11 @@
 
   angular
     .module('core')
-    .factory('menuService', menuService);
+    .factory('menuFactory', menuFactory);
 
-  menuService.$inject = ['lodash'];
-  function menuService(lodash) {
-    var service = {
+  menuFactory.$inject = ['lodash'];
+  function menuFactory(lodash) {
+    var factory = {
       toolbar: {
         items: [],
         addItem: addItem,
@@ -56,6 +56,6 @@
       }
     }
 
-    return service;
+    return factory;
   }
 })();
