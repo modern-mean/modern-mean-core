@@ -24,7 +24,7 @@ restart.displayName = 'Nodemon Restart Server';
 
 function watch(done) {
   livereload.listen();
-  gulp.watch(['modules/**/*.{js,css,html}', '!**/layout.server.view.html'], gulp.series(build.build, restart, livereloadChanged));
+  gulp.watch(['modules/**/*.{js,css,html}'], gulp.series(build.build, restart, livereloadChanged));
   return done();
 }
 
