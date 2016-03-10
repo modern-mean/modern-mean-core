@@ -5,10 +5,11 @@
     .module('users.admin')
     .controller('UserController', UserController);
 
-  UserController.$inject = ['userResolve', '$state'];
+  UserController.$inject = ['Authentication', 'userResolve', '$state'];
 
-  function UserController(userResolve, $state) {
+  function UserController(Authentication, userResolve, $state) {
     var vm = this;
+    vm.authentication = Authentication;
 
     vm.remove = remove;
     vm.update = update;

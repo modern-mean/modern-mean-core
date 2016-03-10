@@ -1,20 +1,15 @@
-<md-content>
-  <h1 class="md-display-1">Change Profile Picture</h1>
-
-    <div class="form-group text-center" ng-show="!vm.file">
-      <img ng-src="{{vm.user.profileImageURL}}" alt="{{vm.user.displayName}}" class="img-thumbnail user-profile-picture">
-    </div>
-    <md-input-container class="md-block">
-      <img ngf-src="vm.file" class="">
-      <md-button ng-show="vm.file" ng-click="vm.upload()" class="md-raised md-primary" aria-label="Save Profile">Save Picture</md-button>
-      <div
-        ng-show="!vm.file"
-        ngf-select ngf-drop ng-model="vm.file"
-        class="drop-box ng-pristine ng-valid" ngf-drop-available="dropAvailable">Select File
-        <span ng-show="dropAvailable" class=""> or Drop File</span>
-      </div>
-    </md-input-container>
-
-
-
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Change Profile Picture</h1>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
+  <md-input-container class="md-block">
+    <input type="file" ngf-select="" ng-model="vm.file" name="file" ngf-accept="'image/*'" required="">
+  </md-input-container>
+  <section>
+    <img ng-if="!vm.file" ng-src="{{vm.user.profileImageURL}}" alt="{{vm.user.displayName}}" class="user-profile-picture">
+    <img ngf-src="vm.file" class="user-profile-picture">
+  </section>
+  <md-button ng-show="vm.file" ng-click="vm.upload()" class="md-raised md-primary" aria-label="Save Profile">Save Picture</md-button>
 </md-content>

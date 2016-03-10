@@ -1,0 +1,28 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z1" md-component-id="right">
+  <span ng-repeat="menu in vm.menus | orderBy: order" ng-show="menu.show">
+    <md-toolbar class="md-theme-blue-grey md-hue-3">
+      <h1 class="md-toolbar-tools">
+        <img ng-if="menu.image" class="header-profile-image" alt="{{menu.title}}" ng-src="{{menu.image}}">
+        <md-button ng-if="!menu.image" class="md-icon-button md-mini" ng-click="vm.close('right')" aria-label="Close Menu">
+          <ng-md-icon icon="{{menu.icon}}"></ng-md-icon>
+        </md-button>
+        <span flex></span>
+        <span style="font-weight: 700; font-size: 1.2em">{{menu.title}}</span>
+      </h1>
+    </md-toolbar>
+    <md-content>
+      <md-list>
+        <span ng-repeat="item in menu.items">
+          <md-divider ng-if="$last"></md-divider>
+          <md-list-item ui-sref="{{item.state}}" ng-click="vm.close('right')">
+            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            <span flex></span>
+            <span>{{item.title}}</span>
+          </md-list-item>
+        </span>
+        <md-divider ng-if="menu.image"></md-divider>
+        <md-list-item ng-if="menu.image" ng-click="vm.close('right')"><ng-md-icon icon="close"></ng-md-icon><span flex></span>close menu</md-list-item>
+      </md-list>
+    </md-content>
+  </span>
+</md-sidenav>

@@ -3,8 +3,6 @@
 import express from 'express';
 import { authentication } from '../controllers/users.server.controller';
 
-
-
 function init(app) {
   return new Promise(function (resolve, reject) {
     try {
@@ -23,8 +21,6 @@ function init(app) {
 
   });
 }
-
-
 
 export default init;
   /*

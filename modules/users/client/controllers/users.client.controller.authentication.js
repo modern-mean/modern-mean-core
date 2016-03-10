@@ -13,7 +13,6 @@
     vm.authentication = Authentication;
     vm.callOauthProvider = callOauthProvider;
     vm.error = $location.search().err || undefined;
-    vm.popoverMsg = PasswordValidator.getPopoverMsg();
     vm.signin = signin;
     vm.signup = signup;
 
@@ -25,7 +24,7 @@
         .signup(vm.credentials)
         .then(
           function (response) {
-            $state.go($state.previous.state.name || 'root.home', $state.previous.params);
+            $state.go($state.previous.state.name || 'root.user.dashboard', $state.previous.params);
           },
           function (err) {
             vm.error = err.data.message;
@@ -40,7 +39,15 @@
         .signin(vm.credentials)
         .then(
           function (response) {
-            $state.go($state.previous.state.name || 'root.home', $state.previous.params);
+            if($state.previous.state.name = 'root.signout') {
+              $state.previous.state.name = 'root.user.dashboard';
+            }
+
+            if($state.previous.state.name = 'root.user.authentication.signup') {
+              $state.previous.state.name = 'root.user.dashboard';
+            }
+
+            $state.go($state.previous.state.name || 'root.user.dashboard', $state.previous.params);
           },
           function (err) {
             vm.error = err.data.message;

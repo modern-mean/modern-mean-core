@@ -1,5 +1,9 @@
-<md-content>
-  <h2 class="md-display-1">Or sign up using your email</h2>
+<md-toolbar class="md-hue-2">
+  <div class="md-toolbar-tools">
+    <h2 class="md-display-1" style="font-weight: 700; font-size: 1.5em">Signup for your free Account</h2>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
   <form name="userForm" ng-submit="vm.signup(userForm.$valid)" novalidate autocomplete="off">
     <md-input-container class="md-block">
       <input type="text" id="firstName" name="firstName" ng-model="vm.credentials.firstName" placeholder="First Name" required>
@@ -30,9 +34,9 @@
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">
-      <md-button type="submit" class="md-raised md-primary" aria-label="Sign Up">Sign up</md-button>
+      <md-button ng-disabled="userForm.$invalid" type="submit" class="md-raised md-primary" aria-label="Sign Up">Sign up</md-button>
       &nbsp; or&nbsp;
-      <md-button ui-sref="authentication.signin" class="md-raised md-default" aria-label="Sign In"> Sign in</md-button>
+      <md-button ui-sref="root.user.authentication.signin" class="md-raised md-default" aria-label="Sign In"> Sign in</md-button>
     </section>
     <section layout="row" layout-align="center center" ng-show="vm.error">
       <strong ng-bind="vm.error"></strong>

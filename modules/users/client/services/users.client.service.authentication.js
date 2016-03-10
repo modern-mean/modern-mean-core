@@ -8,8 +8,6 @@
   Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', '$rootScope', 'AUTH_EVENTS', 'User'];
 
   function Authentication($q, $resource, $http, $location, $state, $rootScope, AUTH_EVENTS, User) {
-
-
     var readyPromise = $q.defer();
 
     var service = {
@@ -28,8 +26,6 @@
     function changePassword(credentials) {
       return $resource('/api/users/password').save(credentials);
     }
-
-
 
     function forgotPassword(credentials) {
       return $resource('/api/auth/forgot').save(credentials);
@@ -59,7 +55,6 @@
             function () {
               $state.go('root.user.authentication.signin');
             });
-
       });
 
     }
@@ -152,10 +147,6 @@
     //Run init
     init();
 
-
-
-
     return service;
-
   }
 })();

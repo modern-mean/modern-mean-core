@@ -17,7 +17,8 @@
       vm.success = vm.error = undefined;
 
       vm.user.$update(function (response) {
-        vm.success = response.message;
+        vm.success = true;
+        vm.user = response;
       }, function (response) {
         vm.error = response.data.message;
       });
