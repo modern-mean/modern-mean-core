@@ -1,4 +1,4 @@
-<md-content layout-padding>
+<md-content layout-padding flex>
   <section layout="row" layout-align="center center">
     <img alt="Modern-MEAN" src="/dist/img/core/client/img/brand/logo.png" />
   </section>
@@ -27,32 +27,48 @@
       </ul>
     </md-content>
   </section>
-  <div layout="row" layout-xs="column">
-    <div layout="column">
-      <md-content>
-        <h2 class="md-title"><strong>M</strong>ongoDB</h2>
-        <p><a target="_blank" href="http://mongodb.org/">MongoDB</a> is a NoSQL database. MongoDB's <a target="_blank" href="http://docs.mongodb.org/manual/">great manual</a> is the place to get started with NoSQL and MongoDB.</p>
-      </md-content>
-    </div>
-    <div layout="column">
-      <md-content>
-        <h2 class="md-title"><strong>E</strong>xpress</h2>
-        <p><a target="_blank" href="http://expressjs.com/"> Express</a> is a NodeJS server-side application web framework. Check out <a target="_blank" href="http://expressjs.com/4x/api.html">The ExpressJS API reference for more information</a> or <a target="_blank" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow</a> for more info.</p>
-      </md-content>
-    </div>
-    <div layout="column">
-      <md-content>
-        <h2 class="md-title"><strong>A</strong>ngularJS</h2>
-        <p><a target="_blank" href="http://angularjs.org/">AngularJS</a> is client-side web application framework. The <a target="_blank" href="http://www.thinkster.io/">Thinkster Popular Guide</a> and <a target="_blank" href="https://egghead.io/">Egghead Videos</a> are great resources.</p>
-      </md-content>
-    </div>
-    <div layout="column">
-      <md-content>
-        <h2 class="md-title"><strong>N</strong>ode.js</h2>
-        <p><a target="_blank" href="http://nodejs.org/">Node.js</a> is a JavaScript run-time, popular for being a web server platform. Node's website and this <a target="_blank" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">stackOverflow thread</a> offer excellent starting points to get to grasps with node.</p>
-      </md-content>
-    </div>
-  </div>
+
+  <section layout="row">
+    <md-card flex="25">
+      <md-card-content>
+        <h2><strong>M</strong>ongoDB</h2>
+        <p><a target="_blank" href="http://mongodb.org/">MongoDB</a> is a NoSQL database. MongoDB's great manual is the place to get started with NoSQL and MongoDB.</p>
+      </md-card-content>
+      <md-card-footer>
+        <a target="_blank" href="http://docs.mongodb.org/manual/">Manual</a>
+      </md-card-footer>
+    </md-card>
+    <md-card flex="25">
+      <md-card-content>
+        <h2><strong>E</strong>xpress</h2>
+        <p><a target="_blank" href="http://expressjs.com/"> Express</a> is a NodeJS server-side application web framework.</p>
+      </md-card-content>
+      <md-card-footer>
+        <a target="_blank" href="http://expressjs.com/4x/api.html">The ExpressJS API reference</a>
+        <a target="_blank" href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js">StackOverflow</a>
+      </md-card-footer>
+    </md-card>
+    <md-card flex="25">
+      <md-card-content>
+        <h2><strong>A</strong>ngularJS</h2>
+        <p><a target="_blank" href="http://angularjs.org/">AngularJS</a> is the client-side web application framework.</p>
+      </md-card-content>
+      <md-card-footer>
+        <a target="_blank" href="http://www.thinkster.io/">Thinkster Popular Guide</a>
+        <a target="_blank" href="https://egghead.io/">Egghead Videos</a>
+      </md-card-footer>
+    </md-card>
+    <md-card flex="25">
+      <md-card-content>
+        <h2><strong>N</strong>ode.js</h2>
+        <p><a target="_blank" href="http://nodejs.org/">Node.js</a> is a JavaScript run-time, popular for being a web server platform.</p>
+      </md-card-content>
+      <md-card-footer>
+        <a target="_blank" href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js">stackOverflow thread</a>
+      </md-card-footer>
+    </md-card>
+  </section>
+  
   <div layout="row">
     <md-content>
       <h2 class="md-display">Modern-MEAN Documentation</h2>
