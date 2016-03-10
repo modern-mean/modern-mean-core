@@ -18,13 +18,15 @@
   <!-- endinject -->
 </head>
 <body ng-cloak>
-  <header ui-view="header"></header>
-  <section layout="row">
-    <section ui-view="leftnav"></section>
-    <section ui-view="main"></section>
-    <section ui-view="rightnav"></section>
-  </section>
-  <footer ui-view="footer"></footer>
+  <div layout="column" layout-fill flex>
+    <md-toolbar layout="row" class="md-whiteframe-z2" ui-view="header"></md-toolbar>
+    </md-toolbar>
+    <div layout="row" flex>
+      <section ui-view="leftnav"></section>
+      <md-content flex ui-view="main"></md-content>
+      <section ui-view="rightnav"></section>
+    </div>
+  </div>
   <!-- inject:js -->
   <!-- endinject -->
   {% if livereload %}
