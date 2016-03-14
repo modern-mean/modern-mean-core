@@ -8,10 +8,10 @@
 
   function tracking(AnalyticsProvider) {
     AnalyticsProvider.setAccount({
-        name: "tracker",
-        tracker: 'UA-12345678-1',
-        trackEvent: true
-      });
+      name: "tracker",
+      tracker: 'UA-XXXXXXXX-XX',
+      trackEvent: true
+    });
 
     // Track all routes (default is true).
     AnalyticsProvider.trackPages(true);
@@ -25,7 +25,7 @@
 
     // URL prefix (default is empty).
     // Helpful when the app doesn't run in the root directory.
-    // AnalyticsProvider.trackPrefix('modern-mean');
+    // AnalyticsProvider.trackPrefix('/');
 
     // Change the default page event name.
     // Helpful when using ui-router, which fires $stateChangeSuccess instead of $routeChangeSuccess.
