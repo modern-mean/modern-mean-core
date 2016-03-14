@@ -80,7 +80,7 @@ function modules(app) {
       .then(files => {
         files.forEach(file => {
           console.log(chalk.yellow('Express::Module::Match::' + file));
-          let promise = require(path.resolve(file)).default(app);
+          let promise = require(path.resolve(file)).default.init(app);
           promises.push(promise);
         });
 
@@ -101,7 +101,7 @@ function modules(app) {
 function core(app) {
   return new Promise(function (resolve, reject) {
     //TODO  Change to System.import when its available
-    require(path.resolve(config.files.modules.core)).default(app)
+    require(path.resolve(config.files.modules.core)).default.init(app)
       .then(function () {
         console.log(chalk.green('Express::Core::Success'));
         resolve(app);

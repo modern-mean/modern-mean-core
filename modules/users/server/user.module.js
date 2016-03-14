@@ -45,4 +45,7 @@ function init(app) {
   return Promise.all([modelInit, expressInit]);
 }
 
-export default init;
+let service = { init: init };
+
+export default service;
+export { init }
