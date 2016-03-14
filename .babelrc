@@ -5,8 +5,7 @@
       "plugins": ["transform-remove-console"]
     },
     "test": {
-      "presets": ["es2015"],
-      "plugins": ["transform-remove-console"]
+      "presets": ["es2015"]
     },
     "development": {
       "presets": ["es2015"]
