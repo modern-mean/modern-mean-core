@@ -1,9 +1,7 @@
 'use strict';
 
-import _ from 'lodash';
 import mongoose from 'mongoose';
 import chalk from 'chalk';
-import crypto from 'crypto';
 import config from 'modernMean/config';
 
 
@@ -11,7 +9,7 @@ import config from 'modernMean/config';
 var seedOptions = {
   seedUser: {
     provider: 'local',
-    email: process.env.MONGO_SEED_USER_EMAIL || 'user@localhost.com',
+    email: 'user@localhost.com',
     firstName: 'User',
     lastName: 'Local',
     displayName: 'User Local',
@@ -19,7 +17,7 @@ var seedOptions = {
   },
   seedAdmin: {
     provider: 'local',
-    email: process.env.MONGO_SEED_ADMIN_EMAIL || 'admin@localhost.com',
+    email: 'admin@localhost.com',
     firstName: 'Admin',
     lastName: 'Local',
     displayName: 'Admin Local',

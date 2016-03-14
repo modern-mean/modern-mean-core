@@ -1,6 +1,6 @@
 'use strict';
 
-import { get as model } from '../models/user.server.model';
+import { get as model } from '../models/users.server.model.user';
 import mongoose from 'mongoose';
 
 function read(req, res) {

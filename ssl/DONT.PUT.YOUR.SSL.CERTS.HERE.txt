@@ -1,0 +1,1 @@
+You should use the environment variables to point to your production SSL certs.  Putting certs here will commit them to your project.

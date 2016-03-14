@@ -1,6 +1,6 @@
 'use strict';
 
-import { get as model } from '../../models/user.server.model';
+import { get as model } from '../../models/users.server.model.user';
 import passport from 'passport';
 import config from 'modernMean/config';
 import chalk from 'chalk';

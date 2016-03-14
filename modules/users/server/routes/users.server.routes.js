@@ -5,9 +5,9 @@ import express from 'express';
 import { profile, password } from '../controllers/users.server.controller';
 import chalk from 'chalk';
 
-
 function init(app) {
   return new Promise(function (resolve, reject) {
+    console.log(chalk.bold.green('Users::Routes::Start'));
     try {
       let router = express.Router();
 
@@ -23,6 +23,7 @@ function init(app) {
       router.route('/picture').post(profile.changeProfilePicture);
 
       app.use('/api/users', router);
+      console.log(chalk.bold.green('Users::Routes::Success'));
       resolve(app);
     } catch(err) {
       reject(err);

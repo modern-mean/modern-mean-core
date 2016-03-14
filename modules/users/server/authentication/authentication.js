@@ -23,4 +23,4 @@ function authentication(app) {
   });
 }
 
-export { authentication };
+export default authentication;
