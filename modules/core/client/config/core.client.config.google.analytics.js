@@ -8,7 +8,7 @@
 
   function tracking(AnalyticsProvider) {
     AnalyticsProvider.setAccount({
-      name: "tracker",
+      name: 'tracker',
       tracker: 'UA-XXXXXXXX-XX',
       trackEvent: true
     });
