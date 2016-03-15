@@ -53,7 +53,7 @@ function images() {
 images.displayName = 'Build Images';
 
 function injectLayout() {
-  return gulp.src('./build/core/server/views/layout.server.view.html')
+  return gulp.src('./build/core/server/views/index.server.view.html')
     .pipe(inject(gulp.src(['public/dist/angular.js', 'public/dist/**/*.{js,css}'], {read: false}), {
       ignorePath: '/public'
     }))

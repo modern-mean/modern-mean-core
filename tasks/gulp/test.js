@@ -20,7 +20,7 @@ import debug from 'gulp-debug';
 
 
 function lint() {
-  return gulp.src(['modules/**/*.js'])
+  return gulp.src(['./modules/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

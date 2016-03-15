@@ -23,11 +23,16 @@ function renderNotFound(req, res) {
       });
     },
     'default': function () {
-      res.send('Path not found');
+      res.json({
+        error: 'Path not found'
+      });
     }
   });
 }
 
+let controller = { renderIndex: renderIndex, renderServerError: renderServerError, renderNotFound: renderNotFound };
+
+export default controller;
 export {
   renderIndex,
   renderServerError,

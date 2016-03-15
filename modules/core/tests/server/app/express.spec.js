@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai'
+import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import expressModule from '../../../server/app/express';
 import express from 'express';
@@ -168,6 +168,16 @@ describe('/modules/core/server/app/express.js', () => {
   describe('modules()', () => {
 
     describe('success', () => {
+      let saveConfig;
+
+      beforeEach(() => {
+        saveConfig = config.files.modules.custom;
+        config.files.modules.custom = ['./modules/core/tests/server/resolveModule.js'];
+      });
+
+      afterEach(() => {
+        config.files.modules.custom = saveConfig;
+      });
 
       it('should resolve a promise on success', () => {
         let app = express();

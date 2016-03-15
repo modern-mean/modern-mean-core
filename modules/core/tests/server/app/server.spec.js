@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai'
+import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import app from '../../../server/app/init';
 
@@ -13,13 +13,13 @@ let should = chai.should();
 
 
 describe('/modules/core/server/app/server.js', function () {
+  let mockStart, mockStop;
 
   describe('success', () => {
-    let mockStart;
 
     beforeEach(() => {
       mockStart = sinon.stub(app, 'start').resolves();
-      require('../../../server/app/server');
+
     });
 
     afterEach(() => {
@@ -28,32 +28,33 @@ describe('/modules/core/server/app/server.js', function () {
     });
 
     it('should call app.start()', function () {
-
+      require('../../../server/app/server');
+      //delete require.cache[require.resolve('../../../server/app/server')];
       return mockStart.should.have.been.calledOnce;
     });
 
   });
 
   describe('error', () => {
-    let mockStart, mockStop;
+
 
     beforeEach(() => {
       mockStart = sinon.stub(app, 'start').rejects('test');
       mockStop = sinon.stub(app, 'stop').resolves();
-      require('../../../server/app/server');
     });
 
     afterEach(() => {
       mockStart.restore();
       mockStop.restore();
-      delete require.cache[require.resolve('../../../server/app/server')];
     });
 
-    it('should call app.stop()', function (done) {
+    it('should call app.stop()', (done) => {
+      require('../../../server/app/server');
+      //delete require.cache[require.resolve('../../../server/app/server')];
       setTimeout(() => {
-        mockStop.should.have.been.calledOnce;
-        return done();
-      }, 25);
+        mockStop.should.have.been.called;
+        done();
+      }, 75);
     });
 
   });

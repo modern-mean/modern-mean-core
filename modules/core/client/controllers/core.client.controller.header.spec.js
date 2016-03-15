@@ -20,7 +20,7 @@
             toggle: toggleSpy
           };
         };
-      })
+      });
     }));
 
     beforeEach(inject(function(_$state_, _$rootScope_, $controller, _$mdSidenav_) {
