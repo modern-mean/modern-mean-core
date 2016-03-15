@@ -14,9 +14,10 @@
     };
 
     function link(scope, element) {
-      $rootScope.$on('$stateChangeSuccess', listener);
+      $rootScope.$on('$stateChangeStart', listener);
 
       function listener(event, toState) {
+        console.log('Core::Directive::PageTilte', toState.data.pageTitle);
         if (toState.data && toState.data.pageTitle) {
           element.html(CORE_CONSTANTS.page.title + ' - ' + toState.data.pageTitle);
         } else {

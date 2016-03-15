@@ -8,7 +8,7 @@
       $scope,
       $templateCache;
 
-    beforeEach(module('core'));
+    beforeEach(module());
 
     beforeEach(inject(function(_$compile_, _$rootScope_, _$state_, _$templateCache_){
       $compile = _$compile_;
@@ -19,24 +19,16 @@
     }));
 
     it('should inject the state.data.pageTitle into DOM', function() {
-      $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
-
       var element = $compile('<div page-title></div>')($rootScope);
-
       $rootScope.$digest();
-
       expect(element.html()).to.equal('Modern MEAN - Welcome');
     });
 
     it('should inject the core page title constant into DOM if page title doesnt exist on the state', function() {
-      $templateCache.put('modules/core/client/views/core.client.views.home.html', '<div></div>');
       $state.get('root.home').data.pageTitle = undefined;
-      $state.transitionTo('root.home');
-
       var element = $compile('<div page-title></div>')($rootScope);
-
-      $scope.$digest();
-
+      $state.transitionTo('root.home');
+      $rootScope.$digest();
       expect(element.html()).to.equal('Modern MEAN');
     });
   });
