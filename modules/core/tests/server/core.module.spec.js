@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import * as core from '../../server/core.module';
-import routes from '../../server/routes//core.server.routes';
+import routes from '../../server/routes/core.server.routes';
 import express from 'express';
 
 chai.use(promised);
@@ -11,8 +11,6 @@ chai.use(sinonChai);
 
 let expect = chai.expect;
 let should = chai.should();
-
-console.log(core.init);
 
 describe('/modules/core/server/core.module.js', () => {
 

@@ -18,7 +18,7 @@ function init(app) {
       .init()
       .then(function (model) {
         if (config.seedDB) {
-          userSeed();
+          userSeed.init();
         }
         resolve();
       })
@@ -29,9 +29,9 @@ function init(app) {
 
 
   let expressInit = new Promise(function (resolve, reject) {
-    authentication(app)
-      .then(userRoutes)
-      .then(authRoutes)
+    authentication.init(app)
+      .then(userRoutes.init)
+      .then(authRoutes.init)
       .then(function () {
         console.log(chalk.bold.green('Users::Init::Success'));
         resolve(app);

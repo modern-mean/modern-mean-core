@@ -24,9 +24,10 @@ function init(app) {
   });
 }
 
+let controller = { init: init };
 
-
-export default init;
+export default controller;
+export { init };
   /*
 module.exports = function (app) {
   // User Routes

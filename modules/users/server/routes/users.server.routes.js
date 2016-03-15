@@ -32,4 +32,7 @@ function init(app) {
   });
 }
 
-export default init;
+let service = { init: init };
+
+export default service;
+export { init };

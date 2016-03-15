@@ -29,12 +29,12 @@ testTask.displayName = 'test';
 gulp.task(testTask);
 
 //Gulp test:server
-var testServerTask = gulp.series(setTest, build.server, test.server.watch);
+var testServerTask = gulp.series(build.clean, setTest, build.server, test.server.watch);
 testServerTask.displayName = 'test:server';
 gulp.task(testServerTask);
 
 //Gulp test:client
-var testClientTask = gulp.series(setTest, build.build, test.client.watch);
+var testClientTask = gulp.series(build.clean, setTest, build.build, test.client.watch);
 testClientTask.displayName = 'test:client';
 gulp.task(testClientTask);
 

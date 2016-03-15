@@ -1,13 +1,13 @@
 import adminRoutes from './routes/admin.server.routes';
-import { policy } from './policies/admin.server.policy';
+import adminPolicy from './policies/admin.server.policy';
 import chalk from 'chalk';
 
 
 function init(app) {
   return new Promise(function(resolve, reject) {
     console.log(chalk.green('UsersAdmin::Init::Start'));
-    adminRoutes(app)
-      .then(policy)
+    adminRoutes.init(app)
+      .then(adminPolicy.policy)
       .then(function () {
         console.log(chalk.bold.green('UsersAdmin::Init::Success'));
         resolve(app);

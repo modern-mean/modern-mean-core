@@ -110,4 +110,7 @@ function start() {
   });
 }
 
-export default start;
+let service = { init: start };
+
+export default service;
+export { start as init };
