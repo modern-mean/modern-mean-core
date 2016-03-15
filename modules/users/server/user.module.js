@@ -48,4 +48,4 @@ function init(app) {
 let service = { init: init };
 
 export default service;
-export { init }
+export { init };

@@ -44,7 +44,7 @@ describe('/modules/core/server/app/init.js', function () {
 
       it('should reject the promise', function () {
         let promise = app.start();
-        return promise.should.eventually.be.resolved;
+        return promise.should.eventually.be.rejected;
       });
     });
 
@@ -157,7 +157,6 @@ describe('/modules/core/server/app/init.js', function () {
           .then(function () {
             request.get('https://localhost:8082/')
               .end(function(err, res){
-                console.log(err);
                 expect(res.status).to.equal(200);
                 app.stop()
                   .then(function () {
@@ -166,6 +165,7 @@ describe('/modules/core/server/app/init.js', function () {
               });
           });
       });
+
     });
 
   });
@@ -201,8 +201,8 @@ describe('/modules/core/server/app/init.js', function () {
       let mockExpress, mockMongoose;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'destroy').returns(new Promise(function (resolve, reject) { resolve(); }));
-        mockMongoose = sinon.stub(mongoose, 'disconnect').returns(new Promise(function (resolve, reject) { reject(); }));
+        mockExpress = sinon.stub(express, 'destroy').resolves();
+        mockMongoose = sinon.stub(mongoose, 'disconnect').rejects();
       });
 
       afterEach(function () {

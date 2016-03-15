@@ -3,8 +3,6 @@
 import chalk from 'chalk';
 import app from './init';
 
-
-
 app
   .start()
   .then(function (app) {

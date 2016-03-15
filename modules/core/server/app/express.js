@@ -195,7 +195,7 @@ function destroy() {
   return Promise.all([httpServerPromise, httpsServerPromise])
           .then(() => {
             console.log(chalk.green('Express::Destroy::Success'));
-          })
+          });
 }
 
 function getHttpServer() {

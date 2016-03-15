@@ -209,7 +209,7 @@ function changePassword(req, res, next) {
           })
           .catch(function (err) {
             return res.status(400).send(err);
-          })
+          });
       } else {
         return res.status(400).send({
           message: 'Current password is incorrect'
@@ -226,4 +226,4 @@ export {
   //forgot,
   //reset,
   //validateResetToken
-}
+};

@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai'
+import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import mongoose from '../../../server/app/mongoose';
 import mongooseModule from 'mongoose';
@@ -88,7 +88,7 @@ describe('/modules/core/server/app/mongoose.js', function () {
         return mongoose.disconnect()
           .then(function () {
             return mongoose.disconnect().should.be.fulfilled;
-          })
+          });
       });
 
       it('should disconnect from mongoDB', function () {

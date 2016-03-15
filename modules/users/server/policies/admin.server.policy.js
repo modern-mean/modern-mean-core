@@ -40,7 +40,7 @@ function allowed(req, res, next) {
     });
 }
 
-let adminPolicy = { policy: policy, allowed: allowed }
+let adminPolicy = { policy: policy, allowed: allowed };
 
-export { policy, allowed }
+export { policy, allowed };
 export default adminPolicy;

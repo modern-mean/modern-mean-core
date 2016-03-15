@@ -2,7 +2,7 @@
 
 function init () {
   return new Promise(function (resolve, reject) {
-    reject('rejectModule Error');
+    resolve('Module Success');
   });
 }
 

@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai'
+import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import * as core from '../../server/core.module';
 import routes from '../../server/routes//core.server.routes';
