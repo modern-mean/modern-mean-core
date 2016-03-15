@@ -1,5 +1,5 @@
-<md-sidenav md-component-id="coreLeftNav" class="md-sidenav-left md-whiteframe-z2">
-  <md-toolbar class="md-theme-blue-grey md-hue-3 md-whiteframe-z2">
+<md-sidenav md-component-id="coreLeftNav" layout="column" class="md-sidenav-left md-whiteframe-z2">
+  <md-toolbar layout="row" class="md-theme-blue-grey md-hue-3 md-whiteframe-z2">
     <h1 class="md-toolbar-tools">
       <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
       <span flex></span>
@@ -8,12 +8,14 @@
       </md-button>
     </h1>
   </md-toolbar>
-  <md-list>
-    <md-list-item ui-sref="root.home" ng-click="vm.close('left')">
-      <ng-md-icon icon="home"></ng-md-icon>
-      <span flex></span>
-      <span>Home</span>
-    </md-list-item>
-  </md-list>
-  <md-divider></md-divider>
+  <md-content flex>
+    <md-list>
+      <md-list-item ui-sref="root.home" ng-click="vm.close('coreLeftNav')">
+        <ng-md-icon icon="home"></ng-md-icon>
+        <span flex></span>
+        <span>Home</span>
+      </md-list-item>
+      <md-divider></md-divider>
+    </md-list>
+  </md-content>
 </md-sidenav>
