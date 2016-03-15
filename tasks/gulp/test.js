@@ -53,9 +53,9 @@ function mochaSingle(done) {
   	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
   	.on('finish', function () {
   	  return gulp.src(config.files.server.tests)
-  		//.pipe(babel())
-  		//.pipe(injectModules())
-  		.pipe(mocha())
+  		.pipe(mocha({
+        reporter: 'dot'
+      }))
   		.pipe(istanbul.writeReports(
         {
           dir: './.coverdata/server',

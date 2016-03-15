@@ -8,7 +8,7 @@ import { strategy as local } from './strategies/local';
 import chalk from 'chalk';
 
 
-function authentication(app) {
+function init(app) {
   return new Promise(function (resolve, reject) {
     Promise.all([ jwt(app), local(app) ])
       .then(function () {
@@ -23,4 +23,7 @@ function authentication(app) {
   });
 }
 
-export default authentication;
+let service = { init: init };
+
+export default service;
+export { init };

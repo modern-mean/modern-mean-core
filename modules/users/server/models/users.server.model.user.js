@@ -196,6 +196,14 @@ UserSchema.statics.generateRandomPassphrase = function () {
   });
 };
 
+UserSchema.set('toJSON', {
+  transform: function(doc, ret, options) {
+    delete ret.password;
+    delete ret.salt;
+    return ret;
+  }
+});
+
 function init() {
   return new Promise(function (resolve, reject) {
     let model = mongoose.model('User', UserSchema);

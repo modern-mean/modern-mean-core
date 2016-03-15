@@ -34,4 +34,7 @@ function init(app) {
   });
 }
 
-export default init;
+let routes = { init: init };
+
+export default routes;
+export { init };
