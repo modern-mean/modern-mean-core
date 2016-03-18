@@ -152,7 +152,6 @@ describe('/modules/core/server/app/init.js', function () {
       });
 
       it('should start the https server and be listening', function (done) {
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
         app.start()
           .then(function () {
             request.get('https://localhost:8082/')
@@ -237,7 +236,7 @@ describe('/modules/core/server/app/init.js', function () {
         app.start().then(function () {
           app.stop()
             .then(function () {
-              request.get('http://localhost:8444/')
+              request.get('http://localhost:8082/')
                 .end(function(err, res){
                   expect(err.code).to.equal('ECONNREFUSED');
                   done();

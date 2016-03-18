@@ -11,7 +11,7 @@ function signToken(user, options) {
       jwtOptions;
 
     if (!user || !user._id) {
-      return null;
+      reject('User not valid');
     }
 
     options = options || {};
@@ -28,4 +28,7 @@ function signToken(user, options) {
   });
 }
 
+let service = { signToken: signToken };
+
+export default service;
 export { signToken };

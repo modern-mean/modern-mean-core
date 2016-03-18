@@ -1,11 +1,11 @@
-'use strict';
+import path from 'path';
 
 function renderIndex(req, res) {
-  res.render('build/core/server/views/index');
+  res.render(__dirname + '/../views/index');
 }
 
 function renderServerError(req, res) {
-  res.status(500).render('build/core/server/views/500', {
+  res.status(500).render(__dirname + '/../views/500', {
     error: 'Oops! Something went wrong...'
   });
 }
@@ -13,7 +13,7 @@ function renderServerError(req, res) {
 function renderNotFound(req, res) {
   res.status(404).format({
     'text/html': function () {
-      res.render('build/core/server/views/404', {
+      res.render(__dirname + '/../views/404', {
         url: req.originalUrl
       });
     },

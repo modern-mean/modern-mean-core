@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose';
 import passport from 'passport';
-import * as authentication from '../../config/jwt';
+import authentication from '../../authentication/jwtToken';
 import { get as model } from '../../models/users.server.model.user';
 
 // URLs for which user can't be redirected on signin
@@ -41,23 +41,15 @@ function signup(req, res) {
 }
 
 
-function signin(req, res, next) {
-  passport.authenticate('local', function (err, user) {
-    if (err) {
-      console.log('passport authenticate error', err);
-      return res.status(400).send(err);
-    } else {
-      // Remove sensitive data before login
-      user.password = undefined;
-      user.salt = undefined;
-
-      authentication
-        .signToken(user)
-        .then(function (token) {
-          return res.json({ user: user, token: token });
-        });
-    }
-  })(req, res, next);
+function signin(req, res) {
+  authentication
+    .signToken(req.user)
+    .then(function (token) {
+      return res.json({ user: req.user, token: token });
+    })
+    .catch(err => {
+      return res.status(500).send(err);
+    });
 }
 /*
 function oauthCall(strategy, scope) {

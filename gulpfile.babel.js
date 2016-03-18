@@ -14,6 +14,7 @@ function setDevelopment(done) {
 
 function setTest(done) {
   process.env.NODE_ENV = 'test';
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   return done();
 }
 
@@ -29,7 +30,7 @@ testTask.displayName = 'test';
 gulp.task(testTask);
 
 //Gulp test:server
-var testServerTask = gulp.series(build.clean, setTest, build.server, test.server.watch);
+var testServerTask = gulp.series(build.clean, setTest, build.config, test.server.watch);
 testServerTask.displayName = 'test:server';
 gulp.task(testServerTask);
 

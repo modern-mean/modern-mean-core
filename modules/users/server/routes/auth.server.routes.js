@@ -1,9 +1,6 @@
-'use strict';
-
 import express from 'express';
+import passport from 'passport';
 import { authentication } from '../controllers/users.server.controller';
-
-
 
 function init(app) {
   return new Promise(function (resolve, reject) {
@@ -11,7 +8,7 @@ function init(app) {
       let router = express.Router();
 
       router.route('/signup').post(authentication.signup);
-      router.route('/signin').post(authentication.signin);
+      router.route('/signin').post(passport.authenticate('local', { session: false }), authentication.signin);
 
       app.use('/api/auth', router);
 

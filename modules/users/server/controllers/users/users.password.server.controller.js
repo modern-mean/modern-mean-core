@@ -6,7 +6,7 @@ import config from 'modernMean/config';
 import nodemailer from 'nodemailer';
 import async from 'async';
 import crypto from 'crypto';
-import * as authentication from '../../config/jwt';
+import * as authentication from '../../authentication/jwtToken';
 
 
 

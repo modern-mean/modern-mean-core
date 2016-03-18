@@ -49,11 +49,11 @@ function stop() {
   return new Promise(function (resolve, reject) {
     Promise.all([express.destroy(), mongoose.disconnect()])
       .then(function () {
-        console.log(chalk.bold.cyan('Express::Stop::Success'));
+        console.log(chalk.bold.cyan('MEAN::Stop::Success'));
         resolve();
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('Express::Stop::Error' + err));
+        console.log(chalk.bold.red('MEAN::Stop::Error' + err));
         reject();
       });
   });

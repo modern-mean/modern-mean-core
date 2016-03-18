@@ -6,8 +6,7 @@ import chalk from 'chalk';
 
 let LocalStrategy = require('passport-local').Strategy;
 
-
-export function strategy() {
+function strategy() {
   return new Promise(function (resolve, reject) {
     // Use local strategy
     passport.use(new LocalStrategy({
@@ -19,18 +18,21 @@ export function strategy() {
       User.findOne({ email: email.toLowerCase() })
         .then(function (user) {
           if (!user || !user.authenticate(password)) {
-            return done({
-              message: 'Invalid email or password'
-            }, false);
+            return done('Invalid email or password', false);
           }
 
           return done(null, user);
         })
         .catch(function (err) {
-          return done(err);
+          return done(err, false);
         });
     }));
     console.log(chalk.bold.green('Users::Authentication::Local::Success'));
     resolve();
   });
 }
+
+let service = { strategy: strategy };
+
+export default service;
+export { strategy };

@@ -45,6 +45,7 @@ describe('/modules/users/server/users.module.js', () => {
         });
 
         afterEach(() => {
+          mockSeed.restore();
           mockModel.restore();
           config.seedDB = false;
         });

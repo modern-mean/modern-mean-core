@@ -1,24 +1,22 @@
-'use strict';
-
-import { get as model } from '../../models/users.server.model.user';
 import passport from 'passport';
 import config from 'modernMean/config';
 import chalk from 'chalk';
+import JwtStrategy from 'passport-jwt';
+import { get as model } from '../../models/users.server.model.user';
 
-let JwtStrategy = require('passport-jwt').Strategy;
+let jwtStrategy = JwtStrategy.Strategy;
+let extract = JwtStrategy.ExtractJwt;
 
-
-
-export function strategy() {
+function strategy() {
   return new Promise(function (resolve, reject) {
-
     var opts = {};
     opts.secretOrKey = config.jwt.secret;
+    opts.jwtFromRequest = extract.fromAuthHeader();
 
-    passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    passport.use(new jwtStrategy(opts, function(jwt_payload, done) {
 
       let User = model();
-      User.findById({ _id: jwt_payload.user }, '-salt -password')
+      User.findById({ _id: jwt_payload.user })
         .then(function (user) {
           if (!user) {
             return done('User not found');
@@ -35,3 +33,8 @@ export function strategy() {
     resolve();
   });
 }
+
+let service = { strategy: strategy };
+
+export default service;
+export { strategy };
