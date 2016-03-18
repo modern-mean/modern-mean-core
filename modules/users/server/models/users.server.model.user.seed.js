@@ -4,113 +4,122 @@ import mongoose from 'mongoose';
 import chalk from 'chalk';
 import config from 'modernMean/config';
 
-
-// global seed options object
-var seedOptions = {
-  seedUser: {
-    provider: 'local',
-    email: 'user@localhost.com',
-    firstName: 'User',
-    lastName: 'Local',
-    displayName: 'User Local',
-    roles: ['user']
-  },
-  seedAdmin: {
-    provider: 'local',
-    email: 'admin@localhost.com',
-    firstName: 'Admin',
-    lastName: 'Local',
-    displayName: 'Admin Local',
-    roles: ['user', 'admin']
-  }
-};
+let users = {};
 
 function removeUser (user) {
   return new Promise(function (resolve, reject) {
-    var User = mongoose.model('User');
-    User.find({ email: user.email }).remove(function (err) {
-      if (err) {
-        reject(new Error('Failed to remove local ' + user.email));
-      }
-      resolve();
-    });
+    let User = mongoose.model('User');
+    User.find({ email: user.email })
+      .remove()
+      .then(() => {
+        resolve(user);
+      })
+      .catch(err => {
+        reject(err);
+      });
   });
 }
 
 function saveUser (user) {
-  return function() {
-    return new Promise(function (resolve, reject) {
-      // Then save the user
-      user.save(function (err, theuser) {
-        if (err) {
-          reject(new Error('Failed to add localaaa ' + user.email));
-        } else {
-          resolve(theuser);
-        }
-      });
-    });
-  };
-}
-
-function reportSuccess (password) {
-  return function (user) {
-    return new Promise(function (resolve, reject) {
-      console.log(chalk.bold.red('Database Seeding:\t\t\tLocal ' + user.email + ' added with password set to ' + password));
-      resolve();
-    });
-  };
-}
-
-// save the specified user with the password provided from the resolved promise
-function seedTheUser (user) {
-  return function (password) {
-    return new Promise(function (resolve, reject) {
-
-      var User = mongoose.model('User');
-      // set the new password
-      user.password = password;
-
-      removeUser(user)
-        .then(saveUser(user))
-        .then(reportSuccess(password))
-        .then(function () {
-          resolve();
-        })
-        .catch(function (err) {
-          reject(err);
-        });
-
-    });
-  };
-}
-
-function reportError (reject) {
-  return function (err) {
-    console.log();
-    console.log('Database Seeding:\t\t\t' + err);
-    console.log();
-    reject(err);
-  };
-}
-
-function start() {
   return new Promise(function (resolve, reject) {
-    var User = mongoose.model('User');
-    var adminAccount = new User(seedOptions.seedAdmin);
-    var userAccount = new User(seedOptions.seedUser);
-
-    User.generateRandomPassphrase()
-      .then(seedTheUser(userAccount))
-      .then(User.generateRandomPassphrase)
-      .then(seedTheUser(adminAccount))
-      .then(function () {
-        resolve();
+    user.save()
+      .then(savedUser => {
+        resolve(user);
       })
-      .catch(reportError(reject));
+      .catch(err => {
+        reject(err);
+      });
   });
 }
 
-let service = { init: start };
+function seedUser() {
+  return new Promise((resolve, reject) => {
+    let User = mongoose.model('User');
+    let user = new User({
+      provider: 'local',
+      email: 'user@localhost.com',
+      firstName: 'User',
+      lastName: 'Local',
+      displayName: 'User Local',
+      roles: ['user']
+    });
+
+    User.generateRandomPassphrase()
+      .then(password => {
+        user.password = password;
+        removeUser(user)
+          .then(saveUser)
+          .then(() => {
+            users.user = user.toObject();
+            users.user.password = password;
+            console.log(chalk.bold.magenta('Users::Model::Seed::User::'), users.user.email + ':' + users.user.password);
+            resolve(user);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
+function seedAdmin() {
+  return new Promise((resolve, reject) => {
+    let User = mongoose.model('User');
+    let user = new User({
+      provider: 'local',
+      email: 'admin@localhost.com',
+      firstName: 'Admin',
+      lastName: 'Local',
+      displayName: 'Admin Local',
+      roles: ['user', 'admin'],
+      password: User.generateRandomPassphrase().password
+    });
+
+    User.generateRandomPassphrase()
+      .then(password => {
+        user.password = password;
+        removeUser(user)
+          .then(saveUser)
+          .then(() => {
+            users.admin = user.toObject();
+            users.admin.password = password;
+            console.log(chalk.bold.magenta('Users::Model::Seed::User::'), users.admin.email + ':' + users.admin.password);
+            resolve(user);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
+
+function init() {
+  return new Promise(function (resolve, reject) {
+    console.log(chalk.green('Users::Model::Seed::Start'));
+    seedUser()
+      .then(seedAdmin)
+      .then(() => {
+        console.log(chalk.green('Users::Model::Seed::Success'));
+        resolve(users);
+      })
+      .catch((err) => {
+        console.log(chalk.bold.red('Users::Model::Seed::Error::' + err));
+        reject(err);
+      });
+
+  });
+}
+
+
+
+let service = { init: init, users: users, seedUser: seedUser, seedAdmin: seedAdmin };
 
 export default service;
-export { start as init };
+export { init, users, seedUser, seedAdmin };

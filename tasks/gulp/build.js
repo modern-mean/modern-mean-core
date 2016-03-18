@@ -147,5 +147,6 @@ export {
   client,
   server,
   injectLayout as inject,
-  strip
+  strip,
+  config
 };

@@ -67,6 +67,12 @@ let test = {
         pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
       }
     }
+  },
+  files: {
+    modules: {
+      custom: ['./modules/!(*core)/server/*.module.js'],
+      core: './modules/core/server/core.module.js'
+    }
   }
 }
 

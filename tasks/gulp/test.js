@@ -8,16 +8,15 @@ import coverage from 'gulp-coverage';
 import mocha from 'gulp-mocha';
 import concat from 'gulp-concat';
 import coveralls from 'gulp-coveralls';
-import istanbul from 'gulp-babel-istanbul';
+import istanbul from 'gulp-istanbul';
+
 import babel from 'gulp-babel';
 import * as build from './build';
 import config from '../../config/config.js';
 import lodash from 'lodash';
 import debug from 'gulp-debug';
 
-
-
-
+var isparta = require('isparta');
 
 function lint() {
   return gulp.src(['./modules/**/*.js'])
@@ -48,11 +47,13 @@ karmaWatch.displayName = 'karmaWatch';
 function mochaSingle(done) {
   gulp.src(config.files.server.application)
   	.pipe(istanbul({
+      instrumenter: isparta.Instrumenter,
       includeUntested: true
     }))
   	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
   	.on('finish', function () {
   	  return gulp.src(config.files.server.tests)
+      //.pipe(injectModules())
   		.pipe(mocha({
         reporter: 'dot'
       }))
@@ -76,6 +77,7 @@ mochaSingle.displayName = 'Test::Mocha::Single';
 function mochaWatch(done) {
   return gulp.src(config.files.server.application)
   	.pipe(istanbul({
+        instrumenter: isparta.Instrumenter,
         includeUntested: true
       }))
   	.pipe(istanbul.hookRequire()) // or you could use .pipe(injectModules())
@@ -85,7 +87,7 @@ function mochaWatch(done) {
     		//.pipe(babel())
     		//.pipe(injectModules())
     		.pipe(mocha({
-          timeout: 2000
+          timeout: 4000
         }))
         .on('error', gutil.log)
 

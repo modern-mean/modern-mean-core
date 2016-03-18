@@ -35,6 +35,7 @@ function disconnect() {
       }
     });
     mongoose.connection.once('disconnected', function () {
+      console.log(chalk.cyan.bold('Mongoose Disconnected'));
       resolve(db);
     });
   });
