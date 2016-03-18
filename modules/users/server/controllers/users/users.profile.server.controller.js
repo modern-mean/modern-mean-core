@@ -28,7 +28,19 @@ function update(req, res) {
 
 function changeProfilePicture(req, res) {
   var user = req.user;
-  var upload = multer(config.uploads.profileUpload).single('newProfilePicture');
+  var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, config.uploads.profileUpload.dest);
+    },
+    filename: function(req, file, cb) {
+      var datetimestamp = Date.now();
+      cb(null, user._id + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+    }
+  });
+  var upload = multer({
+    storage: storage
+  }).single('newProfilePicture');
+
   var profileUploadFileFilter = require('../../config/multer.js');
 
   // Filtering to upload only images
