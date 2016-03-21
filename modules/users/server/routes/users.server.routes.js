@@ -1,16 +1,18 @@
-'use strict';
-
 import passport from 'passport';
 import express from 'express';
-import forceSSL from 'express-force-ssl';
 import chalk from 'chalk';
+import multer from 'multer';
 import { profile, password } from '../controllers/users.server.controller';
+import profileUpload from '../config/profileUpload';
 
 function init(app) {
   return new Promise(function (resolve, reject) {
-    console.log(chalk.bold.green('Users::Routes::Start'));
-
     let router = express.Router();
+
+    let upload = multer({
+      storage: profileUpload.storage(),
+      fileFilter: profileUpload.filter
+    });
 
     //Set JWT Auth for all user Routes
     router.all('*', passport.authenticate('jwt', { session: false }));
@@ -21,12 +23,11 @@ function init(app) {
     //TODO  renable when social accounts are working again.
     //router.route('/accounts').delete(controllers.authentication.removeOAuthProvider);
     router.route('/password').post(password.changePassword);
-    router.route('/picture').post(profile.changeProfilePicture);
+    router.route('/picture').post(upload.single('newProfilePicture'), profile.changeProfilePicture);
 
-    app.use('/api/users', forceSSL, router);
+    app.use('/api/users', router);
     console.log(chalk.bold.green('Users::Routes::Success'));
     resolve(app);
-
   });
 }
 
