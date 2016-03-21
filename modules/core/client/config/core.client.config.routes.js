@@ -52,6 +52,7 @@
         }
       },
       data: {
+        ignoreState: true,
         pageTitle: 'Welcome'
       }
     })
