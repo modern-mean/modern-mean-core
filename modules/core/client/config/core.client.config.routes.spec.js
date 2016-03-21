@@ -45,6 +45,9 @@
       expect(state.views['main@'].templateUrl).to.equal('modules/core/client/views/core.client.views.home.html');
       expect(state.views['main@'].controller).to.equal('HomeController');
       expect(state.views['main@'].controllerAs).to.equal('vm');
+      expect(state.data).to.be.an('object');
+      expect(state.data.ignoreState).to.equal(true);
+      expect(state.data.pageTitle).to.equal('Welcome');
     });
 
     it('should have a not found state', function () {
