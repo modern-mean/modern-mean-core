@@ -47,7 +47,7 @@
       expect(state.views['main@'].controllerAs).to.equal('vm');
       expect(state.data).to.be.an('object');
       expect(state.data.ignoreState).to.equal(true);
-      expect(state.data.pageTitle).to.equal('Welcome');
+      expect(state.data.pageTitle).to.exist(true);
     });
 
     it('should have a not found state', function () {
