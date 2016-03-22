@@ -7,7 +7,7 @@ function init(app) {
     try {
       let router = express.Router();
 
-      router.route('/signup').post(authentication.signup);
+      router.route('/signup').post(authentication.createUser, authentication.signup);
       router.route('/signin').post(passport.authenticate('local', { session: false }), authentication.signin);
 
       app.use('/api/auth', router);

@@ -5,7 +5,6 @@ import sinonAsPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
 import mongoose from 'mongoose';
 import lodash from 'lodash';
-import fs from 'fs';
 import * as profileController from '../../../server/controllers/users/users.profile.server.controller';
 import userModel from '../../../server/models/users.server.model.user';
 

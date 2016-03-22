@@ -13,43 +13,42 @@ let noReturnUrls = [
 
 
 function signup(req, res) {
-  let User = model();
-  // For security measurement we remove the roles from the req.body object
-  delete req.body.roles;
+  let user = req.user;
 
-  // Init user and add missing fields
-  var user = new User(req.body);
   user.provider = 'local';
   user.displayName = user.firstName + ' ' + user.lastName;
 
   // Then save the user
-  user.save()
-    .then(function (user) {
-      // Remove sensitive data before login
-      user.password = undefined;
-      user.salt = undefined;
+  return user.save()
+    .then(user => {
 
-      authentication
+      return authentication
         .signToken(user)
         .then(function (token) {
           return res.json({ user: user, token: token });
         });
     })
-    .catch(function (err) {
-      return res.status(400).send(err);
+    .catch(err => {
+      return res.status(400).json(err.message);
     });
 }
 
-
 function signin(req, res) {
-  authentication
+  return authentication
     .signToken(req.user)
-    .then(function (token) {
+    .then(token => {
       return res.json({ user: req.user, token: token });
     })
     .catch(err => {
-      return res.status(500).send(err);
+      return res.status(400).json(err.message);
     });
+}
+
+function createUser(req, res, next) {
+  //Remove roles
+  delete req.body.roles;
+  req.user = new model(req.body);
+  return next();
 }
 /*
 function oauthCall(strategy, scope) {
@@ -192,11 +191,15 @@ function removeOAuthProvider(req, res, next) {
 }
 */
 
+let controller = { signin: signin, signup: signup, createUser: createUser };
+
+export default controller;
 export {
   //oauthCall: oauthCall,
   //oauthCallback: oauthCallback,
   //removeOAuthProvider: removeOAuthProvider,
   //saveOAuthUserProfile: saveOAuthUserProfile,
+  createUser,
   signin,
   signup
 };
