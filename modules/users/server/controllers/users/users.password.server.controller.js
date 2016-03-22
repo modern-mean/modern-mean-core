@@ -1,12 +1,9 @@
-'use strict';
-
-
 import { get as model } from '../../models/users.server.model.user';
 import config from 'modernMean/config';
 import nodemailer from 'nodemailer';
 import async from 'async';
 import crypto from 'crypto';
-import * as authentication from '../../authentication/jwtToken';
+import authentication from '../../authentication/jwtToken';
 
 
 
@@ -185,42 +182,35 @@ function reset(req, res, next) {
   });
 }
 */
-function changePassword(req, res, next) {
+function changePassword(req, res) {
   // Init Variables
   let passwordDetails = req.body;
   let message = null;
-  let User = model();
+  let user = req.user;
 
   if (passwordDetails.newPassword !== passwordDetails.verifyPassword) {
-    return res.status(400).send({
-      message: 'Passwords do not match'
-    });
-  };
+    return res.status(400).json('Passwords do not match');
+  }
 
-  User.findById(req.user.id)
+
+  if (!user.authenticate(passwordDetails.currentPassword)) {
+    return res.status(400).json('Current password is incorrect');
+  }
+
+  user.password = passwordDetails.newPassword;
+  return user.save()
     .then(function (user) {
-      if (user.authenticate(passwordDetails.currentPassword)) {
-        user.password = passwordDetails.newPassword;
-        user.save()
-          .then(function (user) {
-            return res.send({
-              message: 'Password changed successfully'
-            });
-          })
-          .catch(function (err) {
-            return res.status(400).send(err);
-          });
-      } else {
-        return res.status(400).send({
-          message: 'Current password is incorrect'
-        });
-      }
+      return res.json(user);
     })
     .catch(function (err) {
-      res.status(400).send(err);
+      return res.status(400).json(err.message);
     });
+
 }
 
+let controller = { changePassword: changePassword };
+
+export default controller;
 export {
   changePassword
   //forgot,
