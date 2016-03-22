@@ -17,7 +17,7 @@
       $rootScope.$on('$stateChangeStart', listener);
 
       function listener(event, toState) {
-        console.log('Core::Directive::PageTilte', toState.data.pageTitle);
+        console.log('Core::Directive::PageTitle', toState.data.pageTitle);
         if (toState.data && toState.data.pageTitle) {
           element.html(CORE_CONSTANTS.page.title + ' - ' + toState.data.pageTitle);
         } else {
