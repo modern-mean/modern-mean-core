@@ -10,7 +10,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/core/server/controllers/core.server.controller.js', function () {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   it('should export default', () => {
     controller.default.should.be.an.object;
@@ -25,7 +35,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
 
     beforeEach(() => {
       mockRes = {
-        render: sinon.spy()
+        render: sandbox.spy()
       };
     });
 
@@ -45,8 +55,8 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
 
     beforeEach(() => {
       mockRes = {
-        status: sinon.stub().returnsThis(),
-        render: sinon.spy()
+        status: sandbox.stub().returnsThis(),
+        render: sandbox.spy()
       };
     });
 
@@ -67,15 +77,15 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
 
     beforeEach(() => {
       mockRes = {
-        status: sinon.stub().returnsThis(),
-        render: sinon.spy(),
-        json: sinon.spy()
+        status: sandbox.stub().returnsThis(),
+        render: sandbox.spy(),
+        json: sandbox.spy()
       };
       mockReq = { originalUrl: 'http://test' };
     });
 
     it('should call respond with status 404', () => {
-      mockRes.format = sinon.stub().yieldsTo('text/html');
+      mockRes.format = sandbox.stub().yieldsTo('text/html');
       controller.renderNotFound(mockReq, mockRes);
       return mockRes.status.should.have.been.calledWith(404);
     });
@@ -83,7 +93,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
     describe('text/html header', () => {
 
       it('should call res.render', () => {
-        mockRes.format = sinon.stub().yieldsTo('text/html');
+        mockRes.format = sandbox.stub().yieldsTo('text/html');
         controller.renderNotFound(mockReq, mockRes);
         return mockRes.render.should.have.been.called;
       });
@@ -93,7 +103,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
     describe('application/json header', () => {
 
       it('should call res.json', () => {
-        mockRes.format = sinon.stub().yieldsTo('application/json');
+        mockRes.format = sandbox.stub().yieldsTo('application/json');
         controller.renderNotFound(mockReq, mockRes);
         return mockRes.json.should.have.been.called;
       });
@@ -103,7 +113,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
     describe('catch all header', () => {
 
       it('should call res.json', () => {
-        mockRes.format = sinon.stub().yieldsTo('default');
+        mockRes.format = sandbox.stub().yieldsTo('default');
         controller.renderNotFound(mockReq, mockRes);
         return mockRes.json.should.have.been.calledWith({ error: 'Path not found' });
       });

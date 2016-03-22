@@ -11,7 +11,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/authentication/jwtToken.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -31,7 +41,7 @@ describe('/modules/users/server/authentication/jwtToken.js', () => {
                 .then(token => {
                   return token.should.exist;
                 });
-            
+
       });
 
       it('should reject a promise if user is not valid', () => {

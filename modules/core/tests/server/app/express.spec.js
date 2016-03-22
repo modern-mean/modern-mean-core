@@ -15,7 +15,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
-describe('/modules/core/server/app/express.js', () => {
+let sandbox;
+
+describe('/modules/core/server/app/express.jsaa', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   it('should export module', () => {
     return expressModule.should.be.an.object;
@@ -73,7 +83,7 @@ describe('/modules/core/server/app/express.js', () => {
 
     it('should call express.use', () => {
       let app = express();
-      let spy = sinon.spy(app, 'use');
+      let spy = sandbox.spy(app, 'use');
       expressModule.middleware(app);
       return spy.should.have.been.called;
     });
@@ -127,14 +137,14 @@ describe('/modules/core/server/app/express.js', () => {
 
     it('should call app.engine', () => {
       let app = express();
-      let spy = sinon.spy(app, 'engine');
+      let spy = sandbox.spy(app, 'engine');
       expressModule.engine(app);
       return spy.should.have.been.called;
     });
 
     it('should call app.set', () => {
       let app = express();
-      let spy = sinon.spy(app, 'set');
+      let spy = sandbox.spy(app, 'set');
       expressModule.engine(app);
       return spy.should.have.been.called;
     });
@@ -154,7 +164,7 @@ describe('/modules/core/server/app/express.js', () => {
 
     it('should call app.use', () => {
       let app = express();
-      let spy = sinon.spy(app, 'use');
+      let spy = sandbox.spy(app, 'use');
       expressModule.headers(app);
       return spy.should.have.been.called;
     });
@@ -283,17 +293,15 @@ describe('/modules/core/server/app/express.js', () => {
         newHttp = http.createServer(app);
         newHttps = https.createServer(app);
 
-        mockHttp = sinon.stub(newHttp, 'listen').returns(newHttp).yields();
-        mockHttps = sinon.stub(newHttps, 'listen').returns(newHttps).yields();
+        mockHttp = sandbox.stub(newHttp, 'listen').returns(newHttp).yields();
+        mockHttps = sandbox.stub(newHttps, 'listen').returns(newHttps).yields();
 
-        mockHttpCreateServer = sinon.stub(http, 'createServer').returns(newHttp);
-        mockHttpsCreateServer = sinon.stub(https, 'createServer').returns(newHttps);
+        mockHttpCreateServer = sandbox.stub(http, 'createServer').returns(newHttp);
+        mockHttpsCreateServer = sandbox.stub(https, 'createServer').returns(newHttps);
         return promise = expressModule.listen(app);
       });
 
       afterEach(() => {
-        mockHttpCreateServer.restore();
-        mockHttpsCreateServer.restore();
         process.env.NODE_ENV = 'test';
       });
 
@@ -312,13 +320,8 @@ describe('/modules/core/server/app/express.js', () => {
 
       beforeEach(() => {
         app = express();
-        mockHttpCreateServer = sinon.stub(http, 'createServer').throws();
-        mockHttpsCreateServer = sinon.stub(https, 'createServer').throws();
-      });
-
-      afterEach(() => {
-        mockHttpCreateServer.restore();
-        mockHttpsCreateServer.restore();
+        mockHttpCreateServer = sandbox.stub(http, 'createServer').throws();
+        mockHttpsCreateServer = sandbox.stub(https, 'createServer').throws();
       });
 
       it('should reject a promise', () => {

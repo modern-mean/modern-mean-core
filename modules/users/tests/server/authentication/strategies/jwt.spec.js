@@ -1,6 +1,5 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonMongoose from 'sinon-mongoose';
 import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import express from 'express';
@@ -19,7 +18,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
-describe('/modules/users/server/authentication/strategies/jwt.js', () => {
+let sandbox;
+
+describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -37,11 +46,7 @@ describe('/modules/users/server/authentication/strategies/jwt.js', () => {
       describe('success', () => {
 
         beforeEach(() => {
-          passportSpy = sinon.spy(passport, 'use');
-        });
-
-        afterEach(() => {
-          passportSpy.restore();
+          passportSpy = sandbox.spy(passport, 'use');
         });
 
         it('should resolve a promise', () => {
@@ -143,11 +148,7 @@ describe('/modules/users/server/authentication/strategies/jwt.js', () => {
 
       beforeEach(() => {
         mongooseModel = mongoose.model('User');
-        mockMongoose = sinon.stub(mongooseModel, 'findById').rejects('Yippee');
-      });
-
-      afterEach(() => {
-        mockMongoose.restore();
+        mockMongoose = sandbox.stub(mongooseModel, 'findById').rejects('Yippee');
       });
 
       it('should respond 401', done => {

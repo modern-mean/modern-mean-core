@@ -1,7 +1,6 @@
-'use strict';
-
-import { get as model } from '../models/users.server.model.user';
+import lodash from 'lodash';
 import mongoose from 'mongoose';
+import userModel from '../models/users.server.model.user';
 
 function read(req, res) {
   return res.json(req.model);
@@ -10,67 +9,67 @@ function read(req, res) {
 function update(req, res) {
   let user = req.model;
 
-  //For security purposes only merge these parameters
-  user.firstName = req.body.firstName;
-  user.lastName = req.body.lastName;
-  user.displayName = user.firstName + ' ' + user.lastName;
-  user.roles = req.body.roles;
+  //Since this is admin functionality assuming they know what they are doing
+  lodash.merge(user, req.body);
 
-  user.save()
-    .then(function (user) {
+  return user.save()
+    .then(user => {
       return res.json(user);
     })
-    .catch(function (err) {
-      return res.status(400).send(err);
+    .catch(err => {
+      return res.status(400).json(err.message);
     });
 }
 
 function remove(req, res) {
   let user = req.model;
 
-  user.remove()
-    .then(function (user) {
+  return user.remove()
+    .then(user => {
       return res.json(user);
     })
-    .catch(function (err) {
-      return res.status(400).send(err);
+    .catch(err => {
+      return res.status(400).json(err.message);
     });
 }
 
 function list(req, res) {
-  let User = model();
-  User.find({}, '-salt -password')
-    .then(function (users) {
+  let User = userModel.getModels().user;
+  return User.find({})
+    .then(users => {
       return res.json(users);
     })
-    .catch(function (err) {
-      return res.status(400).send(err);
+    .catch(err => {
+      return res.status(400).json(err.message);
     });
 }
 
 function userByID(req, res, next, id) {
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({
-      message: 'User is invalid'
-    });
+    return res.status(400).json('User is invalid');
   }
 
-  let User = model();
-  User.findById(id, '-salt -password')
-    .then(function (user) {
+  let User = userModel.getModels().user;
+
+  return User.findById(id)
+    .then(user => {
       if (!user) {
-        return next(new Error('Failed to load user ' + id));
+        return next('Failed to load user ' + id);
       }
 
       req.model = user;
-      next();
+      return next();
 
     })
-    .catch(function (err) {
-      return next(err);
+    .catch(err => {
+      return next(err.message);
     });
 }
 
+let controller = { read: read, update: update, remove: remove, list: list, userByID, userByID };
+
+export default controller;
 export {
   read,
   update,

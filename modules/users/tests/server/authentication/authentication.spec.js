@@ -15,7 +15,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/authentication/authentication.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -34,13 +44,8 @@ describe('/modules/users/server/authentication/authentication.js', () => {
 
         beforeEach(() => {
           app = express();
-          jwtSpy = sinon.spy(jwtStrategy, 'strategy');
-          passportSpy = sinon.spy(passport, 'initialize');
-        });
-
-        afterEach(() => {
-          passportSpy.restore();
-          jwtSpy.restore();
+          jwtSpy = sandbox.spy(jwtStrategy, 'strategy');
+          passportSpy = sandbox.spy(passport, 'initialize');
         });
 
         it('should setup user admin routes', () => {
@@ -68,11 +73,7 @@ describe('/modules/users/server/authentication/authentication.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockStrategy = sinon.stub(jwtStrategy, 'strategy').rejects();
-        });
-
-        afterEach(() => {
-          mockStrategy.restore();
+          mockStrategy = sandbox.stub(jwtStrategy, 'strategy').rejects();
         });
 
         it('should reject a promise', () => {

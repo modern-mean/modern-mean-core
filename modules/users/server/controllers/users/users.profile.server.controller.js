@@ -8,13 +8,9 @@ function update(req, res) {
   // Init Variables
   var user = req.user;
 
-  // For security measurement we remove the roles from the req.body object
-  delete req.body.roles;
+  user.name = req.body.name;
 
-  // Merge existing user
-  user = lodash.extend(user, req.body);
-  user.updated = Date.now();
-  user.displayName = user.firstName + ' ' + user.lastName;
+
   return user.save()
     .then(user => {
       res.json(user);

@@ -22,7 +22,7 @@
       vm.error = undefined;
 
       Authentication
-        .signup(vm.credentials)
+        .signup(vm.user)
         .then(
           function (response) {
             $state.go($state.previous.state.name || 'root.home', $state.previous.params);
