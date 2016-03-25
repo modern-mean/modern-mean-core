@@ -2,26 +2,26 @@
   <h2 class="md-display-1">Or sign up using your email</h2>
   <form name="userForm" ng-submit="vm.signup(userForm.$valid)" novalidate autocomplete="off">
     <md-input-container class="md-block">
-      <input type="text" id="firstName" name="firstName" ng-model="vm.credentials.firstName" placeholder="First Name" required>
+      <input type="text" id="firstName" name="firstName" ng-model="vm.user.name.first" placeholder="First Name" required>
       <div ng-messages="userForm.firstName.$error" role="alert">
         <div ng-message="required">First name is required.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
-      <input type="text" id="lastName" name="lastName" ng-model="vm.credentials.lastName" placeholder="Last Name" required>
+      <input type="text" id="lastName" name="lastName" ng-model="vm.user.name.last" placeholder="Last Name" required>
       <div ng-messages="userForm.lastName.$error" role="alert">
         <div ng-message="required">Last name is required.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
-      <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="Email address" lowercase required>
+      <input type="email" id="email" name="email" ng-model="vm.user.email" placeholder="Email address" lowercase required>
       <div ng-messages="userForm.email.$error" role="alert">
         <div ng-message="required">Email address is required.</div>
         <div ng-message="email">Email address is invalid.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
-      <input type="password" id="password" name="password" ng-model="vm.credentials.password" placeholder="Password" uib-popover="{{vm.popoverMsg}}" uib-popover-trigger="focus" password-validator required>
+      <input type="password" id="password" name="password" ng-model="vm.user.password" placeholder="Password" uib-popover="{{vm.popoverMsg}}" uib-popover-trigger="focus" password-validator required>
       <div ng-messages="userForm.password.$error" role="alert">
         <div ng-message="required">Password is required.</div>
         <div ng-repeat="passwordError in passwordErrors">

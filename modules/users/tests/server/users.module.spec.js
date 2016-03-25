@@ -18,7 +18,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/users.module.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -38,15 +48,13 @@ describe('/modules/users/server/users.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockModel = sinon.stub(userModel, 'init').resolves();
-          mockSeed = sinon.stub(userSeed, 'init');
+          mockModel = sandbox.stub(userModel, 'init').resolves();
+          mockSeed = sandbox.stub(userSeed, 'init');
           config.seedDB = true;
           return users.init(app);
         });
 
         afterEach(() => {
-          mockSeed.restore();
-          mockModel.restore();
           config.seedDB = false;
         });
 
@@ -60,17 +68,10 @@ describe('/modules/users/server/users.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockModel = sinon.stub(userModel, 'init').resolves();
-          authenticationSpy = sinon.spy(authentication, 'init');
-          userRoutesSpy = sinon.spy(userRoutes, 'init');
-          authRoutesSpy = sinon.spy(authRoutes, 'init');
-        });
-
-        afterEach(() => {
-          userRoutesSpy.restore();
-          authRoutesSpy.restore();
-          authenticationSpy.restore();
-          mockModel.restore();
+          mockModel = sandbox.stub(userModel, 'init').resolves();
+          authenticationSpy = sandbox.spy(authentication, 'init');
+          userRoutesSpy = sandbox.spy(userRoutes, 'init');
+          authRoutesSpy = sandbox.spy(authRoutes, 'init');
         });
 
         it('should setup user authentication', () => {
@@ -112,14 +113,8 @@ describe('/modules/users/server/users.module.js', () => {
         describe('express init', () => {
           beforeEach(() => {
             app = express();
-            mockRoutes = sinon.stub(userRoutes, 'init').rejects();
-            mockModel = sinon.stub(userModel, 'init').resolves();
-          });
-
-          afterEach(() => {
-            mockRoutes.restore();
-            mockModel.restore();
-
+            mockRoutes = sandbox.stub(userRoutes, 'init').rejects();
+            mockModel = sandbox.stub(userModel, 'init').resolves();
           });
 
           it('should reject a promise', () => {
@@ -131,11 +126,7 @@ describe('/modules/users/server/users.module.js', () => {
         describe('model init', () => {
           beforeEach(() => {
             app = express();
-            mockModel = sinon.stub(userModel, 'init').rejects();
-          });
-
-          afterEach(() => {
-            mockModel.restore();
+            mockModel = sandbox.stub(userModel, 'init').rejects();
           });
 
           it('should reject a promise', () => {

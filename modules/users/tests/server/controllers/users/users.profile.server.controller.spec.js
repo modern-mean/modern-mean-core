@@ -5,8 +5,8 @@ import sinonAsPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
 import mongoose from 'mongoose';
 import lodash from 'lodash';
-import * as profileController from '../../../server/controllers/users/users.profile.server.controller';
-import userModel from '../../../server/models/users.server.model.user';
+import * as profileController from '../../../../server/controllers/users/users.profile.server.controller';
+import userModel from '../../../../server/models/users.server.model.user';
 
 
 chai.use(promised);
@@ -15,10 +15,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/controllers/users/users.profile.server.controller.js', () => {
 
   beforeEach(() => {
+    sandbox = sinon.sandbox.create();
     return userModel.init();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
   });
 
   describe('export', () => {
@@ -40,7 +47,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
         beforeEach(() => {
           model = mongoose.model('User');
           user = new model();
-          mockUser = sinon.stub(user, 'save').resolves(user);
+          mockUser = sandbox.stub(user, 'save').resolves(user);
           mockReq = {
             user: user,
             file: {
@@ -55,13 +62,9 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
             }
           };
           mockRes = {
-            json: sinon.spy()
+            json: sandbox.spy()
           };
           return profileController.changeProfilePicture(mockReq, mockRes);
-        });
-
-        afterEach(() => {
-          mockUser.restore();
         });
 
         it('should change the users profile picture', () => {
@@ -80,7 +83,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
         beforeEach(() => {
           model = mongoose.model('User');
           user = new model();
-          mockUser = sinon.stub(user, 'save').rejects('Error!');
+          mockUser = sandbox.stub(user, 'save').rejects('Error!');
           mockReq = {
             user: user,
             file: {
@@ -95,14 +98,10 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
             }
           };
           mockRes = {
-            json: sinon.spy(),
-            status: sinon.stub().returnsThis()
+            json: sandbox.spy(),
+            status: sandbox.stub().returnsThis()
           };
           return profileController.changeProfilePicture(mockReq, mockRes);
-        });
-
-        afterEach(() => {
-          mockUser.restore();
         });
 
         it('should set status to 400', () => {
@@ -136,7 +135,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
           user: user
         };
         mockRes = {
-          json: sinon.spy()
+          json: sandbox.spy()
         };
       });
 
@@ -152,13 +151,13 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
     });
 
     describe('update()', () => {
-      let mockReq, mockRes, mockUser, user, model, lodashSpy;
+      let mockReq, mockRes, mockUser, user, model;
 
       describe('success', () => {
         beforeEach(() => {
           model = mongoose.model('User');
           user = new model();
-          mockUser = sinon.stub(user, 'save').resolves(user);
+          mockUser = sandbox.stub(user, 'save').resolves(user);
           mockReq = {
             user: user,
             body: {
@@ -167,27 +166,14 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
             }
           };
           mockRes = {
-            json: sinon.stub()
+            json: sandbox.stub()
           };
-          lodashSpy = sinon.spy(lodash, 'extend');
-          return profileController.update(mockReq, mockRes);
-        });
 
-        afterEach(() => {
-          mockUser.restore();
-          lodashSpy.restore();
+          return profileController.update(mockReq, mockRes);
         });
 
         it('should update the logged in user', () => {
           return mockUser.should.have.been.called;
-        });
-
-        it('should not update the user roles', () => {
-          return expect(mockReq.body.roles).to.not.exist;
-        });
-
-        it('should merge the user with lodash.extend', () => {
-          return lodashSpy.should.have.been.calledWith(user, mockReq.body);
         });
 
         it('should respond with logged in user', () => {
@@ -200,7 +186,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
         beforeEach(() => {
           model = mongoose.model('User');
           user = new model();
-          mockUser = sinon.stub(user, 'save').rejects('Error!');
+          mockUser = sandbox.stub(user, 'save').rejects('Error!');
           mockReq = {
             user: user,
             body: {
@@ -209,16 +195,10 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
             }
           };
           mockRes = {
-            json: sinon.stub(),
-            status: sinon.stub().returnsThis()
+            json: sandbox.stub(),
+            status: sandbox.stub().returnsThis()
           };
-          lodashSpy = sinon.spy(lodash, 'extend');
           return profileController.update(mockReq, mockRes);
-        });
-
-        afterEach(() => {
-          mockUser.restore();
-          lodashSpy.restore();
         });
 
         it('should call res.status with 400', () => {

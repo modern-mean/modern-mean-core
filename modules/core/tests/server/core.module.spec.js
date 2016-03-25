@@ -12,7 +12,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/core/server/core.module.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -31,11 +41,7 @@ describe('/modules/core/server/core.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockRoutes = sinon.stub(routes, 'init').resolves();
-        });
-
-        afterEach(() => {
-          mockRoutes.restore();
+          mockRoutes = sandbox.stub(routes, 'init').resolves();
         });
 
         it('should call core routes', () => {
@@ -55,11 +61,7 @@ describe('/modules/core/server/core.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockRoutes = sinon.stub(routes, 'init').rejects();
-        });
-
-        afterEach(() => {
-          mockRoutes.restore();
+          mockRoutes = sandbox.stub(routes, 'init').rejects();
         });
 
         it('should reject a promise', () => {

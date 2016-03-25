@@ -18,7 +18,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/authentication/strategies/local.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -36,7 +46,7 @@ describe('/modules/users/server/authentication/strategies/local.js', () => {
       describe('success', () => {
 
         beforeEach(() => {
-          passportSpy = sinon.spy(passport, 'use');
+          passportSpy = sandbox.spy(passport, 'use');
         });
 
         afterEach(() => {
@@ -61,7 +71,7 @@ describe('/modules/users/server/authentication/strategies/local.js', () => {
   });
 
   describe('agent()', () => {
-    let app;
+    let app, users;
 
     beforeEach(() => {
       return mean.start()
@@ -70,24 +80,23 @@ describe('/modules/users/server/authentication/strategies/local.js', () => {
               });
     });
 
+    beforeEach(() => {
+      return userSeed.init()
+        .then(seedUsers => {
+          users = seedUsers;
+        });
+    });
+
     afterEach(() => {
       return mean.stop();
     });
 
     describe('success', () => {
-      let users;
-
-      beforeEach(() => {
-        return userSeed.init()
-          .then(seedUsers => {
-            users = seedUsers;
-          });
-      });
 
       it('should authenticate the user', done => {
         request
           .post('https://localhost:8082/api/auth/signin')
-          .send({ email: users.user.email, password: users.user.password })
+          .send({ email: users.user.providers[0].email, password: users.user.password })
           .end((err, res) => {
 
             expect(res.status).to.equal(200);
@@ -98,49 +107,62 @@ describe('/modules/users/server/authentication/strategies/local.js', () => {
 
     });
 
-    describe('user not found', () => {
+    describe('error', () => {
 
-      it('should responsd 500', done => {
-        request
-          .post('https://localhost:8082/api/auth/signin')
-          .send({ email: 'asdfadsf434983249@asdfjie.com', password: 'asdfasdf' })
-          .end((err, res) => {
-            expect(res.status).to.equal(500);
-            expect(res.error.text).to.equal('Invalid email or password\n');
-            done();
-          });
+      describe('user not found', () => {
+
+        it('should responsd 500', done => {
+          request
+            .post('https://localhost:8082/api/auth/signin')
+            .send({ email: 'asdfadsf434983249@asdfjie.com', password: 'asdfasdf' })
+            .end((err, res) => {
+              expect(res.status).to.equal(500);
+              expect(res.error.text).to.equal('Invalid email or password\n');
+              done();
+            });
+        });
+
       });
 
+      describe('authentication failure', () => {
 
+        it('should responsd 500', done => {
+          request
+            .post('https://localhost:8082/api/auth/signin')
+            .send({ email: users.user.providers[0].email, password: 'failme' })
+            .end((err, res) => {
+              expect(res.status).to.equal(500);
+              expect(res.error.text).to.equal('Invalid email or password\n');
+              done();
+            });
+        });
 
-    });
-
-    describe('mongoose error should fail', () => {
-
-      let mongooseModel, mockMongoose, users;
-
-      beforeEach(() => {
-        mongooseModel = mongoose.model('User');
-        mockMongoose = sinon.stub(mongooseModel, 'findOne').rejects('Yippee');
-        return userSeed.init()
-          .then(seedUsers => {
-            users = seedUsers;
-          });
       });
 
-      afterEach(() => {
-        mockMongoose.restore();
-      });
+      describe('mongoose error should fail', () => {
 
-      it('should respond 500', done => {
-        request
-          .post('https://localhost:8082/api/auth/signin')
-          .send({ email: users.user.email, password: users.user.password })
-          .end((err, res) => {
-            expect(res.status).to.equal(500);
-            expect(res.error.text).to.contain('Yippee');
-            done();
-          });
+        let mongooseModel, mockMongoose;
+
+        beforeEach(() => {
+          mongooseModel = mongoose.model('User');
+          mockMongoose = sandbox.stub(mongooseModel, 'findOne').rejects('Yippee');
+        });
+
+        afterEach(() => {
+          mockMongoose.restore();
+        });
+
+        it('should respond 500', done => {
+          request
+            .post('https://localhost:8082/api/auth/signin')
+            .send({ email: users.user.providers[0].email, password: users.user.password })
+            .end((err, res) => {
+              expect(res.status).to.equal(500);
+              expect(res.error.text).to.contain('Yippee');
+              done();
+            });
+        });
+
       });
 
     });

@@ -12,7 +12,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/config/profileUpload.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 

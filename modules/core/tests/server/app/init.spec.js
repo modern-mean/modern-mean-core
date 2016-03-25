@@ -14,9 +14,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
-
+let sandbox;
 
 describe('/modules/core/server/app/init.js', function () {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   it('should export app', function () {
     return app.should.be.an('object');
@@ -33,13 +41,8 @@ describe('/modules/core/server/app/init.js', function () {
       let mockExpress, mockMongoose;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'listen').rejects('Error!!!!!!!!!');
-        mockMongoose = sinon.stub(mongoose, 'connect').resolves('Yay!!!!!!!!!!!!!!!!');
-      });
-
-      afterEach(function () {
-        mockExpress.restore();
-        mockMongoose.restore();
+        mockExpress = sandbox.stub(express, 'init').rejects();
+        mockMongoose = sandbox.stub(mongoose, 'connect').resolves();
       });
 
       it('should reject the promise', function () {
@@ -53,13 +56,8 @@ describe('/modules/core/server/app/init.js', function () {
       let mockExpress, mockMongoose;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'listen').resolves('Yay');
-        mockMongoose = sinon.stub(mongoose, 'connect').rejects('Err');
-      });
-
-      afterEach(function () {
-        mockExpress.restore();
-        mockMongoose.restore();
+        mockExpress = sandbox.stub(express, 'init').resolves();
+        mockMongoose = sandbox.stub(mongoose, 'connect').rejects();
       });
 
       it('should reject the promise', function () {
@@ -70,64 +68,37 @@ describe('/modules/core/server/app/init.js', function () {
 
     describe('success', function () {
 
-      let mockExpress, mockMongoose;
+      let initStub, variablesStub, middlewareStub, engineStub, headersStub, modulesStub, coreStub, listenStub, connectStub, promiseStub;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'listen').resolves('Yay');
-        mockMongoose = sinon.stub(mongoose, 'connect').resolves('Yay');
+        //Express Stubs
+        initStub = sandbox.stub(express, 'init').resolves();
+        middlewareStub = sandbox.stub(express, 'middleware').resolves();
+        variablesStub = sandbox.stub(express, 'variables').resolves();
+        engineStub = sandbox.stub(express, 'engine').resolves();
+        headersStub = sandbox.stub(express, 'headers').resolves();
+        modulesStub = sandbox.stub(express, 'modules').resolves();
+        coreStub = sandbox.stub(express, 'core').resolves();
+        listenStub = sandbox.stub(express, 'listen').resolves();
+        //Mongoose Stubs
+        connectStub = sandbox.stub(mongoose, 'connect').resolves();
+        promiseStub = sandbox.stub(mongoose, 'setPromise').resolves();
+
+
+        return app.start();
       });
 
-      afterEach(function () {
-        mockExpress.restore();
-        mockMongoose.restore();
-      });
-
-      it('should call express.init', function () {
-        let spy = sinon.spy(express, 'init');
-        return app.start().then(function () {
-          return spy.should.have.been.called;
-        });
-      });
-
-      it('should call express.middleware', function () {
-        let spy = sinon.spy(express, 'middleware');
-        return app.start().then(function () {
-          return spy.should.have.been.calledOnce;
-        });
-      });
-
-      it('should call express.engine', function () {
-        let spy = sinon.spy(express, 'engine');
-        return app.start().then(function () {
-          return spy.should.have.been.called;
-        });
-      });
-
-      it('should call express.headers', function () {
-        let spy = sinon.spy(express, 'headers');
-        return app.start().then(function () {
-          return spy.should.have.been.called;
-        });
-      });
-
-      it('should call express.modules', function () {
-        let spy = sinon.spy(express, 'modules');
-        return app.start().then(function () {
-          return spy.should.have.been.called;
-        });
-      });
-
-      it('should call express.core', function () {
-        let spy = sinon.spy(express, 'core');
-        return app.start().then(function () {
-          return spy.should.have.been.called;
-        });
-      });
-
-      it('should call express.listen', function () {
-        return app.start().then(function () {
-          return mockExpress.should.have.been.calledOnce;
-        });
+      it('should initialize express', function () {
+        initStub.should.have.been.called;
+        middlewareStub.should.have.been.called;
+        variablesStub.should.have.been.called;
+        engineStub.should.have.been.called;
+        headersStub.should.have.been.called;
+        modulesStub.should.have.been.called;
+        coreStub.should.have.been.called;
+        connectStub.should.have.been.called;
+        promiseStub.should.have.been.called;
+        return listenStub.should.have.been.called;
       });
 
       it('should resolve the promise', function () {
@@ -179,13 +150,8 @@ describe('/modules/core/server/app/init.js', function () {
       let mockExpress, mockMongoose;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'destroy').returns(new Promise(function (resolve, reject) { reject(); }));
-        mockMongoose = sinon.stub(mongoose, 'disconnect').returns(new Promise(function (resolve, reject) { resolve(); }));
-      });
-
-      afterEach(function () {
-        mockExpress.restore();
-        mockMongoose.restore();
+        mockExpress = sandbox.stub(express, 'destroy').rejects();
+        mockMongoose = sandbox.stub(mongoose, 'disconnect').resolves();
       });
 
       it('should reject the promise', function (done) {
@@ -200,13 +166,8 @@ describe('/modules/core/server/app/init.js', function () {
       let mockExpress, mockMongoose;
 
       beforeEach(function () {
-        mockExpress = sinon.stub(express, 'destroy').resolves();
-        mockMongoose = sinon.stub(mongoose, 'disconnect').rejects();
-      });
-
-      afterEach(function () {
-        mockExpress.restore();
-        mockMongoose.restore();
+        mockExpress = sandbox.stub(express, 'destroy').resolves();
+        mockMongoose = sandbox.stub(mongoose, 'disconnect').rejects();
       });
 
       it('should reject the promise', function (done) {

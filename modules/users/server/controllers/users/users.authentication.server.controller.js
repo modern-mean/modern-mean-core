@@ -2,8 +2,9 @@
 
 import mongoose from 'mongoose';
 import passport from 'passport';
+import lodash from 'lodash';
 import authentication from '../../authentication/jwtToken';
-import { get as model } from '../../models/users.server.model.user';
+import userModel from '../../models/users.server.model.user';
 
 // URLs for which user can't be redirected on signin
 let noReturnUrls = [
@@ -13,12 +14,23 @@ let noReturnUrls = [
 
 
 function signup(req, res) {
-  let user = req.user;
+  let user = req.model;
+  let models = userModel.getModels();
+  let provider = new models.provider();
+  let email = new models.email();
 
-  user.provider = 'local';
-  user.displayName = user.firstName + ' ' + user.lastName;
+  user.name = req.body.name;
 
-  // Then save the user
+  email.email = req.body.email;
+  email.primary = true;
+
+  provider.type = 'local';
+  provider.email = req.body.email;
+  provider.clearpassword = req.body.password;
+
+  user.providers.push(provider);
+  user.emails.push(email);
+
   return user.save()
     .then(user => {
 
@@ -44,12 +56,7 @@ function signin(req, res) {
     });
 }
 
-function createUser(req, res, next) {
-  //Remove roles
-  delete req.body.roles;
-  req.user = new model(req.body);
-  return next();
-}
+
 /*
 function oauthCall(strategy, scope) {
   return function (req, res, next) {
@@ -191,7 +198,7 @@ function removeOAuthProvider(req, res, next) {
 }
 */
 
-let controller = { signin: signin, signup: signup, createUser: createUser };
+let controller = { signin: signin, signup: signup };
 
 export default controller;
 export {
@@ -199,7 +206,6 @@ export {
   //oauthCallback: oauthCallback,
   //removeOAuthProvider: removeOAuthProvider,
   //saveOAuthUserProfile: saveOAuthUserProfile,
-  createUser,
   signin,
   signup
 };

@@ -17,7 +17,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 xdescribe('modules/users/server/routes/users.server.routes.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -132,11 +142,7 @@ xdescribe('modules/users/server/routes/users.server.routes.js', () => {
         beforeEach(() => {
           mongooseModel = mongoose.model('User');
           console.log(mongooseModel);
-          mockMongoose = sinon.stub(mongooseModel.prototype, 'save').rejects('Yippee');
-        });
-
-        afterEach(() => {
-          mockMongoose.restore();
+          mockMongoose = sandbox.stub(mongooseModel.prototype, 'save').rejects('Yippee');
         });
 
         it('should send a 400 error', (done) => {

@@ -5,18 +5,23 @@ import promised from 'chai-as-promised';
 import mongoose from '../../../server/app/mongoose';
 import mongooseModule from 'mongoose';
 
-
-
-
 chai.use(promised);
 chai.use(sinonChai);
 
 let expect = chai.expect;
 let should = chai.should();
 
-
+let sandbox;
 
 describe('/modules/core/server/app/mongoose.js', function () {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   it('should export mongoose', function () {
     return mongoose.should.be.an.object;
@@ -50,11 +55,7 @@ describe('/modules/core/server/app/mongoose.js', function () {
     describe('error', function () {
       let mockMongoose;
       beforeEach(function () {
-        mockMongoose = sinon.stub(mongooseModule, 'connect').yields('Error Connecting');
-      });
-
-      afterEach(function () {
-        mockMongoose.restore();
+        mockMongoose = sandbox.stub(mongooseModule, 'connect').yields('Error Connecting');
       });
 
       it('should reject the promise', function () {
@@ -64,6 +65,7 @@ describe('/modules/core/server/app/mongoose.js', function () {
       it('should have a ready state of 0', function () {
         return mongooseModule.connection.readyState.should.be.equal(0);
       });
+
     });
 
   });
@@ -104,7 +106,7 @@ describe('/modules/core/server/app/mongoose.js', function () {
 
       let mockMongoose;
       beforeEach(function () {
-        mockMongoose = sinon.stub(mongooseModule, 'disconnect').yields('Error Disconnecting');
+        mockMongoose = sandbox.stub(mongooseModule, 'disconnect').yields('Error Disconnecting');
         return mongoose.connect();
       });
 

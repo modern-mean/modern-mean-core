@@ -13,7 +13,17 @@ chai.use(sinonChai);
 let expect = chai.expect;
 let should = chai.should();
 
+let sandbox;
+
 describe('/modules/users/server/admin.users.module.js', () => {
+
+  beforeEach(() => {
+    return sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    return sandbox.restore();
+  });
 
   describe('export', () => {
 
@@ -32,13 +42,8 @@ describe('/modules/users/server/admin.users.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          routesSpy = sinon.spy(adminRoutes, 'init');
-          policySpy = sinon.spy(adminPolicy, 'policy');
-        });
-
-        afterEach(() => {
-          routesSpy.restore();
-          policySpy.restore();
+          routesSpy = sandbox.spy(adminRoutes, 'init');
+          policySpy = sandbox.spy(adminPolicy, 'policy');
         });
 
         it('should setup user admin routes', () => {
@@ -69,11 +74,7 @@ describe('/modules/users/server/admin.users.module.js', () => {
 
         beforeEach(() => {
           app = express();
-          mockRoutes = sinon.stub(adminRoutes, 'init').rejects();
-        });
-
-        afterEach(() => {
-          mockRoutes.restore();
+          mockRoutes = sandbox.stub(adminRoutes, 'init').rejects();
         });
 
         it('should reject a promise', () => {
