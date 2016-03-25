@@ -28,11 +28,11 @@ describe('/modules/users/server/controllers/admin.server.controller.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return adminController.default.should.be.an.object;
+      return adminController.default.should.be.an('object');
     });
 
     it('should export read', () => {
-      return adminController.read.should.be.a.function;
+      return adminController.read.should.be.a('function');
     });
 
     describe('read()', () => {
@@ -55,7 +55,7 @@ describe('/modules/users/server/controllers/admin.server.controller.js', () => {
     });
 
     it('should export update', () => {
-      return adminController.update.should.be.a.function;
+      return adminController.update.should.be.a('function');
     });
 
     describe('update()', () => {
@@ -136,7 +136,7 @@ describe('/modules/users/server/controllers/admin.server.controller.js', () => {
     });
 
     it('should export remove', () => {
-      return adminController.remove.should.be.a.function;
+      return adminController.remove.should.be.a('function');
     });
 
     describe('remove()', () => {
@@ -205,7 +205,7 @@ describe('/modules/users/server/controllers/admin.server.controller.js', () => {
     });
 
     it('should export list', () => {
-      return adminController.remove.should.be.a.function;
+      return adminController.remove.should.be.a('function');
     });
 
     describe('list()', () => {
@@ -254,7 +254,7 @@ describe('/modules/users/server/controllers/admin.server.controller.js', () => {
     });
 
     it('should export userByID', () => {
-      return adminController.userByID.should.be.a.function;
+      return adminController.userByID.should.be.a('function');
     });
 
     describe('userByID()', () => {

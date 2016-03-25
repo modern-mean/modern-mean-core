@@ -28,11 +28,11 @@ describe('/modules/users/server/admin.users.module.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return adminUsers.default.should.be.an.object;
+      return adminUsers.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return adminUsers.default.should.be.a.function;
+      return adminUsers.init.should.be.a('function');
     });
 
     describe('init()', () => {

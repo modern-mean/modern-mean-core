@@ -28,11 +28,11 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should export module', () => {
-    return expressModule.should.be.an.object;
+    return expressModule.should.be.an('object');
   });
 
   it('should have property init', () => {
-    return expressModule.init.should.be.a.function;
+    return expressModule.init.should.be.a('function');
   });
 
   describe('init()', () => {
@@ -46,7 +46,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
       it('should resolve an instance of express', () => {
         return expressModule.init()
                 .then(app => {
-                  return app.use.should.be.a.function;
+                  return app.use.should.be.a('function');
                 });
       });
 
@@ -55,7 +55,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property variables', () => {
-    return expressModule.variables.should.be.a.function;
+    return expressModule.variables.should.be.a('function');
   });
 
   describe('variables()', () => {
@@ -76,7 +76,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property middleware', () => {
-    return expressModule.middleware.should.be.a.function;
+    return expressModule.middleware.should.be.a('function');
   });
 
   describe('middleware()', () => {
@@ -125,7 +125,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property engine', () => {
-    return expressModule.engine.should.be.a.function;
+    return expressModule.engine.should.be.a('function');
   });
 
   describe('engine()', () => {
@@ -152,7 +152,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property headers', () => {
-    return expressModule.headers.should.be.a.function;
+    return expressModule.headers.should.be.a('function');
   });
 
   describe('headers()', () => {
@@ -172,7 +172,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property modules', () => {
-    return expressModule.modules.should.be.a.function;
+    return expressModule.modules.should.be.a('function');
   });
 
   describe('modules()', () => {
@@ -217,7 +217,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property core', () => {
-    return expressModule.core.should.be.a.function;
+    return expressModule.core.should.be.a('function');
   });
 
   describe('core()', () => {
@@ -252,7 +252,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property listen', () => {
-    return expressModule.listen.should.be.a.function;
+    return expressModule.listen.should.be.a('function');
   });
 
   describe('listen()', () => {
@@ -274,11 +274,11 @@ describe('/modules/core/server/app/express.jsaa', () => {
       });
 
       it('should populate httpServer', () => {
-        return expressModule.httpServer().should.be.an.object;
+        return expressModule.httpServer().should.be.an('object');
       });
 
       it('should populate httpsServer', () => {
-        return expressModule.httpsServer().should.be.an.object;
+        return expressModule.httpsServer().should.be.an('object');
       });
 
     });
@@ -333,7 +333,7 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   it('should have property destroy', () => {
-    return expressModule.destroy.should.be.a.function;
+    return expressModule.destroy.should.be.a('function');
   });
 
   describe('destroy()', () => {

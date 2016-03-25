@@ -32,11 +32,11 @@ xdescribe('modules/users/server/routes/users.server.routes.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return userRoutes.default.should.be.an.object;
+      return userRoutes.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return userRoutes.init.should.be.a.function;
+      return userRoutes.init.should.be.a('function');
     });
 
   });

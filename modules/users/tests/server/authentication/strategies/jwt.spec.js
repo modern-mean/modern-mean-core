@@ -33,11 +33,11 @@ describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return jwtStrategy.default.should.be.an.object;
+      return jwtStrategy.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return jwtStrategy.strategy.should.be.a.function;
+      return jwtStrategy.strategy.should.be.a('function');
     });
 
     describe('strategy()', () => {

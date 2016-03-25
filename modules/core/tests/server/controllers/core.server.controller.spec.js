@@ -23,11 +23,11 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
   });
 
   it('should export default', () => {
-    controller.default.should.be.an.object;
+    controller.default.should.be.an('object');
   });
 
   it('should export renderIndex', () => {
-    controller.renderIndex.should.be.a.function;
+    controller.renderIndex.should.be.a('function');
   });
 
   describe('renderIndex()', () => {
@@ -47,7 +47,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
   });
 
   it('should export renderServerError', () => {
-    controller.renderServerError.should.be.a.function;
+    controller.renderServerError.should.be.a('function');
   });
 
   describe('renderServerError()', () => {
@@ -69,7 +69,7 @@ describe('/modules/core/server/controllers/core.server.controller.js', function 
   });
 
   it('should export renderNotFound', () => {
-    controller.renderNotFound.should.be.a.function;
+    controller.renderNotFound.should.be.a('function');
   });
 
   describe('renderNotFound()', () => {

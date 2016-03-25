@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonAsPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
-import fs from 'fs';
 import * as profileUpload from '../../../server/config/profileUpload';
 import config from 'modernMean/config';
 
@@ -28,11 +27,11 @@ describe('/modules/users/server/config/profileUpload.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return profileUpload.default.should.be.an.object;
+      return profileUpload.default.should.be.an('object');
     });
 
     it('should export filter', () => {
-      return profileUpload.filter.should.be.a.function;
+      return profileUpload.filter.should.be.a('function');
     });
 
     describe('filter', () => {
@@ -75,22 +74,22 @@ describe('/modules/users/server/config/profileUpload.js', () => {
     });
 
     it('should export storage', () => {
-      return profileUpload.filter.should.be.a.function;
+      return profileUpload.filter.should.be.a('function');
     });
 
     describe('storage()', () => {
 
       it('should return an object of Disk Storage', () => {
         let test = profileUpload.storage();
-        test.should.be.an.object;
-        test.getFilename.should.be.a.function;
-        return test.getDestination.should.be.a.function;
+        test.should.be.an('object');
+        test.getFilename.should.be.a('function');
+        return test.getDestination.should.be.a('function');
       });
 
     });
 
     it('should export destination', () => {
-      return profileUpload.destination.should.be.a.function;
+      return profileUpload.destination.should.be.a('function');
     });
 
     describe('destination()', () => {
@@ -112,7 +111,7 @@ describe('/modules/users/server/config/profileUpload.js', () => {
     });
 
     it('should export filename', () => {
-      return profileUpload.filename.should.be.a.function;
+      return profileUpload.filename.should.be.a('function');
     });
 
     describe('destination()', () => {

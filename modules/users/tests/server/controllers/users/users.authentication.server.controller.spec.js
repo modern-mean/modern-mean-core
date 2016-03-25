@@ -31,11 +31,11 @@ describe('/modules/users/server/controllers/users/users.authentication.server.co
   describe('export', () => {
 
     it('should export default', () => {
-      return authenticationController.default.should.be.an.object;
+      return authenticationController.default.should.be.an('object');
     });
 
     it('should export signin', () => {
-      return authenticationController.signin.should.be.a.function;
+      return authenticationController.signin.should.be.a('function');
     });
 
     describe('signin()', () => {
@@ -87,7 +87,7 @@ describe('/modules/users/server/controllers/users/users.authentication.server.co
     });
 
     it('should export signup', () => {
-      return authenticationController.signup.should.be.a.function;
+      return authenticationController.signup.should.be.a('function');
     });
 
     describe('signup()', () => {

@@ -33,11 +33,11 @@ describe('/modules/users/server/users.module.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return users.default.should.be.an.object;
+      return users.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return users.default.should.be.a.function;
+      return users.init.should.be.a('function');
     });
 
     describe('init()', () => {

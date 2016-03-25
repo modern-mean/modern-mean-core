@@ -7,13 +7,45 @@ import userModel from './users.server.model.user';
 
 let users = {};
 
-function getUser(email, userTemplate) {
+let userTemplate = {
+  email: 'user@localhost.com',
+  name: {
+    first: 'User',
+    last: 'Local'
+  },
+  roles: ['user']
+};
+
+let adminTemplate = {
+  email: 'admin@localhost.com',
+  name: {
+    first: 'User',
+    last: 'Admin'
+  },
+  roles: ['admin']
+};
+
+function removeUser() {
+  let User = userModel.getModels().user;
+  users.user = undefined;
+  return User.remove({ 'providers.email': userTemplate.email });
+}
+
+function removeAdmin() {
+  let User = userModel.getModels().user;
+  users.admin = undefined;
+  return User.remove({ 'providers.email': adminTemplate.email });
+}
+
+
+function getUser(template) {
   return new Promise((resolve, reject) => {
     let User = userModel.getModels().user;
-    User.findOne({ 'providers.email': email, 'providers.type': 'local' })
+
+    User.findOne({ 'providers.email': template.email, 'providers.type': 'local' })
       .then(user => {
         if (!user) {
-          resolve(new User(userTemplate));
+          resolve(new User(template));
         }
         resolve(user);
       });
@@ -25,17 +57,9 @@ function seedUser() {
 
     let LocalProvider = userModel.getModels().provider;
     let Email = userModel.getModels().email;
-    let userEmail = 'user@localhost.com';
-    let userTemplate = {
-      name: {
-        first: 'User',
-        last: 'Local'
-      },
-      roles: ['user']
-    };
 
     let passwordPromise = LocalProvider.generateRandomPassphrase();
-    let userPromise = getUser(userEmail, userTemplate);
+    let userPromise = getUser(userTemplate);
 
     Promise.all([passwordPromise, userPromise])
       .then(promises => {
@@ -45,7 +69,7 @@ function seedUser() {
         //Set email if its not set
         if (user.emails.length === 0) {
           let email = new userModel.getModels().email({
-            email: userEmail,
+            email: userTemplate.email,
             primary: true
           });
           user.emails.push(email);
@@ -56,7 +80,7 @@ function seedUser() {
         //Set provider
         let provider = new LocalProvider({
           type: 'local',
-          email: userEmail,
+          email: userTemplate.email,
           clearpassword: password
         });
 
@@ -68,10 +92,14 @@ function seedUser() {
             users.user.password = password;
             console.log(chalk.bold.magenta('Users::Model::Seed::User::'), user.emails[0].email + ':' + password);
             resolve(user);
-          })
+          });
+          /*
+          Commented out till i figure out how to mock it.
           .catch(err => {
+            console.log(chalk.bold.red('Users::Model::Seed::User::Error::' + err));
             reject(err);
           });
+          */
 
       });
   });
@@ -82,17 +110,9 @@ function seedAdmin() {
 
     let LocalProvider = userModel.getModels().provider;
     let Email = userModel.getModels().email;
-    let adminEmail = 'admin@localhost.com';
-    let userTemplate = {
-      name: {
-        first: 'Admin',
-        last: 'Local'
-      },
-      roles: ['admin']
-    };
 
     let passwordPromise = LocalProvider.generateRandomPassphrase();
-    let userPromise = getUser(adminEmail, userTemplate);
+    let userPromise = getUser(adminTemplate);
 
     Promise.all([passwordPromise, userPromise])
       .then(promises => {
@@ -102,7 +122,7 @@ function seedAdmin() {
         //Set email if its not set
         if (user.emails.length === 0) {
           let email = new userModel.getModels().email({
-            email: adminEmail,
+            email: adminTemplate.email,
             primary: true
           });
           user.emails.push(email);
@@ -113,7 +133,7 @@ function seedAdmin() {
         //Set provider
         let provider = new LocalProvider({
           type: 'local',
-          email: adminEmail,
+          email: adminTemplate.email,
           clearpassword: password
         });
 
@@ -125,36 +145,51 @@ function seedAdmin() {
             users.admin.password = password;
             console.log(chalk.bold.magenta('Users::Model::Seed::Admin::'), user.emails[0].email + ':' + password);
             resolve(user);
-          })
+          });
+          /*
+          Commented out till i figure out how to mock it.
           .catch(err => {
+            console.log(chalk.bold.red('Users::Model::Seed::Admin::Error::' + err));
             reject(err);
           });
+          */
 
       });
   });
 }
 
-
 function init() {
   return new Promise(function (resolve, reject) {
+
+    if (users.admin !== undefined && users.user !== undefined) {
+      return resolve(users);
+    }
+
     console.log(chalk.green('Users::Model::Seed::Start'));
     seedUser()
       .then(seedAdmin)
       .then(() => {
         console.log(chalk.green('Users::Model::Seed::Success'));
         resolve(users);
-      })
+      });
+      /*
+      Commented out till i figure out how to mock it.
       .catch((err) => {
         console.log(chalk.bold.red('Users::Model::Seed::Error::' + err));
         reject(err);
       });
+      */
 
   });
 }
 
+function getUsers() {
+  return users;
+}
 
 
-let service = { init: init, users: users, seedUser: seedUser, seedAdmin: seedAdmin };
+
+let service = { init: init, getUsers: getUsers, seedUser: seedUser, seedAdmin: seedAdmin, removeUser: removeUser, removeAdmin: removeAdmin };
 
 export default service;
-export { init, users, seedUser, seedAdmin };
+export { init, getUsers, seedUser, seedAdmin, removeUser, removeAdmin };

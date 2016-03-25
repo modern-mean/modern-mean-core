@@ -24,11 +24,11 @@ describe('/modules/core/server/app/mongoose.js', function () {
   });
 
   it('should export mongoose', function () {
-    return mongoose.should.be.an.object;
+    return mongoose.should.be.an('object');
   });
 
   it('should have property connect that is a function', function () {
-    return mongoose.connect.should.be.a.function;
+    return mongoose.connect.should.be.a('function');
   });
 
   describe('connect()', function () {
@@ -71,7 +71,7 @@ describe('/modules/core/server/app/mongoose.js', function () {
   });
 
   it('should have property disconnect that is a function', function () {
-    return mongoose.disconnect.should.be.a.function;
+    return mongoose.disconnect.should.be.a('function');
   });
 
   describe('disconnect()', function () {

@@ -30,11 +30,11 @@ describe('/modules/users/server/authentication/authentication.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return authentication.default.should.be.an.object;
+      return authentication.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return authentication.init.should.be.a.function;
+      return authentication.init.should.be.a('function');
     });
 
     describe('init()', () => {

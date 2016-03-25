@@ -26,19 +26,19 @@ describe('/modules/users/server/controllers/users/users.server.controller.js', (
   describe('export', () => {
 
     it('should export default', () => {
-      return userController.default.should.be.an.object;
+      return userController.default.should.be.an('object');
     });
 
     it('should export authentication', () => {
-      return userController.authentication.should.be.an.object;
+      return userController.authentication.should.be.an('object');
     });
 
     it('should export password', () => {
-      return userController.password.should.be.an.object;
+      return userController.password.should.be.an('object');
     });
 
     it('should export profile', () => {
-      return userController.profile.should.be.an.object;
+      return userController.profile.should.be.an('object');
     });
 
   });

@@ -33,11 +33,11 @@ describe('/modules/users/server/authentication/strategies/local.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return localStrategy.default.should.be.an.object;
+      return localStrategy.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return localStrategy.strategy.should.be.a.function;
+      return localStrategy.strategy.should.be.a('function');
     });
 
     describe('strategy()', () => {

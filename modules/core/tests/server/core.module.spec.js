@@ -27,11 +27,11 @@ describe('/modules/core/server/core.module.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return core.default.should.be.an.object;
+      return core.default.should.be.an('object');
     });
 
     it('should export init', () => {
-      return core.default.should.be.a.function;
+      return core.init.should.be.a('function');
     });
 
     describe('init()', () => {

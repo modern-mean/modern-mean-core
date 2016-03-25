@@ -31,11 +31,11 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
   describe('export', () => {
 
     it('should export default', () => {
-      return profileController.default.should.be.an.object;
+      return profileController.default.should.be.an('object');
     });
 
     it('should export changeProfilePicture', () => {
-      return profileController.changeProfilePicture.should.be.a.function;
+      return profileController.changeProfilePicture.should.be.a('function');
     });
 
 
@@ -122,7 +122,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
 
 
     it('should export me', () => {
-      return profileController.me.should.be.a.function;
+      return profileController.me.should.be.a('function');
     });
 
     describe('me()', () => {
@@ -147,7 +147,7 @@ describe('/modules/users/server/controllers/users/users.profile.server.controlle
     });
 
     it('should export update', () => {
-      return profileController.me.should.be.a.function;
+      return profileController.me.should.be.a('function');
     });
 
     describe('update()', () => {
