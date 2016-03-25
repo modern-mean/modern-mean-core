@@ -19,6 +19,7 @@ function connect() {
     });
 
     mongoose.connection.once('connected', function () {
+      console.log(chalk.cyan.bold('Mongoose Connected'));
       resolve(db);
     });
   });

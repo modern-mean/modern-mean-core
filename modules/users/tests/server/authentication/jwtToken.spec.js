@@ -26,11 +26,11 @@ describe('/modules/users/server/authentication/jwtToken.js', () => {
   describe('export', () => {
 
     it('should export default', () => {
-      return jwtToken.default.should.be.an.object;
+      return jwtToken.default.should.be.an('object');
     });
 
     it('should export signToken', () => {
-      return jwtToken.signToken.should.be.a.function;
+      return jwtToken.signToken.should.be.a('function');
     });
 
     describe('signToken()', () => {

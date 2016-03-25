@@ -18,8 +18,8 @@ function init() {
     if (!models.email) {
       models.email = mongoose.model('Email', EmailSchema);
     }
-  
-    resolve();
+
+    resolve(models);
   });
 }
 

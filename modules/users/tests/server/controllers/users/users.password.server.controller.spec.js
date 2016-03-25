@@ -30,11 +30,11 @@ describe('/modules/users/server/controllers/users/users.password.server.controll
   describe('export', () => {
 
     it('should export default', () => {
-      return passwordController.default.should.be.an.object;
+      return passwordController.default.should.be.an('object');
     });
 
     it('should export changePassword', () => {
-      return passwordController.changePassword.should.be.a.function;
+      return passwordController.changePassword.should.be.a('function');
     });
 
 

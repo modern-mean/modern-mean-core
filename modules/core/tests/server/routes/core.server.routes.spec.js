@@ -27,11 +27,11 @@ describe('modules/core/server/routes/core.server.routes.js', () => {
   });
 
   it('should export default', () => {
-    return routes.default.should.be.an.object;
+    return routes.default.should.be.an('object');
   });
 
   it('should export init', () => {
-    return routes.init.should.be.a.function;
+    return routes.init.should.be.a('function');
   });
 
   describe('init()', () => {
