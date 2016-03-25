@@ -10,17 +10,21 @@ function filter(req, file, cb) {
 
 function storage() {
   return multer.diskStorage({
-    destination: function(req, file, cb) {
-      cb(null, config.uploads.profileUpload.dest);
-    },
-    filename: function(req, file, cb) {
-      var datetimestamp = Date.now();
-      cb(null, req.user._id + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
-    }
+    destination: destination,
+    filename: filename
   });
 }
 
-let service = { filter: filter, storage: storage };
+function destination(req, file, cb) {
+  cb(null, config.uploads.profileUpload.dest);
+}
+
+function filename(req, file, cb) {
+  var datetimestamp = Date.now();
+  cb(null, req.user._id + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+}
+
+let service = { filter: filter, destination: destination, filename: filename, storage: storage };
 
 export default service;
-export { filter, storage };
+export { filter, destination, filename, storage };
