@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -12,7 +14,7 @@ let should = chai.should();
 
 let sandbox;
 
-describe('/modules/core/server/app/server.js', function () {
+describe('/modules/core/server/app/server.js', () => {
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();
@@ -30,7 +32,7 @@ describe('/modules/core/server/app/server.js', function () {
       mockStart = sandbox.stub(app, 'start').resolves();
     });
 
-    it('should call app.start()', function () {
+    it('should call app.start()', () => {
       delete require.cache[require.resolve('../../../server/app/server')];
       require('../../../server/app/server');
       return mockStart.should.have.been.calledOnce;

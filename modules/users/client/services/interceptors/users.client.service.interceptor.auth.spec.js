@@ -4,15 +4,15 @@
   describe('users.client.service.interceptor.auth.js', function () {
 
     var $rootScope,
-      User,
+      Authentication,
       $state,
       $httpBackend;
 
     beforeEach(module('users'));
 
-    beforeEach(inject(function(_$rootScope_, _User_, _$httpBackend_, _$state_) {
+    beforeEach(inject(function(_$rootScope_, _Authentication_, _$httpBackend_, _$state_) {
       $rootScope = _$rootScope_;
-      User = new _User_();
+      Authentication = _Authentication_;
       $httpBackend = _$httpBackend_;
       $state = _$state_;
     }));
@@ -20,18 +20,18 @@
     describe('Auth Interceptor', function () {
 
       it('should redirect to sign in on 401', function () {
-        $httpBackend.expectGET('/api/users/me').respond(401);
+        $httpBackend.expectGET('/api/me').respond(401);
         var stateSpy = chai.spy.on($state, 'transitionTo');
-        User.$me();
+        Authentication.user.$get();
         $rootScope.$digest();
         $httpBackend.flush();
         expect(stateSpy).to.have.been.called.with('root.user.authentication.signin');
       });
 
       it('should redirect to forbidden in on 403', function () {
-        $httpBackend.expectGET('/api/users/me').respond(403);
+        $httpBackend.expectGET('/api/me').respond(403);
         var stateSpy = chai.spy.on($state, 'transitionTo');
-        User.$me();
+        Authentication.user.$get();
         $rootScope.$digest();
         $httpBackend.flush();
         expect(stateSpy).to.have.been.called.with('root.forbidden');

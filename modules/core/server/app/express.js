@@ -14,10 +14,12 @@ import enableDestroy from 'server-destroy';
 import morgan from 'morgan';
 import livereload from 'connect-livereload';
 import fs from 'fs';
+import forceSSL from 'express-force-ssl';
 
 //Store Express server
 let httpServer,
-  httpsServer;
+  httpsServer,
+  expressApp;
 
 function variables(app) {
   return new Promise(function (resolve, reject) {
@@ -42,6 +44,14 @@ function middleware(app) {
       extended: true
     }));
     app.use(bodyParser.json());
+
+    if (config.express.https.enable) {
+      app.set('forceSSLOptions', {
+        httpsPort: config.express.https.port
+      });
+
+      app.use(forceSSL);
+    }
 
     console.log(chalk.green('Express::Middleware::Success'));
     resolve(app);
@@ -114,48 +124,47 @@ function core(app) {
 }
 
 function listen(app) {
-
-  console.log('--');
-  console.log(chalk.green(config.app.title));
-  console.log(chalk.green('Environment:     ' + process.env.NODE_ENV));
-  console.log(chalk.green('App version:     ' + config.app.version));
-  console.log(chalk.green('Database:        ' + config.db.uri));
-
+  console.log(chalk.green('Express::Listen::Start'));
   let httpServerPromise = new Promise(function (resolve, reject) {
-    try {
-      httpServer = http.createServer(app).listen(config.express.http.port, config.express.host, () => {
-        console.log(chalk.green('HTTP Server:          http://' + config.express.host + ':' + config.express.http.port));
-        if(process.env.NODE_ENV !== 'production') {
-          enableDestroy(httpServer);
-        }
-        resolve(app);
-      });
-    } catch (err) {
-      reject(err);
-    }
+
+    httpServer.listen(config.express.http.port, config.express.host, () => {
+      /* istanbul ignore else: cant test this since production server cant be destroyed  */
+      if(process.env.NODE_ENV !== 'production') {
+        enableDestroy(httpServer);
+      }
+      resolve(app);
+    });
+
   });
 
-  let httpsOptions = {
-    key: fs.readFileSync(config.express.https.options.key),
-    cert: fs.readFileSync(config.express.https.options.cert)
-  };
+
 
   let httpsServerPromise = new Promise(function (resolve, reject) {
-    try {
-      httpsServer = https.createServer(httpsOptions, app).listen(config.express.https.port, config.express.host, () => {
-        console.log(chalk.green('HTTPS Server:          https://' + config.express.host + ':' + config.express.https.port));
-        if(process.env.NODE_ENV !== 'production') {
-          enableDestroy(httpsServer);
-        }
-        resolve(app);
-      });
-    } catch (err) {
-      reject(err);
+    if (!config.express.https.enable) {
+      return resolve();
     }
+
+    httpsServer.listen(config.express.https.port, config.express.host, () => {
+      /* istanbul ignore else: cant test this since production server cant be destroyed  */
+      if(process.env.NODE_ENV !== 'production') {
+        enableDestroy(httpsServer);
+      }
+      resolve(app);
+    });
+
   });
 
   return Promise.all([httpServerPromise, httpsServerPromise])
           .then(promises => {
+            console.log('--');
+            console.log(chalk.green(config.app.title));
+            console.log(chalk.green('Environment:     ' + process.env.NODE_ENV));
+            console.log(chalk.green('App version:     ' + config.app.version));
+            console.log(chalk.green('Database:        ' + config.db.uri));
+            console.log(chalk.green('HTTP Server:     http://' + httpServer.address().address + ':' + httpServer.address().port));
+            if (config.express.https.enable) {
+              console.log(chalk.green('HTTPS Server:    https://' + httpsServer.address().address + ':' + httpsServer.address().port));
+            }
             console.log('--');
             return app;
           });
@@ -163,16 +172,30 @@ function listen(app) {
 
 function init() {
   return new Promise(function (resolve, reject) {
-    let app = express();
+    console.log(chalk.green('Express::Init::Start'));
+    if (expressApp !== undefined || httpsServer !== undefined || httpServer !== undefined) {
+      return reject('Express::Init::Error::Server is still running.');
+    }
+    expressApp = express();
+    httpServer = http.createServer(expressApp);
+    if (config.express.https.enable) {
+      let httpsOptions = {
+        key: fs.readFileSync(config.express.https.options.key),
+        cert: fs.readFileSync(config.express.https.options.cert)
+      };
+      httpsServer = https.createServer(httpsOptions, expressApp);
+    }
     console.log(chalk.green('Express::Init::Success'));
-    resolve(app);
+    resolve(expressApp);
   });
 }
 
 function destroy() {
+  expressApp = undefined;
   let httpServerPromise = new Promise(function (resolve, reject) {
-    if (!httpServer) {
-      resolve();
+    if (!httpServer || !httpServer.listening) {
+      httpServer = undefined;
+      return resolve();
     }
 
     httpServer.destroy(function () {
@@ -182,13 +205,14 @@ function destroy() {
   });
 
   let httpsServerPromise = new Promise(function (resolve, reject) {
-    if (!httpsServer) {
-      resolve();
+    if (!httpsServer || !httpsServer.listening) {
+      httpsServer = undefined;
+      return resolve();
     }
 
     httpsServer.destroy(function () {
       httpsServer = undefined;
-      resolve();
+      return resolve();
     });
   });
 
@@ -206,7 +230,11 @@ function getHttpsServer() {
   return httpsServer;
 }
 
-let service = { core: core, engine: engine, headers: headers, init: init, listen: listen, middleware: middleware, modules: modules, variables: variables, destroy: destroy, httpServer: getHttpServer, httpsServer: getHttpsServer };
+function getExpressApp() {
+  return expressApp;
+}
+
+let service = { core: core, engine: engine, headers: headers, init: init, listen: listen, middleware: middleware, modules: modules, variables: variables, destroy: destroy, httpServer: getHttpServer, httpsServer: getHttpsServer, expressApp: getExpressApp };
 export default service;
 
 export {
@@ -220,5 +248,6 @@ export {
   variables,
   getHttpServer as httpServer,
   getHttpsServer as httpsServer,
+  getExpressApp as expressApp,
   destroy
 };

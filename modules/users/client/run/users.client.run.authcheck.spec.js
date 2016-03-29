@@ -43,18 +43,15 @@
       });
 
       it('should redirect to forbidded if they dont have access', function () {
-        Authentication.user = {
-          roles: ['user']
-        };
+        Authentication.authorization.roles = ['user'];
+        Authentication.token = 'asdf';
         $state.transitionTo('root.admin.users');
         $rootScope.$digest();
         expect($state.current.name).to.equal('root.forbidden');
       });
 
       it('should allow access if user has one of the roles', function () {
-        Authentication.user = {
-          roles: ['admin']
-        };
+        Authentication.authorization.roles = ['admin'];
         $state.transitionTo('root.admin.users');
         $rootScope.$digest();
         expect($state.current.name).to.equal('root.admin.users');
@@ -64,7 +61,7 @@
 
     describe('signout', function () {
 
-      it('should sign the user out on signout route', function () {
+      it('should signout the user', function () {
         var signoutSpy = chai.spy.on(Authentication, 'signout');
         $state.transitionTo('root.signout');
         $rootScope.$digest();

@@ -6,51 +6,57 @@ import globby from 'globby';
 import path from 'path';
 import config from 'modernMean/config';
 
+mongoose.Promise = global.Promise;
 
 //Database Connection
 let db;
 
 function connect() {
-  return new Promise(function (resolve, reject) {
-    db = mongoose.connect(config.db.uri, config.db.options, function (err) {
+  return new Promise((resolve, reject) => {
+
+    if (mongoose.connection.readyState !== 0) {
+      //console.log(chalk.cyan.bold('Mongoose::Connect::AlreadyConnected'));
+      return resolve(mongoose);
+    }
+
+    mongoose.connect(config.db.uri, config.db.options, function (err) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
     });
 
     mongoose.connection.once('connected', function () {
-      console.log(chalk.cyan.bold('Mongoose Connected'));
-      resolve(db);
+      console.log(chalk.cyan.bold('Mongoose::Connect::Success'), mongoose.connection.readyState);
+      return resolve(mongoose);
     });
+
   });
 }
 
 function disconnect() {
   return new Promise(function (resolve, reject) {
+    console.log(chalk.cyan.bold('Mongoose::Disconnect::Start'));
     if (mongoose.connection.readyState === 0) {
       resolve();
     }
+
     mongoose.disconnect(function (err) {
       if (err) {
         reject(err);
       }
     });
+
     mongoose.connection.once('disconnected', function () {
-      console.log(chalk.cyan.bold('Mongoose Disconnected'));
-      resolve(db);
+      console.log(chalk.cyan.bold('Mongoose::Disconnect::Success'));
+      db = undefined;
+      resolve();
     });
+
   });
 }
 
-function setPromise() {
-  return new Promise(function (resolve, reject) {
-    mongoose.Promise = global.Promise;
-    resolve();
-  });
-};
 
-
-let service = { connect: connect, disconnect: disconnect, setPromise: setPromise };
+let service = { connect: connect, disconnect: disconnect };
 
 export default service;
-export { connect, disconnect, setPromise };
+export { connect, disconnect };

@@ -1,3 +1,5 @@
+'use strict';
+
 import routes from './routes/core.server.routes';
 import chalk from 'chalk';
 

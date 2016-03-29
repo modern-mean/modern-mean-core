@@ -1,3 +1,5 @@
+'use strict';
+
 import passport from 'passport';
 import chalk from 'chalk';
 import jwtStrategy from './strategies/jwt';

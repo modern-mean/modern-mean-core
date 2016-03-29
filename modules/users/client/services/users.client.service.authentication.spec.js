@@ -34,7 +34,8 @@
           $http = _$http_;
           Authentication = _Authentication_;
           broadcastSpy = chai.spy.on($rootScope, '$broadcast');
-          $httpBackend.expectGET('/api/users/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $rootScope.$digest();
           $httpBackend.flush();
         }));
@@ -90,7 +91,8 @@
           Authentication = _Authentication_;
 
           broadcastSpy = chai.spy.on($rootScope, '$broadcast');
-          $httpBackend.expectGET('/api/users/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $rootScope.$digest();
           $httpBackend.flush();
         }));
@@ -151,7 +153,7 @@
 
       describe('changePassword', function () {
         it('should post to the server to change password and return a promise', function () {
-          $httpBackend.expectPOST('/api/users/password').respond(200, { message: 'Yippee' });
+          $httpBackend.expectPOST('/api/me/password').respond(200, { message: 'Yippee' });
           var response = Authentication.changePassword({});
           $rootScope.$digest();
           $httpBackend.flush();
@@ -192,37 +194,6 @@
           expect(response).to.be.an('object');
           expect(response.$promise).to.be.an('object');
           expect(response.$promise.then).to.be.a('function');
-        });
-      });
-
-      it('should have a refresh property that is a function', function () {
-        expect(Authentication.refresh).to.be.an('function');
-      });
-
-      describe('refresh', function () {
-        it('should create a user resource and set the user property if successful', function () {
-          $httpBackend.expectGET('/api/users/me').respond(200, { id: 'testid' });
-          var response = Authentication.refresh({});
-          $rootScope.$digest();
-          $httpBackend.flush();
-          expect(Authentication.user.id).to.equal('testid');
-          expect(Authentication.user.$save).to.be.a('function');
-        });
-
-        it('should set the user property if successful', function () {
-          Authentication.user = new User();
-          $httpBackend.expectGET('/api/users/me').respond(200, { id: 'testid' });
-          var response = Authentication.refresh({});
-          $httpBackend.flush();
-          expect(Authentication.user.id).to.equal('testid');
-        });
-
-        it('should redirect to authentication.signin on error', function () {
-          $httpBackend.expectGET('/api/users/me').respond(400);
-          var stateSpy = chai.spy.on($state, 'go');
-          var response = Authentication.refresh({});
-          $httpBackend.flush();
-          expect(stateSpy).to.have.been.called.with('root.user.authentication.signin');
         });
       });
 
@@ -285,7 +256,11 @@
           });
 
           it('should not set user property', function () {
-            expect(Authentication.user).to.equal(undefined);
+            expect(Authentication.user._id).to.equal(undefined);
+          });
+
+          it('should not set authorization property', function () {
+            expect(Authentication.authorization.roles).to.equal(undefined);
           });
 
           it('should not set token property', function () {
@@ -311,7 +286,9 @@
             AUTH_EVENTS = _AUTH_EVENTS_;
             $http = _$http_;
 
-            $httpBackend.expectPOST('/api/auth/signin').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+            $httpBackend.expectPOST('/api/auth/signin').respond(200, { token: 'testtoken' });
+            $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+            $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
             result = Authentication.signin();
             $httpBackend.flush();
           }));
@@ -327,6 +304,11 @@
           it('should set user property', function () {
             expect(Authentication.user).to.be.an('object');
             expect(Authentication.user.id).to.equal('testid');
+          });
+
+          it('should set authorization property', function () {
+            expect(Authentication.authorization).to.be.an('object');
+            expect(Authentication.authorization.roles).to.contain('surething');
           });
 
           it('should set token property', function () {
@@ -366,7 +348,11 @@
           });
 
           it('should not set user property', function () {
-            expect(Authentication.user).to.equal(undefined);
+            expect(Authentication.user._id).to.equal(undefined);
+          });
+
+          it('should not set authorization property', function () {
+            expect(Authentication.authorization.roles).to.equal(undefined);
           });
 
           it('should not set token property', function () {
@@ -393,6 +379,8 @@
             $http = _$http_;
 
             $httpBackend.expectPOST('/api/auth/signup').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+            $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+            $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
             result = Authentication.signup();
             $httpBackend.flush();
           }));
@@ -408,6 +396,11 @@
           it('should set user property', function () {
             expect(Authentication.user).to.be.an('object');
             expect(Authentication.user.id).to.equal('testid');
+          });
+
+          it('should set authorization property', function () {
+            expect(Authentication.authorization).to.be.an('object');
+            expect(Authentication.authorization.roles).to.contain('surething');
           });
 
           it('should set token property', function () {

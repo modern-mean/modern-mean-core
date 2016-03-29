@@ -1,3 +1,5 @@
+'use strict';
+
 import path from 'path';
 
 function renderIndex(req, res) {

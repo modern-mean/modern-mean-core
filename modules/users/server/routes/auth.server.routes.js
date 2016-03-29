@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'express';
 import passport from 'passport';
 import { authentication } from '../controllers/users.server.controller';
@@ -5,20 +7,14 @@ import userModel from '../models/users.server.model.user';
 
 function init(app) {
   return new Promise(function (resolve, reject) {
-    try {
-      let router = express.Router();
+    let router = express.Router();
 
-      router.route('/signup').post(userModel.create, authentication.signup);
-      router.route('/signin').post(passport.authenticate('local', { session: false }), authentication.signin);
+    router.route('/signup').post(userModel.create, authentication.signup);
+    router.route('/signin').post(passport.authenticate('local', { session: false }), authentication.signin);
 
-      app.use('/api/auth', router);
+    app.use('/api/auth', router);
 
-      resolve(app);
-
-    } catch(err) {
-      reject(err);
-    }
-
+    resolve(app);
   });
 }
 

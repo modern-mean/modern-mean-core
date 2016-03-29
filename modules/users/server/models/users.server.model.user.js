@@ -1,4 +1,7 @@
+'use strict';
+
 import mongoose from 'mongoose';
+import chalk from 'chalk';
 import UserSchema from '../schemas/users.server.schema.user';
 import ProviderSchema from '../schemas/users.server.schema.provider';
 import EmailSchema from '../schemas/users.server.schema.email';
@@ -7,6 +10,7 @@ let models = {};
 
 function init() {
   return new Promise(function (resolve, reject) {
+    console.log(chalk.green('User::Model::Init::Start'));
     if (!models.user) {
       models.user = mongoose.model('User', UserSchema);
     }
@@ -18,8 +22,8 @@ function init() {
     if (!models.email) {
       models.email = mongoose.model('Email', EmailSchema);
     }
-
-    resolve(models);
+    console.log(chalk.green('User::Model::Init::Success'));
+    return resolve(models);
   });
 }
 

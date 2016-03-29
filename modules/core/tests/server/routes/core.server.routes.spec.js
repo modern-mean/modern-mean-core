@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -82,5 +84,5 @@ describe('modules/core/server/routes/core.server.routes.js', () => {
     });
 
   });
-  
+
 });

@@ -2,36 +2,39 @@
 
 import passport from 'passport';
 import express from 'express';
+import nodeacl from 'acl';
+import aclModule from '../config/acl';
 import * as admin from '../controllers/admin.server.controller';
-import * as acl from '../policies/admin.server.policy';
 
 function init(app) {
-  return new Promise(function (resolve, reject) {
-    try {
-      let router = express.Router();
+  return new Promise((resolve, reject) => {
+    let router = express.Router();
+    let acl = aclModule.getAcl();
 
-      //Set JWT Auth for all user Routes
-      router.all('*', passport.authenticate('jwt', { session: false }));
-      //TODO IMplment policies
-      router.route('/')
-        .get(acl.allowed, admin.list);
+    //Set JWT Auth for all user Routes
+    router.all('*', passport.authenticate('jwt', { session: false }));
 
-      // Single user routes
-      router.route('/:userId')
-        .get(acl.allowed, admin.read)
-        .put(acl.allowed, admin.update)
-        .delete(acl.allowed, admin.remove);
+    router.route('/')
+      .get(acl.middleware(99, getUser), admin.list);
 
-      // Finish by binding the user middleware
-      router.param('userId', admin.userByID);
+    // Single user routes
+    router.route('/:userId')
+      .get(acl.middleware(99, getUser), admin.read)
+      .put(acl.middleware(99, getUser), admin.update)
+      .delete(acl.middleware(99, getUser), admin.remove);
 
-      app.use('/api/admin/users', router);
-      resolve(app);
-    } catch(err) {
-      reject(err);
-    }
+    // Finish by binding the user middleware
+    router.param('userId', admin.userByID);
+
+    app.use('/api/users', router);
+    resolve(app);
 
   });
+}
+
+/* istanbul ignore next: Ignore for now... prolly could export the function to test it */
+function getUser(req, res) {
+  return req.user._id.toString();
 }
 
 let routes = { init: init };

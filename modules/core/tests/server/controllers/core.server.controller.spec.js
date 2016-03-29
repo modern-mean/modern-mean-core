@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -12,7 +14,7 @@ let should = chai.should();
 
 let sandbox;
 
-describe('/modules/core/server/controllers/core.server.controller.js', function () {
+describe('/modules/core/server/controllers/core.server.controller.js', () => {
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();

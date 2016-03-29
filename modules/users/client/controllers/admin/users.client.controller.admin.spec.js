@@ -8,13 +8,15 @@
       UserListController,
       $httpBackend,
       $state,
-      mockUserAdminResource;
+      mockUserAdminResource,
+      Authentication;
 
     beforeEach(module('users.admin'));
 
-    beforeEach(inject(function(_$rootScope_, $controller, _$httpBackend_, _$state_, _UserAdmin_) {
+    beforeEach(inject(function(_$rootScope_, $controller, _$httpBackend_, _$state_, _UserAdmin_, _Authentication_) {
       $httpBackend = _$httpBackend_;
       $rootScope = _$rootScope_;
+      Authentication = _Authentication_;
       $scope = $rootScope.$new();
       $state = _$state_;
       mockUserAdminResource = new _UserAdmin_({ _id: 'testuser' });
@@ -23,6 +25,8 @@
         $scope: $scope,
         userResolve: mockUserAdminResource
       });
+
+      Authentication.authorization.roles = ['admin'];
 
     }));
 

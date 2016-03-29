@@ -1,15 +1,15 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonAsPromised from 'sinon-as-promised';
-
+import express from 'express';
 import promised from 'chai-as-promised';
 import request from 'supertest';
-import mongoose from 'mongoose';
 import * as userRoutes from '../../../server/routes/users.server.routes.js';
-import jwtToken from '../../../server/authentication/jwtToken';
-import userSeed from '../../../server/models/users.server.model.user.seed';
-import mean from '../../../../core/server/app/init';
+import userController from '../../../server/controllers/users.server.controller';
+
 
 chai.use(promised);
 chai.use(sinonChai);
@@ -19,7 +19,7 @@ let should = chai.should();
 
 let sandbox;
 
-xdescribe('modules/users/server/routes/users.server.routes.js', () => {
+describe('modules/users/server/routes/users.server.routes.js', () => {
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();
@@ -41,131 +41,145 @@ xdescribe('modules/users/server/routes/users.server.routes.js', () => {
 
   });
 
-  describe('/api/users/me', () => {
-    let users, app;
+  describe('init', () => {
+    let app, routerStub, mockRouter, expressSpy;
 
     beforeEach(() => {
-      return mean.start()
-              .then(promises => {
-                app = promises[1];
-              });
+      app = express();
+      mockRouter = express.Router();
+      sandbox.stub(mockRouter, 'all');
+      expressSpy = sandbox.spy(app, 'use');
+      routerStub = sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
     });
 
-    beforeEach(() => {
-      return userSeed.init()
-        .then(seedUsers => {
-          users = seedUsers;
-        });
+    it ('should create a new router', () => {
+      return routerStub.should.have.been.called;
     });
 
-    afterEach(() => {
-      return mean.stop();
+    it ('should be secured by passport jwt', () => {
+      return mockRouter.all.should.have.been.calledWith('*', sinon.match.func);
     });
 
-    describe('GET', () => {
-
-      it('should return the user that is logged in', (done) => {
-        return jwtToken.signToken(users.user)
-          .then(token => {
-            request(app)
-              .get('/api/users/me')
-              .set('Authorization', 'JWT ' + token)
-              .expect('Content-Type', /json/)
-              .expect(200)
-              .expect(res => {
-                expect(res.body._id).to.equal(users.user._id.toString());
-                expect(res.body.email).to.equal(users.user.email);
-              })
-              .end(done);
-          });
-      });
-
+    it ('should call app.use with router', () => {
+      return expressSpy.should.have.been.calledWith('/api/me', mockRouter);
     });
 
   });
 
-  describe('/api/users', () => {
-    let users, app;
+  describe('/ route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
     beforeEach(() => {
-      return mean.start()
-              .then(promises => {
-                app = promises[1];
-              });
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        get: sandbox.stub().returnsThis(),
+        put: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(0).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
     });
+
+    it('should call route with /', () => {
+      return routeStub.should.have.been.calledWith('/');
+    });
+
+    it('should call .get with profile.me', () => {
+      return mockRoute.get.should.have.been.calledWith(userController.profile.me);
+    });
+
+    it('should call .put with profile.update', () => {
+      return mockRoute.put.should.have.been.calledWith(userController.profile.update);
+    });
+
+  });
+
+  describe('/authorization route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
     beforeEach(() => {
-      return userSeed.init()
-        .then(seedUsers => {
-          users = seedUsers;
-        });
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        get: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(1).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
     });
 
-    afterEach(() => {
-      return mean.stop();
+    it('should call route with /authorization', () => {
+      return routeStub.should.have.been.calledWith('/authorization');
     });
 
-    describe('PUT', () => {
+    it('should call .get with authorization.read', () => {
+      return mockRoute.get.should.have.been.calledWith(userController.authorization.read);
+    });
 
-      describe('success', () => {
-        let user;
+  });
 
-        it('should update the logged in user', (done) => {
-          user = users.user;
-          user.firstName = 'okie';
-          user.roles = ['admin', 'wtf'];
-          return jwtToken.signToken(users.user)
-            .then(token => {
-              request(app)
-                .put('/api/users')
-                .set('Authorization', 'JWT ' + token)
-                .send(user)
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .expect(res => {
-                  expect(res.body.firstName).to.equal('okie');
-                  expect(res.body.roles).to.be.an.array;
-                  expect(res.body.roles).to.not.contain('admin');
-                  expect(res.body.displayName).to.equal('okie Local');
-                })
-                .end(done);
-            });
+  describe('/password route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
-        });
+    beforeEach(() => {
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        post: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(2).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
+    });
 
-      });
+    it('should call route with /password', () => {
+      return routeStub.should.have.been.calledWith('/password');
+    });
 
-      describe('error', () => {
+    it('should call .get with authorization.read', () => {
+      return mockRoute.post.should.have.been.calledWith(userController.password.changePassword);
+    });
 
-        let mongooseModel, mockMongoose;
+  });
 
-        beforeEach(() => {
-          mongooseModel = mongoose.model('User');
-          console.log(mongooseModel);
-          mockMongoose = sandbox.stub(mongooseModel.prototype, 'save').rejects('Yippee');
-        });
+  describe('/picture route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
-        it('should send a 400 error', (done) => {
+    beforeEach(() => {
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        post: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(3).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
+    });
 
-          return jwtToken.signToken(users.user)
-            .then(token => {
-              request(app)
-                .put('/api/users')
-                .set('Authorization', 'JWT ' + token)
-                .send(users.user)
-                .expect('Content-Type', /json/)
-                .expect(400)
-                .expect(res => {
-                  console.log(res);
-                  expect(res.error.text).to.equal('Yippee');
-                })
-                .end(done);
-            });
+    it('should call route with /picture', () => {
+      return routeStub.should.have.been.calledWith('/picture');
+    });
 
-        });
-
-      });
-
+    it('should call .get with upload and profile.changeProfilePicture', () => {
+      return mockRoute.post.should.have.been.calledWith(sinon.match.func, userController.profile.changeProfilePicture);
     });
 
   });

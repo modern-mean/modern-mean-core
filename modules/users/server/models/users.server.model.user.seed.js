@@ -1,9 +1,9 @@
 'use strict';
 
-import mongoose from 'mongoose';
 import chalk from 'chalk';
 import config from 'modernMean/config';
 import userModel from './users.server.model.user';
+import aclModule from '../config/acl.js';
 
 let users = {};
 
@@ -12,8 +12,7 @@ let userTemplate = {
   name: {
     first: 'User',
     last: 'Local'
-  },
-  roles: ['user']
+  }
 };
 
 let adminTemplate = {
@@ -21,9 +20,10 @@ let adminTemplate = {
   name: {
     first: 'User',
     last: 'Admin'
-  },
-  roles: ['admin']
+  }
 };
+
+
 
 function removeUser() {
   let User = userModel.getModels().user;
@@ -85,9 +85,10 @@ function seedUser() {
         });
 
         user.providers.push(provider);
-
         user.save()
           .then(() => {
+
+            aclModule.getAcl().addUserRoles(user._id.toString(), 'user');
             users.user = user.toObject();
             users.user.password = password;
             console.log(chalk.bold.magenta('Users::Model::Seed::User::'), user.emails[0].email + ':' + password);
@@ -100,6 +101,7 @@ function seedUser() {
             reject(err);
           });
           */
+
 
       });
   });
@@ -141,6 +143,7 @@ function seedAdmin() {
 
         user.save()
           .then(() => {
+            aclModule.getAcl().addUserRoles(user._id.toString(), ['admin']);
             users.admin = user.toObject();
             users.admin.password = password;
             console.log(chalk.bold.magenta('Users::Model::Seed::Admin::'), user.emails[0].email + ':' + password);

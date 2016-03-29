@@ -12,11 +12,13 @@
 
     beforeEach(module('users'));
 
-    beforeEach(inject(function(_$rootScope_, $controller, _Authentication_, _$httpBackend_, User) {
+    beforeEach(inject(function(_$rootScope_, $controller, _Authentication_, _$httpBackend_, _User_) {
       $rootScope = _$rootScope_;
-      $scope = $rootScope.$new();
       Authentication = _Authentication_;
-      Authentication.user = new User({ displayName: 'test' });
+      User = _User_;
+      $scope = $rootScope.$new();
+
+
       EditProfileController = $controller('EditProfileController as vm', {
         $scope: $scope,
         Authentication: Authentication
@@ -49,7 +51,7 @@
           });
 
           it('should put to server and handle success', function () {
-            $httpBackend.expectPUT('/api/users').respond(200, { message: 'Yippee' });
+            $httpBackend.expectPUT('/api/me').respond(200, { message: 'Yippee' });
             $scope.$digest();
             $scope.vm.update();
             $scope.$digest();
@@ -59,7 +61,7 @@
           });
 
           it('should put to server and handle error', function () {
-            $httpBackend.expectPUT('/api/users').respond(400, { message: 'Oops' });
+            $httpBackend.expectPUT('/api/me').respond(400, { message: 'Oops' });
             $scope.vm.update();
             $scope.$digest();
             $httpBackend.flush();

@@ -5,8 +5,8 @@
     .module('users.routes')
     .run(authCheck);
 
-  authCheck.$inject = ['$rootScope', '$state', 'Authentication'];
-  function authCheck($rootScope, $state, Authentication) {
+  authCheck.$inject = ['$rootScope', '$state', 'Authentication', 'Authorization'];
+  function authCheck($rootScope, $state, Authentication, Authorization) {
     // Check authentication before changing state
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
@@ -25,15 +25,16 @@
           if (toState.data && toState.data.roles && toState.data.roles.length > 0) {
             var allowed = false;
             toState.data.roles.forEach(function (role) {
-              if ((role === 'guest') || (Authentication.user && Authentication.user.roles !== undefined && Authentication.user.roles.indexOf(role) !== -1)) {
+              console.log(Authentication.authorization);
+              if (role === 'guest' || (Authentication.authorization.roles && Authentication.authorization.roles.indexOf(role) !== -1)) {
                 allowed = true;
                 return true;
               }
             });
-            
+
             if (!allowed) {
               event.preventDefault();
-              if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
+              if (Authentication.token !== undefined) {
                 $state.go('root.forbidden');
               } else {
                 $state.go('root.user.authentication.signin').then(function () {

@@ -1,3 +1,5 @@
+'use strict';
+
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import validator from 'validator';
@@ -9,7 +11,7 @@ let Schema = mongoose.Schema;
  * A Validation function for local strategy email
  */
 let validateLocalStrategyEmail = function (email) {
-  return ((this.type !== 'local' && !this.updated) || validator.isEmail(email, { require_tld: false }));
+  return ((this.type !== 'local') || validator.isEmail(email, { require_tld: false }));
 };
 
 /**
