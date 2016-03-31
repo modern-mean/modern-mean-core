@@ -7,33 +7,26 @@
       Authentication,
       $httpBackend,
       User,
+      Authorization,
       $state,
       $http,
-      AUTH_EVENTS,
       $window,
       $location;
-
-
-
-
 
     describe('Authentication Initialization', function () {
 
       describe('token in storage', function () {
-        var broadcastSpy;
 
         beforeEach(function () {
           localStorage.setItem('token', 'testtoken');
           module('users');
         });
 
-        beforeEach(inject(function(_$rootScope_, _$httpBackend_, _AUTH_EVENTS_, _$http_, _Authentication_) {
+        beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$http_, _Authentication_) {
           $rootScope = _$rootScope_;
           $httpBackend = _$httpBackend_;
-          AUTH_EVENTS = _AUTH_EVENTS_;
           $http = _$http_;
           Authentication = _Authentication_;
-          broadcastSpy = chai.spy.on($rootScope, '$broadcast');
           $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
           $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $rootScope.$digest();
@@ -63,13 +56,9 @@
           expect($http.defaults.headers.common.Authorization).to.equal('JWT testtoken');
         });
 
-        it('should broadcast login event', function () {
-          expect(broadcastSpy).to.have.been.called.with(AUTH_EVENTS.loginSuccess);
-        });
       });
 
       describe('token on URL', function () {
-        var broadcastSpy;
 
         beforeEach(module('users'));
 
@@ -82,15 +71,13 @@
         }));
 
 
-        beforeEach(inject(function(_$rootScope_, _$httpBackend_, _AUTH_EVENTS_, _$http_, _$location_, _Authentication_) {
+        beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$http_, _$location_, _Authentication_) {
           $location = _$location_;
           $rootScope = _$rootScope_;
           $httpBackend = _$httpBackend_;
-          AUTH_EVENTS = _AUTH_EVENTS_;
           $http = _$http_;
           Authentication = _Authentication_;
 
-          broadcastSpy = chai.spy.on($rootScope, '$broadcast');
           $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
           $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $rootScope.$digest();
@@ -124,9 +111,6 @@
           expect($http.defaults.headers.common.Authorization).to.equal('JWT testtoken');
         });
 
-        it('should broadcast login event', function () {
-          expect(broadcastSpy).to.have.been.called.with(AUTH_EVENTS.loginSuccess);
-        });
       });
 
     });
@@ -202,12 +186,15 @@
       });
 
       describe('signout', function () {
-        var broadcastSpy;
-
-        beforeEach(inject(function (_AUTH_EVENTS_, _$http_) {
-          broadcastSpy = chai.spy.on($rootScope, '$broadcast');
-          AUTH_EVENTS = _AUTH_EVENTS_;
+        
+        beforeEach(inject(function (_$http_, _User_, _Authorization_) {
           $http = _$http_;
+          User = _User_;
+          Authorization = _Authorization_;
+          Authentication.user = new User({ _id: 'testy' });
+          Authentication.authorization = new Authorization({ roles: ['testy'] });
+          Authentication.token = 'testy';
+          localStorage.setItem('token', 'testy');
 
           Authentication.signout();
         }));
@@ -216,8 +203,14 @@
           expect(localStorage.getItem('token')).to.equal(null);
         });
 
-        it('should set service user property to undefined', function () {
-          expect(Authentication.user).to.equal(undefined);
+        it('should set service user property to new User', function () {
+          expect(Authentication.user).to.be.an('object');
+          expect(Authentication.user._id).to.not.exist;
+        });
+
+        it('should set service authorization property to new Authorization', function () {
+          expect(Authentication.authorization).to.be.an('object');
+          expect(Authentication.authorization.roles).to.not.exist;
         });
 
         it('should set service token property to undefined', function () {
@@ -226,10 +219,6 @@
 
         it('should set $http Authorization header to undefined', function () {
           expect($http.defaults.headers.common.Authorization).to.equal(undefined);
-        });
-
-        it('should set broadcast signout event', function () {
-          expect(broadcastSpy).to.have.been.called.with(AUTH_EVENTS.logoutSuccess);
         });
 
       });
@@ -278,12 +267,10 @@
         });
 
         describe('on success', function () {
-          var result,
-            broadcastSpy;
+          var result;
 
-          beforeEach(inject(function (_AUTH_EVENTS_, _$http_) {
-            broadcastSpy = chai.spy.on($rootScope, '$broadcast');
-            AUTH_EVENTS = _AUTH_EVENTS_;
+          beforeEach(inject(function (_$http_) {
+
             $http = _$http_;
 
             $httpBackend.expectPOST('/api/auth/signin').respond(200, { token: 'testtoken' });
@@ -323,9 +310,6 @@
             expect($http.defaults.headers.common.Authorization).to.equal('JWT testtoken');
           });
 
-          it('should broadcast login event', function () {
-            expect(broadcastSpy).to.have.been.called.with(AUTH_EVENTS.loginSuccess);
-          });
         });
 
       });
@@ -370,12 +354,9 @@
         });
 
         describe('on success', function () {
-          var result,
-            broadcastSpy;
+          var result;
 
-          beforeEach(inject(function (_AUTH_EVENTS_, _$http_) {
-            broadcastSpy = chai.spy.on($rootScope, '$broadcast');
-            AUTH_EVENTS = _AUTH_EVENTS_;
+          beforeEach(inject(function (_$http_) {
             $http = _$http_;
 
             $httpBackend.expectPOST('/api/auth/signup').respond(200, { token: 'testtoken', user: { id: 'testid' } });
@@ -415,9 +396,6 @@
             expect($http.defaults.headers.common.Authorization).to.equal('JWT testtoken');
           });
 
-          it('should broadcast login event', function () {
-            expect(broadcastSpy).to.have.been.called.with(AUTH_EVENTS.loginSuccess);
-          });
         });
 
       });

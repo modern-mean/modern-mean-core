@@ -5,10 +5,17 @@
     .module('users')
     .run(menuConfig);
 
-  menuConfig.$inject = ['menuService', 'Authentication', '$rootScope', 'AUTH_EVENTS'];
+  menuConfig.$inject = ['$state'];
 
-  function menuConfig(menuService, Authentication, $rootScope, AUTH_EVENTS) {
+  function menuConfig($state) {
 
+    var rootState = $state.get('root');
+    rootState.views.rightnav.templateUrl = 'modules/users/client/views/menus/users.client.views.menus.rightnav.html';
+    rootState.views.rightnav.controller = 'UserRightNavController';
+
+
+
+    /*
     menuService.toolbar.addItem({
       title: 'Sign In',
       icon: 'login',
@@ -77,6 +84,7 @@
       menuService.toolbar.getItem({ state: 'root.user.authentication.signin' }).show = true;
       menuService.toolbar.removeItem({ id: 'usermenu' });
     });
+    */
 
   }
 
