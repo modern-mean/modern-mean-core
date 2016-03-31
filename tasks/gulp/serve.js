@@ -3,7 +3,9 @@
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import livereload from 'gulp-livereload';
+import lodash from 'lodash';
 import * as build from './build';
+import { mergeEnvironment } from '../../config/config.js';
 
 var nodemonInstance;
 
@@ -26,20 +28,20 @@ function restart(done) {
 restart.displayName = 'Nodemon Restart Server';
 
 function watchClient(done) {
+  let config = mergeEnvironment();
+  let watchFiles = lodash.union(config.files.build.client.application, config.files.build.client.images, config.files.build.client.templates);
   livereload.listen();
-  gulp.watch(['modules/*/client/**/*.{js,css,html}'], gulp.series(terminalClear, build.client, build.inject, restart, livereloadChanged));
+  gulp.watch(watchFiles, gulp.series(terminalClear, build.client, build.inject, restart, livereloadChanged));
   return done();
 }
 watchClient.displayName = 'Serve::Watch::Client';
 
 function watchServer(done) {
-  gulp.watch(['modules/*/server/**/*.{js,css,html}'], gulp.series(terminalClear, build.server, build.inject, restart, livereloadChanged));
+  let config = mergeEnvironment();
+  gulp.watch(config.files.build.server.application, gulp.series(terminalClear, build.server, build.inject, restart, livereloadChanged));
   return done();
 }
 watchServer.displayName = 'Serve::Watch::Server';
-
-
-
 
 function livereloadChanged(done) {
   setTimeout(function () {

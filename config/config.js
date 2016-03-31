@@ -11,7 +11,7 @@ let config;
 let defaultConfig = {
   app: {
     title: 'MODERN-MEAN',
-    description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
+    description: 'Full-Stacka JavaScript with MongoDB, Express, AngularJS, and Node.js',
     keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
     version: '0.0.2',
     logo: '/dist/img/core/client/img/brand/logo.png',
@@ -49,9 +49,9 @@ let defaultConfig = {
   files: {
     build: {
       client: {
-        application: ['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/*.{js,css}'],
-        images: ['modules/*/client/**/*.{jpg,png,gif,ico}'],
-        templates: ['modules/*/client/**/*.html'],
+        application: ['./modules/core/client/app/core.client.app.loader.js', './modules/*/client/**/*.{js,css}'],
+        images: ['./modules/*/client/**/*.{jpg,png,gif,ico}'],
+        templates: ['./modules/*/client/**/*.html'],
         vendor: lodash.union(mainBowerFiles())
       },
       server: {
@@ -63,7 +63,8 @@ let defaultConfig = {
         custom: ['./build/!(*core)/server/*.module.js'],
         core: './build/core/server/core.module.js'
       }
-    }
+    },
+    config: ['./config/**/*.js']
   }
 };
 
