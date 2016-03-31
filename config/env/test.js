@@ -69,11 +69,26 @@ let test = {
     }
   },
   files: {
-    modules: {
-      custom: ['./modules/!(*core)/server/*.module.js'],
-      core: './modules/core/server/core.module.js'
+    test: {
+      lint: {
+        eslint: ['./modules/**/*.js', './config/**/*.js']
+      },
+      client: {
+        tests: ['./modules/*/tests/client/**/*.spec.js'],
+        coverage: ['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/*.module.js', './modules/*/client/**/!(*module).js']
+      },
+      server: {
+        tests: ['./modules/*/tests/server/**/*.spec.js'],
+        coverage: ['./modules/*/server/**/*.js']
+      }
+    },
+    serve: {
+      modules: {
+        custom: ['./modules/!(*core)/server/*.module.js'],
+        core: './modules/core/server/core.module.js'
+      }
     }
   }
-}
+};
 
 export default test;

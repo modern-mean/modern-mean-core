@@ -40,4 +40,6 @@ testClientTask.displayName = 'test:client';
 gulp.task(testClientTask);
 
 //Lint test
-gulp.task(test.lint);
+var lint = gulp.series(setTest, test.lint);
+lint.displayName = 'lint';
+gulp.task(lint);

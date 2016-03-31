@@ -4,6 +4,7 @@ import lodash from 'lodash';
 import development from './env/development';
 import test from './env/test';
 import production from './env/production';
+import mainBowerFiles from 'main-bower-files';
 
 
 let config;
@@ -46,30 +47,49 @@ let defaultConfig = {
     }
   },
   files: {
-    modules: {
-      custom: ['./build/!(*core)/server/*.module.js'],
-      core: './build/core/server/core.module.js'
+    build: {
+      client: {
+        application: ['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/*.{js,css}'],
+        images: ['modules/*/client/**/*.{jpg,png,gif,ico}'],
+        templates: ['modules/*/client/**/*.html'],
+        vendor: lodash.union(mainBowerFiles())
+      },
+      server: {
+        application: ['./modules/*/server/**/*.{js,html}', './confi*/**/*.js']
+      }
     },
-    server: {
-      tests: ['./modules/*/tests/server/**/*.spec.js'],
-      application: ['./modules/*/server/**/*.js']
+    serve: {
+      modules: {
+        custom: ['./build/!(*core)/server/*.module.js'],
+        core: './build/core/server/core.module.js'
+      }
     }
   }
 };
 
-switch(process.env.NODE_ENV) {
-  case 'development':
-    config = lodash.merge(defaultConfig, development);
-    break;
-  case 'test':
-    config = lodash.merge(defaultConfig, test);
-    break;
-  case 'production':
-    config = lodash.merge(defaultConfig, production);
-    break;
-  default:
-    config = defaultConfig;
-    break;
+
+function mergeEnvironment() {
+  switch(process.env.NODE_ENV) {
+    case 'development':
+      config = lodash.merge(defaultConfig, development);
+      return config;
+      break;
+    case 'test':
+      config = lodash.merge(defaultConfig, test);
+      return config;
+      break;
+    case 'production':
+      config = lodash.merge(defaultConfig, production);
+      return config;
+      break;
+    default:
+      config = defaultConfig;
+      return config;
+      break;
+  }
 }
 
+mergeEnvironment();
+
 export default config;
+export { mergeEnvironment, config };
