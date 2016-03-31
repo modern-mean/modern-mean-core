@@ -286,12 +286,12 @@ describe('/modules/core/server/app/express.js', () => {
       let saveConfig;
 
       beforeEach(() => {
-        saveConfig = config.files.modules.custom;
-        config.files.modules.custom = ['./modules/core/tests/server/resolveModule.js'];
+        saveConfig = config.files.serve.modules.custom;
+        config.files.serve.modules.custom = ['./modules/core/tests/server/resolveModule.js'];
       });
 
       afterEach(() => {
-        config.files.modules.custom = saveConfig;
+        config.files.serve.modules.custom = saveConfig;
       });
 
       it('should resolve a promise on success', () => {
@@ -304,12 +304,12 @@ describe('/modules/core/server/app/express.js', () => {
     describe('error', () => {
       let saveConfig;
       beforeEach(() => {
-        saveConfig = config.files.modules.custom;
-        config.files.modules.custom = ['./modules/core/tests/server/rejectModule.js'];
+        saveConfig = config.files.serve.modules.custom;
+        config.files.serve.modules.custom = ['./modules/core/tests/server/rejectModule.js'];
       });
 
       afterEach(() => {
-        config.files.modules.custom = saveConfig;
+        config.files.serve.modules.custom = saveConfig;
       });
 
       it('should reject a promise', () => {
@@ -339,12 +339,12 @@ describe('/modules/core/server/app/express.js', () => {
     describe('error', () => {
       let saveConfig;
       beforeEach(() => {
-        saveConfig = config.files.modules.core;
-        config.files.modules.core = './modules/core/tests/server/rejectModule.js';
+        saveConfig = config.files.serve.modules.core;
+        config.files.serve.modules.core = './modules/core/tests/server/rejectModule.js';
       });
 
       afterEach(() => {
-        config.files.modules.core = saveConfig;
+        config.files.serve.modules.core = saveConfig;
       });
 
       it('should reject a promise', () => {

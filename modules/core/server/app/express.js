@@ -84,9 +84,9 @@ function headers(app) {
 
 function modules(app) {
   return new Promise(function (resolve, reject) {
-    console.log(chalk.green('Express::Modules::Start'), config.files.modules.custom);
+    console.log(chalk.green('Express::Modules::Start'));
     let promises = [];
-    globby(config.files.modules.custom)
+    globby(config.files.serve.modules.custom)
       .then(files => {
         files.forEach(file => {
           console.log(chalk.yellow('Express::Module::Match::' + file));
@@ -111,7 +111,7 @@ function modules(app) {
 function core(app) {
   return new Promise(function (resolve, reject) {
     //TODO  Change to System.import when its available
-    require(path.resolve(config.files.modules.core)).default.init(app)
+    require(path.resolve(config.files.serve.modules.core)).default.init(app)
       .then(function () {
         console.log(chalk.green('Express::Core::Success'));
         resolve(app);

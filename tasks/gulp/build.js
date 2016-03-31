@@ -14,6 +14,8 @@ import pngquant from 'imagemin-pngquant';
 import del from 'del';
 import babel from 'gulp-babel';
 import stripDebug from 'gulp-strip-debug';
+import { mergeEnvironment } from '../../config/config.js';
+
 
 function angular() {
   var angularJS = filter(['**/angular.js'], { restore: false });
@@ -24,10 +26,11 @@ function angular() {
 angular.displayName = 'Angular';
 
 function application() {
-  var filterJS = filter(['**/*.js'], { restore: true }),
+  let config = mergeEnvironment();
+  let filterJS = filter(['**/*.js'], { restore: true }),
     filterCSS = filter(['**/*.css'], { restore: true });
 
-  return gulp.src(['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/!(*.spec).{js,css}'])
+  return gulp.src(config.files.build.client.application)
     .pipe(filterJS)
     .pipe(concat('application.js'))
     .pipe(gulp.dest('public/dist'))
@@ -39,7 +42,8 @@ function application() {
 application.displayName = 'Client::Application';
 
 function images() {
-  return gulp.src(['modules/*/client/**/*.{jpg,png,gif,ico}'])
+  let config = mergeEnvironment();
+  return gulp.src(config.files.build.client.images)
   .pipe(imagemin({
         progressive: true,
         svgoPlugins: [
@@ -61,7 +65,8 @@ function injectLayout() {
 }
 
 function templates() {
-  return gulp.src(['modules/*/client/**/*.html'])
+  let config = mergeEnvironment();
+  return gulp.src(config.files.build.client.templates)
     .pipe(templateCache('templates.js', {
       root: 'modules/',
       module: 'core',
@@ -73,11 +78,12 @@ function templates() {
 }
 
 function vendor() {
-  var filterJS = filter(['**/*.js', '!**/angular.js'], { restore: true }),
+  let config = mergeEnvironment();
+  let filterJS = filter(['**/*.js', '!**/angular.js'], { restore: true }),
     filterCSS = filter(['**/*.css'], { restore: true }),
     filterFonts = filter('**/*.{svg,woff,woff2,eot,ttf}', { restore: true });
 
-  return gulp.src(mainBowerFiles())
+  return gulp.src(config.files.build.client.vendor)
     .pipe(filterJS)
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('./public/dist'))
@@ -90,8 +96,9 @@ function vendor() {
 }
 
 function serverFiles() {
-  var filterJS = filter(['**/*.js'], { restore: true });
-  return gulp.src(['./modules/*/server/**/*.{js,html}', './confi*/**/*.js'])
+  let config = mergeEnvironment();
+  let filterJS = filter(['**/*.js'], { restore: true });
+  return gulp.src(config.files.build.server.application)
     .pipe(filterJS)
     .pipe(babel())
     .pipe(filterJS.restore)
