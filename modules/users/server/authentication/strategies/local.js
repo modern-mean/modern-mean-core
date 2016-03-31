@@ -1,3 +1,5 @@
+'use strict';
+
 import lodash from 'lodash';
 import passport from 'passport';
 import chalk from 'chalk';

@@ -19,8 +19,8 @@
         expect(User.$update).to.be.a('function');
       });
 
-      it('should have an me method', function () {
-        expect(User.$me).to.be.a('function');
+      it('should have an get method', function () {
+        expect(User.$get).to.be.a('function');
       });
 
     });

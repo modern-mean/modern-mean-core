@@ -1,10 +1,12 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import express from 'express';
 import passport from 'passport';
-import request from 'superagent';
+import request from 'supertest';
 import mongoose from 'mongoose';
 import * as jwtStrategy from '../../../../server/authentication/strategies/jwt';
 import jwtToken from '../../../../server/authentication/jwtToken';
@@ -19,8 +21,25 @@ let expect = chai.expect;
 let should = chai.should();
 
 let sandbox;
+let app;
+let users;
 
-describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
+describe('/modules/users/server/authentication/strategies/jwt.js', () => {
+
+  before(() => {
+    return mean.start()
+            .then(express => {
+              app = express;
+            })
+            .then(userSeed.init)
+            .then(seedUsers => {
+              users = seedUsers;
+            });
+  });
+
+  after(() => {
+    return mean.stop();
+  });
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();
@@ -67,40 +86,16 @@ describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
   });
 
   describe('agent()', () => {
-    let app;
-
-    beforeEach(() => {
-      return mean.start()
-              .then(promises => {
-                app = promises[1];
-              });
-    });
-
-    afterEach(() => {
-      return mean.stop();
-    });
 
     describe('success', () => {
-      let users;
-
-      beforeEach(() => {
-        return userSeed.init()
-          .then(seedUsers => {
-            users = seedUsers;
-          });
-      });
 
       it('should authenticate the user', done => {
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
         return jwtToken.signToken(users.user)
           .then(token => {
-            request
-              .get('https://localhost:8082/api/users/me')
+            request(app)
+              .get('/api/me')
               .set('Authorization', 'JWT ' + token)
-              .end((err, res) => {
-                expect(res.status).to.equal(200);
-                done();
-              });
+              .expect(200, done);
           });
 
       });
@@ -110,14 +105,13 @@ describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
     describe('user not found', () => {
 
       it('should responsd 500', done => {
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
         jwtToken.signToken({ _id: '5669a12817d7528f3866efbe' })
           .then(token => {
-            request
-              .get('https://localhost:8082/api/users/me')
+            request(app)
+              .get('/api/me')
               .set('Authorization', 'JWT ' + token)
+              .expect(500)
               .end((err, res) => {
-                expect(res.status).to.equal(500);
                 expect(res.error.text).to.equal('User not found\n');
                 done();
               });
@@ -128,16 +122,12 @@ describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
     });
 
     describe('invalid token', () => {
-      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
       it('should responsd 401', done => {
-        request
-          .get('https://localhost:8082/api/users/me')
+        request(app)
+          .get('/api/me')
           .set('Authorization', 'JWT asdfasdfasdf')
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            done();
-          });
+          .expect(401, done);
       });
 
     });
@@ -152,20 +142,19 @@ describe('/modules/users/server/authentication/strategies/jwt.jsa', () => {
       });
 
       it('should respond 401', done => {
-
-
         jwtToken.signToken({ _id: '5669a12817d7528f3866efbe' })
           .then(token => {
-            request
-              .get('https://localhost:8082/api/users/me')
+            request(app)
+              .get('/api/me')
               .set('Authorization', 'JWT ' + token)
+              .expect(500)
               .end((err, res) => {
-                expect(res.status).to.equal(500);
                 expect(res.error.text).to.contain('Yippee');
                 done();
               });
           });
       });
+      
     });
 
   });

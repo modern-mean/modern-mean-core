@@ -1,3 +1,5 @@
+'use strict';
+
 import lodash from 'lodash';
 import mongoose from 'mongoose';
 import userModel from '../models/users.server.model.user';

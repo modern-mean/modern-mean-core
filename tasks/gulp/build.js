@@ -93,10 +93,7 @@ function serverFiles() {
   var filterJS = filter(['**/*.js'], { restore: true });
   return gulp.src(['./modules/*/server/**/*.{js,html}', './confi*/**/*.js'])
     .pipe(filterJS)
-    .pipe(babel({
-      "presets": ["es2015"],
-      "plugins": []
-    }))
+    .pipe(babel())
     .pipe(filterJS.restore)
     .pipe(gulp.dest('./build'));
 }

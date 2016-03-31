@@ -1,3 +1,5 @@
+'use strict';
+
 import lodash from 'lodash';
 
 function changePassword(req, res) {

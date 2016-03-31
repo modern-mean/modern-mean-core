@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -60,9 +62,8 @@ describe('/modules/users/server/controllers/users/users.authentication.server.co
           return authenticationController.signin(mockReq, mockRes);
         });
 
-        it('should call res.json with a user and token', () => {
+        it('should call res.json with a token', () => {
           expect(mockRes.json.args[0][0].token).to.exist;
-          expect(mockRes.json.args[0][0].user).to.equal(user);
         });
 
       });
@@ -123,13 +124,8 @@ describe('/modules/users/server/controllers/users/users.authentication.server.co
           return authenticationController.signup(mockReq, mockRes);
         });
 
-        it('should call res.json with a user and token', () => {
+        it('should call res.json with a token', () => {
           expect(mockRes.json.args[0][0].token).to.exist;
-          expect(mockRes.json.args[0][0].user).to.equal(user);
-        });
-
-        it('should not set user roles', () => {
-          expect(mockRes.json.args[0][0].user.roles).to.not.contain('admin');
         });
 
       });

@@ -1,12 +1,15 @@
-import app from '../../../server/app/init';
-import mongoose from '../../../server/app/mongoose';
-import express from '../../../server/app/express';
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
-import request from 'superagent';
+import request from 'supertest';
+import config from 'modernMean/config';
+import app from '../../../server/app/init';
+import mongooseModule from '../../../server/app/mongoose';
+import expressModule from '../../../server/app/express';
 
 chai.use(promised);
 chai.use(sinonChai);
@@ -16,7 +19,7 @@ let should = chai.should();
 
 let sandbox;
 
-describe('/modules/core/server/app/init.js', function () {
+describe('/modules/core/server/app/init.js', () => {
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();
@@ -26,69 +29,50 @@ describe('/modules/core/server/app/init.js', function () {
     return sandbox.restore();
   });
 
-  it('should export app', function () {
+  it('should export app', () => {
     return app.should.be.an('object');
   });
 
-  it('should have start property that is a function', function () {
+  it('should have start property that is a function', () => {
     return app.start.should.be.a('function');
   });
 
-  describe('app.start()', function () {
+  describe('app.start()', () => {
 
-    describe('express failure', function () {
+    describe('error', () => {
 
-      let mockExpress, mockMongoose;
+      let mockExpress;
 
-      beforeEach(function () {
-        mockExpress = sandbox.stub(express, 'init').rejects();
-        mockMongoose = sandbox.stub(mongoose, 'connect').resolves();
+      beforeEach(() => {
+        mockExpress = sandbox.stub(expressModule, 'init').rejects();
       });
 
-      it('should reject the promise', function () {
-        let promise = app.start();
-        return promise.should.eventually.be.rejected;
+      it('should reject the promise', () => {
+        return app.start().should.be.rejected;
       });
     });
 
-    describe('mongoose failure', function () {
-
-      let mockExpress, mockMongoose;
-
-      beforeEach(function () {
-        mockExpress = sandbox.stub(express, 'init').resolves();
-        mockMongoose = sandbox.stub(mongoose, 'connect').rejects();
-      });
-
-      it('should reject the promise', function () {
-        let promise = app.start();
-        return promise.should.eventually.be.rejected;
-      });
-    });
-
-    describe('success', function () {
+    describe('success', () => {
 
       let initStub, variablesStub, middlewareStub, engineStub, headersStub, modulesStub, coreStub, listenStub, connectStub, promiseStub;
 
-      beforeEach(function () {
+      beforeEach(() => {
         //Express Stubs
-        initStub = sandbox.stub(express, 'init').resolves();
-        middlewareStub = sandbox.stub(express, 'middleware').resolves();
-        variablesStub = sandbox.stub(express, 'variables').resolves();
-        engineStub = sandbox.stub(express, 'engine').resolves();
-        headersStub = sandbox.stub(express, 'headers').resolves();
-        modulesStub = sandbox.stub(express, 'modules').resolves();
-        coreStub = sandbox.stub(express, 'core').resolves();
-        listenStub = sandbox.stub(express, 'listen').resolves();
+        initStub = sandbox.stub(expressModule, 'init').resolves();
+        middlewareStub = sandbox.stub(expressModule, 'middleware').resolves();
+        variablesStub = sandbox.stub(expressModule, 'variables').resolves();
+        engineStub = sandbox.stub(expressModule, 'engine').resolves();
+        headersStub = sandbox.stub(expressModule, 'headers').resolves();
+        modulesStub = sandbox.stub(expressModule, 'modules').resolves();
+        coreStub = sandbox.stub(expressModule, 'core').resolves();
+        listenStub = sandbox.stub(expressModule, 'listen').resolves();
         //Mongoose Stubs
-        connectStub = sandbox.stub(mongoose, 'connect').resolves();
-        promiseStub = sandbox.stub(mongoose, 'setPromise').resolves();
-
+        connectStub = sandbox.stub(mongooseModule, 'connect').resolves();
 
         return app.start();
       });
 
-      it('should initialize express', function () {
+      it('should initialize express', () => {
         initStub.should.have.been.called;
         middlewareStub.should.have.been.called;
         variablesStub.should.have.been.called;
@@ -97,116 +81,96 @@ describe('/modules/core/server/app/init.js', function () {
         modulesStub.should.have.been.called;
         coreStub.should.have.been.called;
         connectStub.should.have.been.called;
-        promiseStub.should.have.been.called;
         return listenStub.should.have.been.called;
       });
 
-      it('should resolve the promise', function () {
+      it('should resolve the promise', () => {
         let promise = app.start();
         return promise.should.be.fulfilled;
       });
     });
 
-    describe('full', function () {
-      it('should start the http server and be listening', function (done) {
-        app.start()
-          .then(function () {
-            request.get('http://localhost:8081/')
-              .end(function(err, res){
-                expect(res.status).to.equal(200);
-                app.stop()
-                  .then(function () {
-                    done();
-                  });
-              });
-          });
+    describe('agent', () => {
+
+      beforeEach(() => {
+        return app.start();
       });
 
-      it('should start the https server and be listening', function (done) {
-        app.start()
-          .then(function () {
-            request.get('https://localhost:8082/')
-              .end(function(err, res){
-                expect(res.status).to.equal(200);
-                app.stop()
-                  .then(function () {
-                    done();
-                  });
-              });
-          });
+      afterEach(() => {
+        return app.stop();
       });
+
+      describe('http', () => {
+
+        it('should start the http server and be listening', done => {
+          request(expressModule.expressApp())
+            .get('/')
+            .expect(200, done);
+        });
+
+      });
+
+      describe('https', () => {
+
+        before(() => {
+          config.express.https.enable = true;
+        });
+
+        after(() => {
+          config.express.https.enable = false;
+        });
+
+        it('should start the http server and force redirect', done => {
+          request(expressModule.expressApp())
+            .get('/')
+            .expect(301, done);
+        });
+
+      });
+
+
 
     });
 
   });
 
-  it('should have stop property that is a function', function () {
+  it('should have stop property that is a function', () => {
     expect(app.stop).to.be.a('function');
   });
 
-  describe('app.stop()', function () {
+  describe('app.stop()', () => {
 
-    describe('express failure', function () {
+    describe('express failure', () => {
       let mockExpress, mockMongoose;
 
-      beforeEach(function () {
-        mockExpress = sandbox.stub(express, 'destroy').rejects();
-        mockMongoose = sandbox.stub(mongoose, 'disconnect').resolves();
+      beforeEach(() => {
+        mockExpress = sandbox.stub(expressModule, 'destroy').rejects();
+        mockMongoose = sandbox.stub(mongooseModule, 'disconnect').resolves();
       });
 
-      it('should reject the promise', function (done) {
+      it('should reject the promise', done => {
         app.stop()
-          .catch(function () {
+          .catch(() => {
             done();
           });
       });
     });
 
-    describe('mongoose failure', function () {
+    describe('mongoose failure', () => {
       let mockExpress, mockMongoose;
 
-      beforeEach(function () {
-        mockExpress = sandbox.stub(express, 'destroy').resolves();
-        mockMongoose = sandbox.stub(mongoose, 'disconnect').rejects();
+      beforeEach(() => {
+        mockExpress = sandbox.stub(expressModule, 'destroy').resolves();
+        mockMongoose = sandbox.stub(mongooseModule, 'disconnect').rejects();
       });
 
-      it('should reject the promise', function (done) {
+      it('should reject the promise', done => {
         app.stop()
-          .catch(function (err) {
+          .catch(err => {
             done();
           });
       });
     });
-
-    describe('success', function () {
-
-      it('should stop the http server from listening', function (done) {
-        app.start().then(function () {
-          app.stop()
-            .then(function () {
-              request.get('http://localhost:8081/')
-                .end(function(err, res){
-                  expect(err.code).to.equal('ECONNREFUSED');
-                  done();
-                });
-            });
-        });
-      });
-
-      it('should stop the https server from listening', function (done) {
-        app.start().then(function () {
-          app.stop()
-            .then(function () {
-              request.get('http://localhost:8082/')
-                .end(function(err, res){
-                  expect(err.code).to.equal('ECONNREFUSED');
-                  done();
-                });
-            });
-        });
-      });
-    });
-
 
   });
 });

@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -5,7 +7,8 @@ import sinonAsPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
 import * as userSeed from '../../../server/models/users.server.model.user.seed';
 import userModel from '../../../server/models/users.server.model.user';
-import mongoose from '../../../../core/server/app/mongoose';
+import mongooseModule from '../../../../core/server/app/mongoose';
+import aclModule from '../../../server/config/acl';
 
 chai.use(promised);
 chai.use(sinonChai);
@@ -15,18 +18,23 @@ let should = chai.should();
 
 let sandbox;
 
-userModel.init();
-
 describe('/modules/users/server/models/users.server.model.user.seed.js', () => {
 
+  before(() => {
+    return mongooseModule.connect()
+      .then(Promise.all([aclModule.init(), userModel.init()]));
+  });
+
+  after(() => {
+    return mongooseModule.disconnect();
+  });
+
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-    return mongoose.connect().then(mongoose.setPromise);
+    return sandbox = sinon.sandbox.create();
   });
 
   afterEach(() => {
-    sandbox.restore();
-    return mongoose.disconnect();
+    return sandbox.restore();
   });
 
   describe('export', () => {

@@ -44,7 +44,7 @@
           });
 
           it('should post to server and handle success', function () {
-            $httpBackend.expectPOST('/api/users/password').respond(200, { message: 'Yippee' });
+            $httpBackend.expectPOST('/api/me/password').respond(200, { message: 'Yippee' });
             $scope.vm.changeUserPassword();
             $scope.$digest();
             $httpBackend.flush();
@@ -54,7 +54,7 @@
           });
 
           it('should post to server and handle error', function () {
-            $httpBackend.expectPOST('/api/users/password').respond(400, { message: 'Oops' });
+            $httpBackend.expectPOST('/api/me/password').respond(400, { message: 'Oops' });
             $scope.vm.changeUserPassword();
             $scope.$digest();
             $httpBackend.flush();

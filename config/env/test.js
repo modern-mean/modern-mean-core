@@ -1,6 +1,5 @@
 'use strict';
 
-
 let test = {
   db: {
     uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/modern-mean-test',
@@ -17,6 +16,7 @@ let test = {
       port: process.env.MEAN_HTTP_PORT || 8081,
     },
     https: {
+      enable: false,
       port: process.env.MEAN_HTTPS_PORT || 8082,
       options: { //Anything from https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener
         key: process.env.MEAN_HTTPS_KEY || './ssl/key.pem',

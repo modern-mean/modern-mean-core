@@ -91,17 +91,22 @@
 
         it('should signup a user', function () {
           $httpBackend.expectPOST('/api/auth/signup').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $scope.vm.credentials = { email: 'test@awesome.com' };
           $scope.vm.signup();
           $scope.$digest();
           $httpBackend.flush();
           expect(Authentication.token).to.equal('testtoken');
           expect(Authentication.user.id).to.equal('testid');
+          expect(Authentication.authorization.roles).to.contain('surething');
         });
 
         it('should redirect on success', function () {
           var stateSpy = chai.spy.on($state, 'go');
           $httpBackend.expectPOST('/api/auth/signup').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $scope.vm.credentials = { email: 'test@awesome.com' };
           $scope.vm.signup();
           $scope.$digest();
@@ -138,17 +143,22 @@
 
         it('should signin a user', function () {
           $httpBackend.expectPOST('/api/auth/signin').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $scope.vm.credentials = { email: 'test@awesome.com', password: 'test' };
           $scope.vm.signin();
           $scope.$digest();
           $httpBackend.flush();
           expect(Authentication.token).to.equal('testtoken');
           expect(Authentication.user.id).to.equal('testid');
+          expect(Authentication.authorization.roles).to.contain('surething');
         });
 
         it('should redirect on success', function () {
           var stateSpy = chai.spy.on($state, 'go');
           $httpBackend.expectPOST('/api/auth/signin').respond(200, { token: 'testtoken', user: { id: 'testid' } });
+          $httpBackend.expectGET('/api/me').respond(200, { id: 'testid' });
+          $httpBackend.expectGET('/api/me/authorization').respond(200, { roles: ['surething'] });
           $scope.vm.credentials = { email: 'test@awesome.com' };
           $scope.vm.signin();
           $scope.$digest();

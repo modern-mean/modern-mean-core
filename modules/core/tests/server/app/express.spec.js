@@ -1,3 +1,5 @@
+'use strict';
+
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -17,7 +19,7 @@ let should = chai.should();
 
 let sandbox;
 
-describe('/modules/core/server/app/express.jsaa', () => {
+describe('/modules/core/server/app/express.js', () => {
 
   beforeEach(() => {
     return sandbox = sinon.sandbox.create();
@@ -37,17 +39,94 @@ describe('/modules/core/server/app/express.jsaa', () => {
 
   describe('init()', () => {
 
-    describe('success', () => {
+    describe('error', () => {
 
-      it('should resolve a promise on success', () => {
-        return expressModule.init().should.be.fulfilled;
+      before(() => {
+        return expressModule.init();
       });
 
-      it('should resolve an instance of express', () => {
-        return expressModule.init()
-                .then(app => {
-                  return app.use.should.be.a('function');
-                });
+      after(() => {
+        return expressModule.destroy();
+      });
+
+      it('should reject a promise if the server is already running', () => {
+        return expressModule.init().should.be.rejected;
+      });
+
+    });
+
+    describe('success', () => {
+
+      describe('http', () => {
+        let promise;
+
+        before(() => {
+          promise = expressModule.init();
+          return promise;
+        });
+
+        after(() => {
+          return expressModule.destroy();
+        });
+
+        it('should resolve a promise on success', () => {
+          return promise.should.be.fulfilled;
+        });
+
+        it('should resolve an instance of express', () => {
+          return promise
+                  .then(app => {
+                    return app.use.should.be.a('function');
+                  });
+        });
+
+        it('should create httpServer', () => {
+          return expressModule.httpServer().should.be.an('object');
+        });
+
+        it('should create expressApp', () => {
+          return expressModule.expressApp().should.be.a('function');
+        });
+
+      });
+
+      describe('https', () => {
+        let promise;
+
+        before(() => {
+          config.express.https.enable = true;
+          promise = expressModule.init();
+          return promise;
+        });
+
+        after(() => {
+          config.express.https.enable = false;
+          return expressModule.destroy();
+        });
+
+        it('should resolve a promise on success', () => {
+          return promise.should.be.fulfilled;
+        });
+
+        it('should resolve an instance of express', () => {
+          return promise
+                  .then(app => {
+                    return app.use.should.be.a('function');
+                  });
+        });
+
+        it('should create httpServer', () => {
+          return expressModule.httpServer().should.be.an('object');
+        });
+
+        it('should create httpsServer', () => {
+          return expressModule.httpsServer().should.be.an('object');
+        });
+
+        it('should create expressApp', () => {
+          return expressModule.expressApp().should.be.a('function');
+        });
+
       });
 
     });
@@ -59,15 +138,24 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   describe('variables()', () => {
+    let promise;
+
+    before(() => {
+      promise = expressModule.init()
+        .then(expressModule.variables);
+      return promise;
+    });
+
+    after(() => {
+      return expressModule.destroy();
+    });
 
     it('should resolve a promise on success', () => {
-      return expressModule.init()
-              .then(expressModule.variables).should.be.fulfilled;
+      return promise.should.be.fulfilled;
     });
 
     it('should set express local variables', () => {
-      let app = express();
-      expressModule.variables(app)
+      promise
         .then(app => {
           return Object.keys(app.locals).length.should.be.above(1);
         });
@@ -90,11 +178,11 @@ describe('/modules/core/server/app/express.jsaa', () => {
 
     describe('development environment', () => {
 
-      beforeEach(() => {
+      before(() => {
         process.env.NODE_ENV = 'development';
       });
 
-      afterEach(() => {
+      after(() => {
         process.env.NODE_ENV = 'test';
       });
 
@@ -107,12 +195,29 @@ describe('/modules/core/server/app/express.jsaa', () => {
 
     describe('production environment', () => {
 
-      beforeEach(() => {
+      before(() => {
         process.env.NODE_ENV = 'production';
       });
 
-      afterEach(() => {
+      after(() => {
         process.env.NODE_ENV = 'test';
+      });
+
+      it('should resolve a promise on success', () => {
+        let app = express();
+        return expressModule.middleware(app).should.be.fulfilled;
+      });
+
+    });
+
+    describe('https', () => {
+
+      before(() => {
+        config.express.https.enable = true;
+      });
+
+      after(() => {
+        config.express.https.enable = true;
       });
 
       it('should resolve a promise on success', () => {
@@ -260,57 +365,54 @@ describe('/modules/core/server/app/express.jsaa', () => {
 
     describe('success', () => {
 
-      beforeEach(() => {
-        app = express();
-        return promise = expressModule.listen(app);
+      describe('http', () => {
+
+        before(() => {
+          promise = expressModule.init()
+            .then(expressModule.listen);
+          return promise;
+        });
+
+        after(() => {
+          return expressModule.destroy();
+        });
+
+        it('should resolve a promise on success', () => {
+          return promise.should.be.fulfilled;
+        });
+
+        it('should make httpServer listen', () => {
+          return expressModule.httpServer().listening.should.be.equal(true);
+        });
+
       });
 
-      afterEach(() => {
-        expressModule.destroy();
-      });
+      describe('https', () => {
 
-      it('should resolve a promise on success', () => {
-        return promise.should.be.fulfilled;
-      });
+        before(() => {
+          config.express.https.enable = true;
+          promise = expressModule.init()
+            .then(expressModule.listen);
+          return promise;
+        });
 
-      it('should populate httpServer', () => {
-        return expressModule.httpServer().should.be.an('object');
-      });
+        after(() => {
+          config.express.https.enable = false;
+          return expressModule.destroy();
+        });
 
-      it('should populate httpsServer', () => {
-        return expressModule.httpsServer().should.be.an('object');
-      });
+        it('should resolve a promise on success', () => {
+          return promise.should.be.fulfilled;
+        });
 
-    });
+        it('should make httpServer listen', () => {
+          return expressModule.httpServer().listening.should.be.equal(true);
+        });
 
-    describe('success production', () => {
-      let mockHttpCreateServer, mockHttpsCreateServer, mockHttp, mockHttps, newHttp, newHttps;
+        it('should make httpsServer listen', () => {
+          return expressModule.httpsServer().listening.should.be.equal(true);
+        });
 
-      beforeEach(() => {
-        process.env.NODE_ENV = 'production';
-        app = express();
-
-        newHttp = http.createServer(app);
-        newHttps = https.createServer(app);
-
-        mockHttp = sandbox.stub(newHttp, 'listen').returns(newHttp).yields();
-        mockHttps = sandbox.stub(newHttps, 'listen').returns(newHttps).yields();
-
-        mockHttpCreateServer = sandbox.stub(http, 'createServer').returns(newHttp);
-        mockHttpsCreateServer = sandbox.stub(https, 'createServer').returns(newHttps);
-        return promise = expressModule.listen(app);
-      });
-
-      afterEach(() => {
-        process.env.NODE_ENV = 'test';
-      });
-
-      it('httpServer should not be destroyable', () => {
-        return expect(expressModule.httpServer().destroy).to.equal(undefined);
-      });
-
-      it('httpsServer should not be destroyable', () => {
-        return expect(expressModule.httpsServer().destroy).to.equal(undefined);
       });
 
     });
@@ -337,29 +439,93 @@ describe('/modules/core/server/app/express.jsaa', () => {
   });
 
   describe('destroy()', () => {
-    let app, promise;
 
     describe('success', () => {
 
-      beforeEach(() => {
-        app = express();
-        return expressModule.listen(app);
+      describe('http', () => {
+        let promise;
+
+        beforeEach(() => {
+          promise = expressModule.init()
+            .then(expressModule.listen)
+            .then(expressModule.destroy);
+
+          return promise;
+        });
+
+        it('should resolve a promise if nothing is listening', () => {
+          return promise
+                  .then(() => {
+                    return expressModule.destroy().should.be.resolved;
+                  });
+        });
+
+        it('should resolve a promise', () => {
+          return promise.should.be.resolved;
+        });
+
+        it('should destroy httpServer', () => {
+          return expect(expressModule.httpServer()).to.not.exist;
+        });
+
+        it('should destroy expressApp', () => {
+          return expect(expressModule.expressApp()).to.not.exist;
+        });
+
       });
 
-      it('should resolve a promise if nothing is listening', () => {
-        return expressModule.destroy()
-                .then(() => {
-                  return expressModule.destroy().should.be.resolved;
-                });
-      });
+      describe('https', () => {
 
-      it('should resolve a promise', () => {
-        return expressModule.destroy().should.be.resolved;
+        before(() => {
+          config.express.https.enable = true;
+        });
+
+        after(() => {
+          config.express.https.enable = false;
+        });
+
+        beforeEach(() => {
+          return expressModule.init()
+            .then(expressModule.listen)
+            .then(expressModule.destroy);
+        });
+
+        it('should resolve a promise if nothing is listening', () => {
+          return expressModule.destroy().should.be.resolved;
+        });
+
+        it('should resolve a promise', () => {
+          return expressModule.destroy().should.be.resolved;
+        });
+
+        it('should destroy httpServer', () => {
+          return expect(expressModule.httpServer()).to.not.exist;
+        });
+
+        it('should destroy httpsServer', () => {
+          return expect(expressModule.httpsServer()).to.not.exist;
+        });
+
+        it('should destroy expressApp', () => {
+          return expect(expressModule.expressApp()).to.not.exist;
+        });
+
       });
 
     });
 
-  });
+    it('should have property httpServer', () => {
+      return expressModule.httpServer.should.be.a('function');
+    });
 
+    it('should have property httpsServer', () => {
+      return expressModule.httpsServer.should.be.a('function');
+    });
+
+    it('should have property expressApp', () => {
+      return expressModule.expressApp.should.be.a('function');
+    });
+
+  });
 
 });

@@ -5,28 +5,28 @@
     .module('users')
     .service('Authentication', Authentication);
 
-  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', '$rootScope', 'AUTH_EVENTS', 'User'];
+  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', '$rootScope', 'AUTH_EVENTS', 'User', 'Authorization'];
 
-  function Authentication($q, $resource, $http, $location, $state, $rootScope, AUTH_EVENTS, User) {
+  function Authentication($q, $resource, $http, $location, $state, $rootScope, AUTH_EVENTS, User, Authorization) {
 
 
     var readyPromise = $q.defer();
 
     var service = {
+      authorization: new Authorization(),
       changePassword: changePassword,
       forgotPassword: forgotPassword,
       passwordReset: passwordReset,
       ready: readyPromise.promise,
-      refresh: refresh,
       signout: signout,
       signup: signup,
       signin: signin,
       token: undefined,
-      user: undefined,
+      user: new User()
     };
 
     function changePassword(credentials) {
-      return $resource('/api/users/password').save(credentials);
+      return $resource('/api/me/password').save(credentials);
     }
 
 
@@ -40,34 +40,11 @@
       return $resource('/api/auth/reset').save(credentials);
     }
 
-    function refresh() {
-      return $q(function(resolve, reject) {
-        readyPromise = $q.defer();
-        service.ready = readyPromise.promise;
-        if (service.user === undefined) {
-          service.user = new User({});
-        }
-
-        service
-          .user
-          .$me()
-          .then(
-            function (user) {
-              login({ user: user });
-              resolve(service);
-            },
-            function () {
-              $state.go('root.user.authentication.signin');
-            });
-
-      });
-
-    }
-
     function signout() {
       localStorage.removeItem('token');
-      service.user = undefined;
       service.token = undefined;
+      service.user = undefined;
+      service.authorization = undefined;
       setHeader();
       $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
     }
@@ -78,7 +55,8 @@
           .save(credentials).$promise
           .then(
             function (auth) {
-              login(auth);
+              setToken(auth.token);
+              init();
               resolve(service);
             },
             function (err) {
@@ -94,7 +72,8 @@
           .save(credentials).$promise
           .then(
             function (auth) {
-              login(auth);
+              setToken(auth.token);
+              init();
               resolve(service);
             },
             function (err) {
@@ -102,18 +81,6 @@
             }
           );
       });
-    }
-
-    //Private Methods
-
-    function login(auth) {
-      setUser(auth.user);
-      if (auth.token) {
-        setToken(auth.token);
-      }
-      setHeader();
-      readyPromise.resolve(service);
-      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }
 
     function setHeader() {
@@ -129,10 +96,6 @@
       localStorage.setItem('token', token);
     }
 
-    function setUser(user) {
-      service.user = new User(user);
-    }
-
     function init() {
       service.token = localStorage.getItem('token') || $location.search().token || undefined;
 
@@ -142,7 +105,14 @@
       if (service.token) {
         setHeader();
         setToken(service.token);
-        refresh();
+        $q.all([service.user.$get(), service.authorization.$get()])
+          .then(function (promises) {
+            service.user = promises[0];
+            service.authorization = promises[1];
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            readyPromise.resolve(service);
+          });
+
       } else {
         readyPromise.resolve(service);
       }

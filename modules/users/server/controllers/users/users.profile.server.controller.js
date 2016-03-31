@@ -1,3 +1,5 @@
+'use strict';
+
 import lodash from 'lodash';
 import multer from 'multer';
 import config from 'modernMean/config';

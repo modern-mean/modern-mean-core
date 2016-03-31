@@ -20,9 +20,7 @@
       Authentication = _Authentication_;
       $location = _$location_;
 
-      Authentication.user = {
-        roles: ['admin']
-      };
+      Authentication.authorization.roles = ['admin'];
     }));
 
     it('should have an admin.users state', function () {

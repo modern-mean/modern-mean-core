@@ -8,13 +8,12 @@
   User.$inject = ['$resource'];
 
   function User($resource) {
-    return $resource('/api/users', {}, {
+
+    return $resource('/api/me', {}, {
       update: {
         method: 'PUT'
-      },
-      me: {
-        url: '/api/users/me'
       }
     });
+    
   }
 })();

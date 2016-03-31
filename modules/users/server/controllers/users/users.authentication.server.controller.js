@@ -1,6 +1,5 @@
 'use strict';
 
-import mongoose from 'mongoose';
 import passport from 'passport';
 import lodash from 'lodash';
 import authentication from '../../authentication/jwtToken';
@@ -37,7 +36,7 @@ function signup(req, res) {
       return authentication
         .signToken(user)
         .then(function (token) {
-          return res.json({ user: user, token: token });
+          return res.json({ token: token });
         });
     })
     .catch(err => {
@@ -49,7 +48,7 @@ function signin(req, res) {
   return authentication
     .signToken(req.user)
     .then(token => {
-      return res.json({ user: req.user, token: token });
+      return res.json({ token: token });
     })
     .catch(err => {
       return res.status(400).json(err.message);

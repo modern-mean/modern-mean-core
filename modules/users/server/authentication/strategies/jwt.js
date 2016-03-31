@@ -1,3 +1,5 @@
+'use strict';
+
 import passport from 'passport';
 import config from 'modernMean/config';
 import chalk from 'chalk';

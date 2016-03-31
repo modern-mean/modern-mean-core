@@ -1,9 +1,10 @@
+'use strict';
+
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 import validator from 'validator';
 import generatePassword from 'generate-password';
 import owasp from 'owasp-password-strength-test';
-
 import Provider from './users.server.schema.provider';
 import Email from './users.server.schema.email';
 
@@ -31,10 +32,6 @@ let UserSchema = new Schema({
     default: '/dist/img/users/client/img/profile/default.png'
   },
   providers: [Provider],
-  roles: {
-    type: Array,
-    default: ['user']
-  },
   timestamps: {
     updated: {
       type: Date

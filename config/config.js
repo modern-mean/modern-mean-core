@@ -23,6 +23,7 @@ let defaultConfig = {
       port: process.env.MEAN_HTTP_PORT || 8080,
     },
     https: {
+      enable: false, //Enabling SSL makes the entire site forced over SSL.
       port: process.env.MEAN_HTTPS_PORT || 8443,
       options: {
         key: process.env.MEAN_HTTPS_KEY || './ssl/key.pem',
