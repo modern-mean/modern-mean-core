@@ -5,9 +5,9 @@
     .module('users')
     .service('Authentication', Authentication);
 
-  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', '$rootScope', 'AUTH_EVENTS', 'User', 'Authorization'];
+  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', 'User', 'Authorization'];
 
-  function Authentication($q, $resource, $http, $location, $state, $rootScope, AUTH_EVENTS, User, Authorization) {
+  function Authentication($q, $resource, $http, $location, $state, User, Authorization) {
 
 
     var readyPromise = $q.defer();
@@ -29,8 +29,6 @@
       return $resource('/api/me/password').save(credentials);
     }
 
-
-
     function forgotPassword(credentials) {
       return $resource('/api/auth/forgot').save(credentials);
     }
@@ -43,10 +41,10 @@
     function signout() {
       localStorage.removeItem('token');
       service.token = undefined;
-      service.user = undefined;
-      service.authorization = undefined;
+      service.user = new User();
+      service.authorization = new Authorization();
       setHeader();
-      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+      readyPromise = $q.defer();
     }
 
     function signin(credentials) {
@@ -109,7 +107,6 @@
           .then(function (promises) {
             service.user = promises[0];
             service.authorization = promises[1];
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             readyPromise.resolve(service);
           });
 
@@ -121,9 +118,6 @@
 
     //Run init
     init();
-
-
-
 
     return service;
 
