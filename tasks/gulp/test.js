@@ -105,7 +105,7 @@ mochaWatch.displayName = 'Test::Mocha::Watch';
 
 function watchServerTests(done) {
   let config = mergeEnvironment();
-  gulp.watch(lodash.union(config.files.test.server.tests, config.files.test.server.coverage), gulp.series(build.server, mochaWatch));
+  gulp.watch(lodash.union(config.files.test.server.tests, config.files.test.server.coverage, config.files.config), gulp.series(build.server, mochaWatch));
   return mochaWatch(done);
 }
 watchServerTests.displayName = 'Test::Watch::Server';
