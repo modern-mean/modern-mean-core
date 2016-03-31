@@ -365,17 +365,17 @@ describe('/modules/core/server/app/express.js', () => {
 
     describe('success', () => {
 
-      before(() => {
-        promise = expressModule.init()
-          .then(expressModule.listen);
-        return promise;
-      });
-
-      after(() => {
-        expressModule.destroy();
-      });
-
       describe('http', () => {
+
+        before(() => {
+          promise = expressModule.init()
+            .then(expressModule.listen);
+          return promise;
+        });
+
+        after(() => {
+          return expressModule.destroy();
+        });
 
         it('should resolve a promise on success', () => {
           return promise.should.be.fulfilled;
@@ -391,10 +391,14 @@ describe('/modules/core/server/app/express.js', () => {
 
         before(() => {
           config.express.https.enable = true;
+          promise = expressModule.init()
+            .then(expressModule.listen);
+          return promise;
         });
 
         after(() => {
           config.express.https.enable = false;
+          return expressModule.destroy();
         });
 
         it('should resolve a promise on success', () => {
@@ -410,10 +414,6 @@ describe('/modules/core/server/app/express.js', () => {
         });
 
       });
-
-
-
-
 
     });
 
