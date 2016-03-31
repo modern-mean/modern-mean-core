@@ -2,7 +2,6 @@
 
 import chai from 'chai';
 import sinon from 'sinon';
-import sinonMongoose from 'sinon-mongoose';
 import sinonChai from 'sinon-chai';
 import promised from 'chai-as-promised';
 import express from 'express';
