@@ -5,16 +5,16 @@
     .module('core')
     .controller('SideNavLeftController', SideNavLeftController);
 
-  SideNavLeftController.$inject = ['$mdSidenav'];
+  SideNavLeftController.$inject = ['$mdComponentRegistry'];
 
-  function SideNavLeftController($mdSidenav) {
+  function SideNavLeftController($mdComponentRegistry) {
     var vm = this;
-    vm.close = close;
 
-    function close(navID) {
-      $mdSidenav(navID)
-        .close();
-    }
+    $mdComponentRegistry
+      .when('coreLeftNav')
+      .then(function(nav) {
+        vm.navigation = nav;
+      });
 
     console.log('SideNavLeftController::Init', vm);
   }

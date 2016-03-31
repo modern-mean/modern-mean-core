@@ -4,10 +4,10 @@
   // Setting HTML5 Location Mode
   angular
     .module('core')
-    .run(storeState);
+    .run(stateChangeSuccess);
 
-  storeState.$inject = ['$rootScope', '$state'];
-  function storeState($rootScope, $state) {
+  stateChangeSuccess.$inject = ['$rootScope', '$state', '$mdComponentRegistry'];
+  function stateChangeSuccess($rootScope, $state, $mdComponentRegistry) {
     // Record previous state
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
       storePreviousState(fromState, fromParams);

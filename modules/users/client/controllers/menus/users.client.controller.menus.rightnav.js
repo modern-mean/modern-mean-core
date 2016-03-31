@@ -5,19 +5,18 @@
     .module('users')
     .controller('UserRightNavController', UserRightNavController);
 
-  UserRightNavController.$inject = ['Authentication', '$state', '$mdSidenav' ];
+  UserRightNavController.$inject = ['Authentication', '$state', '$mdComponentRegistry' ];
 
-  function UserRightNavController(Authentication, $state, $mdSidenav) {
+  function UserRightNavController(Authentication, $state, $mdComponentRegistry) {
     var vm = this;
 
     vm.authentication = Authentication;
 
-    vm.close = close;
-
-    function close(navID) {
-      $mdSidenav(navID)
-        .close();
-    }
+    $mdComponentRegistry
+      .when('coreRightNav')
+      .then(function(nav){
+        vm.navigation = nav;
+      });
 
 
     console.log('UserRightNavController::Init::vm', vm);

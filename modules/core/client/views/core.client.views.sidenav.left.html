@@ -3,13 +3,13 @@
     <h1 class="md-toolbar-tools">
       <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
       <span flex></span>
-      <md-button class="md-icon-button md-mini" ng-click="vm.close('coreLeftNav')" aria-label="Close Menu">
+      <md-button class="md-icon-button md-mini" ng-click="vm.navigation.close()" aria-label="Close Menu">
         <ng-md-icon icon="close"></ng-md-icon>
       </md-button>
     </h1>
   </md-toolbar>
   <md-list>
-    <md-list-item ui-sref="root.home" ng-click="vm.close('left')">
+    <md-list-item ui-sref="root.home" >
       <ng-md-icon icon="home"></ng-md-icon>
       <span flex></span>
       <span>Home</span>

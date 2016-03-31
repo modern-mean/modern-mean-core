@@ -4,30 +4,18 @@
   var $state,
     $scope,
     $rootScope,
-    UserRightNavController,
-    $mdSidenav;
+    $compile,
+    UserRightNavController;
 
   describe('users.client.controller.menus.rightnav.js', function () {
 
-    var closeSpy = chai.spy();
-
     beforeEach(module('users'));
 
-    beforeEach(module(function ($provide) {
-      $provide.factory('$mdSidenav', function() {
-        return function() {
-          return {
-            close: closeSpy
-          };
-        };
-      });
-    }));
-
-    beforeEach(inject(function(_$state_, _$rootScope_, $controller, _$mdSidenav_) {
+    beforeEach(inject(function(_$state_, _$rootScope_, $controller, _$compile_) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
       $state = _$state_;
-      $mdSidenav = _$mdSidenav_;
+      $compile = _$compile_;
 
       UserRightNavController = $controller('UserRightNavController as vm', {
         $scope: $scope
@@ -43,16 +31,14 @@
         expect($scope.vm.authentication).to.be.an('object');
       });
 
-      it('should have a vm.close variable that is a function', function () {
-        expect($scope.vm.close).to.be.a('function');
+      it('should have a vm.navigation variable that is an object', function () {
+        var element = $compile('<md-sidenav md-component-id="coreRightNav" class="md-sidenav-right md-whiteframe-z2"></md-sidenav>')($scope);
+        $scope.$digest();
+        return expect($scope.vm.navigation).to.be.an('object');
       });
 
-      describe('vm.close()', function () {
-        it('call $mdSidenav.close()', function () {
-          $scope.vm.close('coreRightNav');
-          expect(closeSpy).to.have.been.called();
-        });
-      });
     });
+
   });
+
 })();
