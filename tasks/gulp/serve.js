@@ -1,7 +1,9 @@
 'use strict';
 
 import gulp from 'gulp';
+import chalk from 'chalk';
 import nodemon from 'gulp-nodemon';
+import forever from 'forever';
 import livereload from 'gulp-livereload';
 import lodash from 'lodash';
 import * as build from './build';
@@ -58,6 +60,18 @@ function terminalClear(done) {
   }
 }
 
+function startForever(done) {
+  let config = mergeEnvironment();
+
+  forever.startDaemon('./build/core/server/app/server.js', config.serve.forever);
+  console.log(chalk.yellow.bold('ModernMean Production server running as Forever Daemon'));
+  console.log(chalk.yellow.bold('You can now use any forever command line options'));
+  console.log(chalk.yellow.bold('https://github.com/foreverjs/forever'));
+  return done();
+
+
+}
+
 let watch = {
   all: gulp.parallel(watchClient, watchServer),
   client: watchClient,
@@ -68,5 +82,6 @@ export {
   start,
   restart,
   watch,
-  terminalClear as clear
+  terminalClear as clear,
+  startForever as forever
 };

@@ -7,7 +7,6 @@ import * as test from './tasks/gulp/test';
 
 
 function setDevelopment(done) {
-  console.log(process.env.NODE_PATH);
   process.env.NODE_ENV = 'development';
   return done();
 }
@@ -15,6 +14,11 @@ function setDevelopment(done) {
 function setTest(done) {
   process.env.NODE_ENV = 'test';
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  return done();
+}
+
+function setProduction(done) {
+  process.env.NODE_ENV = 'production';
   return done();
 }
 
@@ -28,6 +32,11 @@ var preTest = gulp.parallel(build.clean, setTest, test.lint);
 var testTask = gulp.series(preTest, build.build, test.client.single, test.server.single, test.coveralls);
 testTask.displayName = 'test';
 gulp.task(testTask);
+
+//Gulp Production
+var productionTask = gulp.series(build.clean, setProduction, build.build, serve.forever);
+productionTask.displayName = 'prod';
+gulp.task(productionTask);
 
 //Gulp test:server
 var testServerTask = gulp.series(build.clean, setTest, build.config, test.server.watch);
