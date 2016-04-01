@@ -2,6 +2,8 @@
 
 import gulp from 'gulp';
 import concat from 'gulp-concat';
+import uglify from 'gulp-uglify';
+import ngAnnotate from 'gulp-ng-annotate';
 import filter from 'gulp-filter';
 import debug from 'gulp-debug';
 import mainBowerFiles from 'main-bower-files';
@@ -119,8 +121,9 @@ function config() {
 }
 
 function stripServerDebug(done) {
-  if (process.env.NODE_ENV !== 'development') {
-    return gulp.src(['./build/**/!(*.spec).js'])
+  let config = mergeEnvironment();
+  if (config.build.server.stripDebug) {
+    return gulp.src(['./build/**/*.js'])
       .pipe(stripDebug())
       .pipe(gulp.dest('./build'));
   } else {
@@ -129,7 +132,8 @@ function stripServerDebug(done) {
 }
 
 function stripClientDebug(done) {
-  if (process.env.NODE_ENV !== 'development') {
+  let config = mergeEnvironment();
+  if (config.build.client.stripDebug) {
     return gulp.src(['./public/dist/**/application.js'])
       .pipe(stripDebug())
       .pipe(gulp.dest('./public/dist'));
@@ -138,11 +142,26 @@ function stripClientDebug(done) {
   }
 }
 
+function minify(done) {
+  let config = mergeEnvironment();
+  if (config.build.client.uglify) {
+    return gulp.src('./public/dist/*.js')
+      .pipe(ngAnnotate())
+      .pipe(uglify({
+        mangle: true
+      }))
+      .pipe(gulp.dest('./public/dist'));
+  } else {
+    return done();
+  }
+}
+
+
 let strip = gulp.parallel(stripServerDebug, stripClientDebug);
 strip.displayName = 'Build::All::StripDebug';
 
 let server = gulp.series(serverFiles, config);
-let client = gulp.series(gulp.parallel(application, vendor, angular, templates, images));
+let client = gulp.series(gulp.parallel(application, vendor, angular, templates, images), strip, minify);
 let build = gulp.series(gulp.parallel(server, client), injectLayout);
 
 export {

@@ -40,7 +40,7 @@ _site/
 *.tmp
 *.bak
 *.swp
-logs/
+
 build/
 
 # Sublime editor

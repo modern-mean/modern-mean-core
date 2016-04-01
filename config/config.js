@@ -65,6 +65,15 @@ let defaultConfig = {
       }
     },
     config: ['./config/**/*.js']
+  },
+  build: {
+    client: {
+      uglify: process.env.MEAN_UGLIFY || false,
+      stripDebug: process.env.MEAN_STRIPDEBUG || false
+    },
+    server: {
+      stripDebug: process.env.MEAN_STRIPDEBUG || false
+    }
   }
 };
 
