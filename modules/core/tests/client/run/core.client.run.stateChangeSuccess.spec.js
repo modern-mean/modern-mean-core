@@ -4,7 +4,7 @@
   var $rootScope,
     $state;
 
-  describe('core.client.run.storestate.js', function () {
+  describe('core.client.run.stateChangeSuccess.js', function () {
 
     beforeEach(module('core'));
 
