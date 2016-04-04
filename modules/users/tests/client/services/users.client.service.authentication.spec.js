@@ -58,6 +58,30 @@
 
       });
 
+      describe('token in storage error', function () {
+
+        beforeEach(function () {
+          localStorage.setItem('token', 'testtoken');
+          module('users');
+        });
+
+        beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$http_, _Authentication_) {
+          $rootScope = _$rootScope_;
+          $httpBackend = _$httpBackend_;
+          $http = _$http_;
+          Authentication = _Authentication_;
+          $httpBackend.expectGET('/api/me').respond(401);
+          $httpBackend.expectGET('/api/me/authorization').respond(401);
+          $rootScope.$digest();
+          $httpBackend.flush();
+        }));
+
+        it('should remove the token from storage', function () {
+          expect(localStorage.getItem('token')).to.not.exist;
+        });
+
+      });
+
       describe('token on URL', function () {
 
         beforeEach(module('users'));
@@ -186,7 +210,7 @@
       });
 
       describe('signout', function () {
-        
+
         beforeEach(inject(function (_$http_, _User_, _Authorization_) {
           $http = _$http_;
           User = _User_;

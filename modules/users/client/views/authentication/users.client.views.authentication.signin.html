@@ -1,22 +1,28 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h2 class="md-title">Or with your account</h2>
+    <span flex></span>
+    <md-button class="md-icon-button md-accent" aria-label="Clear Form" ng-click="vm.clearForm()">
+      <ng-md-icon icon="cached"></ng-md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
 <md-content>
-  <h2 class="md-display-1">Or with your account</h2>
-  <form name="userForm" ng-submit="vm.signin(userForm.$valid)" novalidate autocomplete="off">
+  <form name="vm.forms.signIn" ng-submit="vm.signin()" novalidate>
     <md-input-container class="md-block">
-      <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="email address" lowercase required>
-      <div ng-messages="userForm.email.$error" role="alert">
+      <input type="email" id="email" name="email" ng-model="vm.credentials.email" placeholder="email address" required>
+      <div ng-messages="vm.forms.signIn.email.$error" role="alert">
         <div ng-message="required">email is required.</div>
       </div>
     </md-input-container>
     <md-input-container class="md-block">
       <input type="password" id="password" name="password" ng-model="vm.credentials.password" placeholder="password" required>
-      <div ng-messages="userForm.password.$error" role="alert">
+      <div ng-messages="vm.forms.signIn.password.$error" role="alert">
         <div ng-message="required">Password is required.</div>
       </div>
     </md-input-container>
     <section layout="row" layout-align="center center">
-      <md-button type="submit" class="md-raised md-primary" aria-label="Sign In">Sign in</md-button>
-      &nbsp; or&nbsp;
-      <md-button ui-sref="authentication.signup" class="md-raised md-default" aria-label="Sign Up">Sign up</a>
+      <md-button type="submit" class="md-raised md-primary" aria-label="Sign In" ng-disabled="vm.forms.signIn.$invalid">Sign in</md-button>
     </section>
     <section layout="row" layout-align="center center">
       <a ui-sref="password.forgot">Forgot your password?</a>

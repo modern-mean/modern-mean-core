@@ -42,7 +42,7 @@
         .then(
           function (response) {
             vm.passwordDetails = undefined;
-            Authentication.login(response.user, response.token);
+            //Authentication.login(response.user, response.token);
             $location.path('/password/reset/success');
           },
           function (err) {

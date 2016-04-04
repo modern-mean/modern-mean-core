@@ -5,17 +5,24 @@
     .module('core')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['$mdSidenav'];
+  HeaderController.$inject = ['$mdComponentRegistry'];
 
-  function HeaderController($mdSidenav) {
+  function HeaderController($mdComponentRegistry) {
     var vm = this;
 
-    vm.toggle = toggle;
+    vm.navigation = {};
 
-    function toggle(navID) {
-      $mdSidenav(navID)
-        .toggle();
-    }
+    $mdComponentRegistry
+      .when('coreLeftNav')
+      .then(function(nav) {
+        vm.navigation.left = nav;
+      });
+
+    $mdComponentRegistry
+      .when('coreRightNav')
+      .then(function(nav) {
+        vm.navigation.right = nav;
+      });
 
     console.log('HeaderController::Init', vm);
   }

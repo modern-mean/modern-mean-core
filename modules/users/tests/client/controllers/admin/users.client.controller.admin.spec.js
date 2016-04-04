@@ -11,6 +11,8 @@
       mockUserAdminResource,
       Authentication;
 
+    var sandbox;
+
     beforeEach(module('users.admin'));
 
     beforeEach(inject(function(_$rootScope_, $controller, _$httpBackend_, _$state_, _UserAdmin_, _Authentication_) {
@@ -28,7 +30,12 @@
 
       Authentication.authorization.roles = ['admin'];
 
+      sandbox = sinon.sandbox.create();
     }));
+
+    afterEach(function () {
+      sandbox.restore();
+    });
 
     describe('UserController', function () {
 
@@ -58,12 +65,12 @@
 
         it('should call the server to delete and redirect on success', function () {
           $httpBackend.expectDELETE('/api/admin/users/testuser').respond(200, {});
-          var stateSpy = chai.spy.on($state, 'go');
+          var stateSpy = sandbox.spy($state, 'go');
           $scope.vm.remove();
           $scope.$digest();
           $httpBackend.flush();
 
-          expect(stateSpy).to.have.been.called.with('root.admin.users');
+          expect(stateSpy).to.have.been.calledWith('root.admin.users');
         });
 
         it('should call the server to delete set an error on error', function () {
@@ -83,12 +90,12 @@
           $httpBackend.expectPUT('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
           $httpBackend.expectGET('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
 
-          var stateSpy = chai.spy.on($state, 'go');
+          var stateSpy = sandbox.spy($state, 'go');
           $scope.vm.update();
           $scope.$digest();
           $httpBackend.flush();
 
-          expect(stateSpy).to.have.been.called.with('root.admin.user', { userId: 'testuser' });
+          expect(stateSpy).to.have.been.calledWith('root.admin.user', { userId: 'testuser' });
         });
 
         it('should call the server to edit set an error on error', function () {
