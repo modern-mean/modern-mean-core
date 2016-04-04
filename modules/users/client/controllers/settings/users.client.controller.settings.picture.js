@@ -16,7 +16,7 @@
     function upload(file) {
       vm.success = vm.error = undefined;
       Upload.upload({
-        url: '/api/users/picture',
+        url: '/api/me/picture',
         data: { newProfilePicture: vm.file },
         headers: {
           Authorization: 'JWT ' + Authentication.token
@@ -25,6 +25,7 @@
       .then(function (response) {
         vm.success = response.data.message;
         vm.file = undefined;
+        Authentication.user.$get();
       }, function (err) {
         vm.error = err.data.message;
       });

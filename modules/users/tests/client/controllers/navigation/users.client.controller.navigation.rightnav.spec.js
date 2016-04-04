@@ -5,12 +5,12 @@
     $scope,
     $rootScope,
     $compile,
-    UserRightNavController,
+    UsersRightNavController,
     Authentication;
 
   var sandbox;
 
-  describe('users.client.controller.menus.rightnav.js', function () {
+  describe('users.client.controller.navigation.rightnav.js', function () {
 
     beforeEach(module('users'));
 
@@ -20,7 +20,7 @@
       $state = _$state_;
       $compile = _$compile_;
 
-      UserRightNavController = $controller('UserRightNavController as vm', {
+      UsersRightNavController = $controller('UsersRightNavController as vm', {
         $scope: $scope
       });
 
@@ -31,7 +31,7 @@
       sandbox.restore();
     });
 
-    describe('UserRightNavController', function () {
+    describe('UsersRightNavController', function () {
       it('should have a vm variable that is an object', function () {
         expect($scope.vm).to.be.an('object');
       });

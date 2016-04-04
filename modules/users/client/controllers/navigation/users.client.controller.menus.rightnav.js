@@ -3,11 +3,11 @@
 
   angular
     .module('users')
-    .controller('UserRightNavController', UserRightNavController);
+    .controller('UsersRightNavController', UsersRightNavController);
 
-  UserRightNavController.$inject = ['Authentication', '$state', '$mdComponentRegistry', '$mdToast'];
+  UsersRightNavController.$inject = ['Authentication', '$state', '$mdComponentRegistry', '$mdToast'];
 
-  function UserRightNavController(Authentication, $state, $mdComponentRegistry, $mdToast) {
+  function UsersRightNavController(Authentication, $state, $mdComponentRegistry, $mdToast) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -15,7 +15,8 @@
 
     $mdComponentRegistry
       .when('coreRightNav')
-      .then(function(nav){
+      .then(function(nav) {
+        console.log('yippeee', nav);
         vm.navigation = nav;
       });
 

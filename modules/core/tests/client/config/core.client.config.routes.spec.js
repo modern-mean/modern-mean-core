@@ -24,9 +24,6 @@
       expect(state.views).to.be.an('object');
       //Header
       expect(state.views.header).to.be.an('object');
-      expect(state.views.header.templateUrl).to.equal('modules/core/client/views/core.client.views.header.html');
-      expect(state.views.header.controller).to.equal('HeaderController');
-      expect(state.views.header.controllerAs).to.equal('vm');
       //Main
       expect(state.views.main).to.be.an('object');
       //LeftNav
