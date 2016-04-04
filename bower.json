@@ -9,7 +9,7 @@
     "angular-aria": "~1.5",
     "angular-resource": "~1.5",
     "angular-sanitize": "~1.5",
-    "angular-material": "^1.0.6",
+    "angular-material": "1.0.7-master-0c659c2",
     "angular-ui-router": "^0.2.18",
     "angular-material-icons": "^0.6.0",
     "owasp-password-strength-test": "~1.3.0",

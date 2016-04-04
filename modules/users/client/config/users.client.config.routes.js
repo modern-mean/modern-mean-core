@@ -20,14 +20,7 @@
       })
       .state('root.user.settings', {
         abstract: true,
-        url: '/settings',
-        views: {
-          'leftnav@': {
-            controller: 'SettingsController',
-            controllerAs: 'vm',
-            templateUrl: 'modules/users/client/views/settings/users.client.views.settings.html',
-          }
-        }
+        url: '/settings'
       })
       .state('root.user.settings.profile', {
         url: '/profile',
@@ -87,16 +80,21 @@
         views: {
           'main@': {
             templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.html',
-            controller: 'AuthenticationController',
-            controllerAs: 'vm'
           }
         }
       })
       .state('root.user.authentication.signup', {
         url: '/signup',
         views: {
-          'authform@root.user.authentication': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.signup.html'
+          'social': {
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.social.html',
+            controller: 'SocialAuthenticationController',
+            controllerAs: 'vm'
+          },
+          'auth': {
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.signup.html',
+            controller: 'SignupAuthenticationController',
+            controllerAs: 'vm'
           }
         },
         data: {
@@ -105,27 +103,22 @@
         }
       })
       .state('root.user.authentication.signin', {
-        url: '/signin?err',
+        url: '/signin',
         views: {
-          'authform@root.user.authentication': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.signin.html'
+          'social': {
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.social.html',
+            controller: 'SocialAuthenticationController',
+            controllerAs: 'vm'
+          },
+          'auth': {
+            templateUrl: 'modules/users/client/views/authentication/users.client.views.authentication.signin.html',
+            controller: 'SigninAuthenticationController',
+            controllerAs: 'vm'
           }
         },
         data: {
           ignoreAuth: true,
           pageTitle: 'Account Sign In'
-        }
-      })
-      .state('root.signout', {
-        url: '/signout',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/authentication/users.client.views.signout.html'
-          }
-        },
-        data: {
-          ignoreAuth: true,
-          pageTitle: 'Signed Out'
         }
       })
       .state('root.user.password', {

@@ -9,8 +9,6 @@
 
   describe('core.client.controller.sidenav.left.js', function () {
 
-    var closeSpy = chai.spy();
-
     beforeEach(module('core'));
 
     beforeEach(inject(function(_$state_, _$rootScope_, $controller, _$compile_) {

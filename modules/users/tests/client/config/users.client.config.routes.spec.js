@@ -53,28 +53,6 @@
         expect(state.url).to.equal('/settings');
       });
 
-      it('should have property views that is an object with leftnav@ property', function () {
-        expect(state.views).to.be.an('object');
-        expect(state.views['leftnav@']).to.be.an('object');
-      });
-
-      describe('leftnav@', function () {
-
-        it('should have property templateUrl', function () {
-          expect(state.views['leftnav@'].templateUrl).to.equal('modules/users/client/views/settings/users.client.views.settings.html');
-        });
-
-        it('should have property controller', function () {
-          expect(state.views['leftnav@'].controller).to.equal('SettingsController');
-        });
-
-        it('should have property controllerAs', function () {
-          expect(state.views['leftnav@'].controllerAs).to.equal('vm');
-        });
-
-
-      });
-
     });
 
     describe('root.user.settings.profile', function () {
@@ -286,14 +264,6 @@
           expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.authentication.html');
         });
 
-        it('should have property controller', function () {
-          expect(state.views['main@'].controller).to.equal('AuthenticationController');
-        });
-
-        it('should have property controllerAs', function () {
-          expect(state.views['main@'].controllerAs).to.equal('vm');
-        });
-
       });
 
     });
@@ -325,15 +295,46 @@
         expect(state.data.ignoreAuth).to.equal(true);
       });
 
-      it('should have property views that is an object with authform@root.user.authentication property', function () {
+      it('should have property views that is an object', function () {
         expect(state.views).to.be.an('object');
-        expect(state.views['authform@root.user.authentication']).to.be.an('object');
       });
 
-      describe('authform@root.user.authentication', function () {
+      it('should have property views should contain auth view', function () {
+        expect(state.views).to.include.keys('auth');
+      });
+
+      describe('auth view', function () {
 
         it('should have property templateUrl', function () {
-          expect(state.views['authform@root.user.authentication'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.signup.html');
+          expect(state.views['auth'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.authentication.signup.html');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['auth'].controller).to.equal('SignupAuthenticationController');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['auth'].controllerAs).to.equal('vm');
+        });
+
+      });
+
+      it('should have property views should contain social view', function () {
+        expect(state.views).to.include.keys('social');
+      });
+
+      describe('social view', function () {
+
+        it('should have property templateUrl', function () {
+          expect(state.views['social'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.authentication.social.html');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['social'].controller).to.equal('SocialAuthenticationController');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['social'].controllerAs).to.equal('vm');
         });
 
       });
@@ -351,7 +352,7 @@
       });
 
       it('should have property url that is /signin', function () {
-        expect(state.url).to.equal('/signin?err');
+        expect(state.url).to.equal('/signin');
       });
 
       it('should have property data that is an object', function () {
@@ -366,56 +367,46 @@
         expect(state.data.ignoreAuth).to.equal(true);
       });
 
-      it('should have property views that is an object with authform@root.user.authentication property', function () {
+      it('should have property views that is an object', function () {
         expect(state.views).to.be.an('object');
-        expect(state.views['authform@root.user.authentication']).to.be.an('object');
       });
 
-      describe('authform@root.user.authentication', function () {
+      it('should have property views should contain auth view', function () {
+        expect(state.views).to.include.keys('auth');
+      });
+
+      describe('auth view', function () {
 
         it('should have property templateUrl', function () {
-          expect(state.views['authform@root.user.authentication'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.signin.html');
+          expect(state.views['auth'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.authentication.signin.html');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['auth'].controller).to.equal('SigninAuthenticationController');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['auth'].controllerAs).to.equal('vm');
         });
 
       });
 
-    });
-
-    describe('root.signout', function () {
-
-      beforeEach(function() {
-        state = $state.get('root.signout');
+      it('should have property views should contain social view', function () {
+        expect(state.views).to.include.keys('social');
       });
 
-      it('should be an object', function () {
-        expect(state).to.be.an('object');
-      });
-
-      it('should have property url that is /signout', function () {
-        expect(state.url).to.equal('/signout');
-      });
-
-      it('should have property data that is an object', function () {
-        expect(state.data).to.be.a('object');
-      });
-
-      it('should have property data.pageTitle', function () {
-        expect(state.data.pageTitle).to.equal('Signed Out');
-      });
-
-      it('should have property data.ignoreAuth', function () {
-        expect(state.data.ignoreAuth).to.equal(true);
-      });
-
-      it('should have property views that is an object with main@ property', function () {
-        expect(state.views).to.be.an('object');
-        expect(state.views['main@']).to.be.an('object');
-      });
-
-      describe('main@', function () {
+      describe('social view', function () {
 
         it('should have property templateUrl', function () {
-          expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.signout.html');
+          expect(state.views['social'].templateUrl).to.equal('modules/users/client/views/authentication/users.client.views.authentication.social.html');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['social'].controller).to.equal('SocialAuthenticationController');
+        });
+
+        it('should have property controller', function () {
+          expect(state.views['social'].controllerAs).to.equal('vm');
         });
 
       });

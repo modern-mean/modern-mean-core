@@ -16,6 +16,7 @@
         vm.navigation = nav;
       });
 
+
     console.log('SideNavLeftController::Init', vm);
   }
 })();

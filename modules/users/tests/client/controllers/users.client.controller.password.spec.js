@@ -10,7 +10,8 @@
       $httpBackend,
       $state,
       $location,
-      $stateParams;
+      $stateParams,
+      sandbox;
 
     beforeEach(module('users'));
 
@@ -23,9 +24,12 @@
       PasswordController = $controller('PasswordController as vm', {
         $scope: $scope
       });
+      sandbox = sinon.sandbox.create();
     }));
 
-
+    afterEach(function () {
+      sandbox.restore();
+    });
 
     describe('PasswordController', function () {
 
@@ -112,16 +116,14 @@
         });
 
 
-        it('should call Authentication.login(), clear password, and redirect on success', function () {
-          var authSpy = chai.spy.on(Authentication, 'login');
-          var locationSpy = chai.spy.on($location, 'path');
+        it('should call clear password, and redirect on success', function () {
+          var locationSpy = sandbox.spy($location, 'path');
           $httpBackend.expectPOST('/api/auth/reset').respond(200, { token: 'testtoken', user: { id: 'testid' } });
           $scope.vm.resetUserPassword();
           $scope.$digest();
           $httpBackend.flush();
 
-          expect(locationSpy).to.have.been.called.with('/password/reset/success');
-          expect(authSpy).to.have.been.called.with({ id: 'testid' }, 'testtoken');
+          expect(locationSpy).to.have.been.calledWith('/password/reset/success');
           expect($scope.vm.passwordDetails).to.equal(undefined);
         });
 

@@ -25,7 +25,7 @@ module.exports = function (karmaConfig) {
     },
 
     // Frameworks to use
-    frameworks: ['mocha', 'chai-spies', 'chai-as-promised', 'chai'],
+    frameworks: ['mocha', 'chai', 'sinon-chai', 'sinon'],
 
     preprocessors: {
       'modules/*/client/views/**/*.html': ['ng-html2js'],

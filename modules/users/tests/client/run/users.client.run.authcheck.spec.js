@@ -59,16 +59,5 @@
 
     });
 
-    describe('signout', function () {
-
-      it('should signout the user', function () {
-        var signoutSpy = chai.spy.on(Authentication, 'signout');
-        $state.transitionTo('root.signout');
-        $rootScope.$digest();
-        expect(signoutSpy).to.have.been.called();
-      });
-
-    });
-
   });
 })();

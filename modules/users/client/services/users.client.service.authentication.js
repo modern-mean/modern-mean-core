@@ -39,12 +39,16 @@
     }
 
     function signout() {
-      localStorage.removeItem('token');
-      service.token = undefined;
-      service.user = new User();
-      service.authorization = new Authorization();
-      setHeader();
-      readyPromise = $q.defer();
+      return $q(function(resolve, reject) {
+        console.log('AuthenticationService::Signout');
+        removeToken();
+        service.user = new User();
+        service.authorization = new Authorization();
+        setHeader();
+        readyPromise = $q.defer();
+        console.log('AuthenticationService::Signout');
+        resolve();
+      });
     }
 
     function signin(credentials) {
@@ -94,6 +98,11 @@
       localStorage.setItem('token', token);
     }
 
+    function removeToken() {
+      service.token = undefined;
+      localStorage.removeItem('token');
+    }
+
     function init() {
       service.token = localStorage.getItem('token') || $location.search().token || undefined;
 
@@ -108,6 +117,9 @@
             service.user = promises[0];
             service.authorization = promises[1];
             readyPromise.resolve(service);
+          })
+          .catch(function (err) {
+            removeToken();
           });
 
       } else {

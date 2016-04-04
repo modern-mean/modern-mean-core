@@ -10,12 +10,6 @@
     // Check authentication before changing state
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-
-
-      if (toState.name === 'root.signout') {
-        Authentication.signout();
-      }
-
       if (toState.data.ignoreAuth) {
         return true;
       }
