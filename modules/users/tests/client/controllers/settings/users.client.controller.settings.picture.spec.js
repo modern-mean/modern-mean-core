@@ -14,10 +14,9 @@
     beforeEach(inject(function(_$rootScope_, $controller, _Authentication_, _$httpBackend_, _User_) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      _Authentication_.user = new _User_();
+      Authentication = _Authentication_;
       ChangeProfilePictureController = $controller('ChangeProfilePictureController as vm', {
-        $scope: $scope,
-        Authentication: _Authentication_
+        $scope: $scope
       });
 
       $httpBackend = _$httpBackend_;
@@ -46,18 +45,20 @@
             expect($scope.vm.error).to.equal(undefined);
           });
 
-          it('should post to server and handle success', function () {
-            $httpBackend.expectPOST('/api/users/picture').respond(200, { message: 'Yippee' });
+          it('should post to server and refresh user', function () {
+            $httpBackend.expectPOST('/api/me/picture').respond(200, { message: 'Yippee' });
+            $httpBackend.expectGET('/api/me').respond(200, { profileImageURL: 'test.png' });
             $scope.$digest();
             $scope.vm.upload();
             $scope.$digest();
             $httpBackend.flush();
 
             expect($scope.vm.success).to.equal('Yippee');
+            expect(Authentication.user.profileImageURL).to.equal('test.png');
           });
 
           it('should post to server and handle error', function () {
-            $httpBackend.expectPOST('/api/users/picture').respond(400, { message: 'Oops' });
+            $httpBackend.expectPOST('/api/me/picture').respond(400, { message: 'Oops' });
             $scope.vm.upload();
             $scope.$digest();
             $httpBackend.flush();

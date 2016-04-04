@@ -1,0 +1,19 @@
+<md-toolbar layout="row" class="md-toolbar-tools md-whiteframe-z2">
+  <md-button class="md-fab md-mini md-accent md-raised" aria-label="Leftnav Menu" ng-click="vm.navigation.left.open()">
+    <ng-md-icon icon="menu"></ng-md-icon>
+  </md-button>
+  <span flex="none" style="font-weight: 900; font-size: 1.8em;letter-spacing: -.05em" hide-xs hide-sm>MODERN-MEAN</span>
+  <span flex></span>
+  <md-button class="md-fab md-mini" ng-show="!vm.authentication.token" class="md-icon-button" aria-label="Rightnav Menu" ng-click="vm.navigation.right.toggle()">
+    <ng-md-icon icon="account_circle"></ng-md-icon>
+  </md-button>
+
+  <md-button  ng-show="vm.authentication.token" aria-label="Rightnav Menu" ng-click="vm.navigation.right.toggle()">
+    <md-list>
+       <md-list-item>
+         <img class="md-avatar" ng-src="{{vm.authentication.user.profileImageURL}}" alt="Profile Image" />
+         <span>{{vm.authentication.user.name.full}}</span>
+       </md-list-item>
+     </md-list>
+  </md-button>
+</md-toolbar>

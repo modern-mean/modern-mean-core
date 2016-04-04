@@ -2,16 +2,18 @@
   'use strict';
 
   angular
-    .module('users')
-    .run(menuConfig);
+    .module('users.routes')
+    .run(navigationConfig);
 
-  menuConfig.$inject = ['$state'];
+  navigationConfig.$inject = ['$state'];
 
-  function menuConfig($state) {
+  function navigationConfig($state) {
 
     var rootState = $state.get('root');
-    rootState.views.rightnav.templateUrl = 'modules/users/client/views/menus/users.client.views.menus.rightnav.html';
-    rootState.views.rightnav.controller = 'UserRightNavController';
+    rootState.views.rightnav.templateUrl = 'modules/users/client/views/navigation/users.client.views.navigation.rightnav.html';
+    rootState.views.rightnav.controller = 'UsersRightNavController';
+    rootState.views.header.templateUrl = 'modules/users/client/views/navigation/users.client.views.navigation.header.html';
+    rootState.views.header.controller = 'UsersHeaderController';
 
 
 
