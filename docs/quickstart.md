@@ -3,10 +3,13 @@ This guide will help you get Modern MEAN running
 
 ##Requirements
 1. MongoDB
-2. NodeJS v5
+2. NodeJS v5.8
 3. NPM
 4. Bower
 5. Gulp 4
+
+##Node Support
+You can find the most up to date information on what node versions we support by looking at our <a href="https://github.com/trainerbill/modern-mean-core/blob/master/.travis.yml#L3">travis builds.</a>
 
 ##Gulp 4 CLI installation
 ```sh
@@ -23,7 +26,7 @@ npm install bower -g
 ```
 ##Modern MEAN installation
 ```sh
-#NodeJS v5 is REQUIRED
+#NodeJS v5.8 is REQUIRED
 git clone https://github.com/modern-mean/modern-mean-core.git
 cd modern-mean-core
 npm install
@@ -31,7 +34,15 @@ npm install
 
 ##Modern MEAN Runtime
 ```sh
-#for development
 gulp
 ```
-For more information on gulp tasks visit the <a href="https://github.com/modern-mean/modern-mean-core/wiki/Gulp-Tasks">gulp wiki page</a>
+For more information on gulp tasks visit the <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/gulptasks.md">gulp tasks documentation</a>
+
+### Running with User Seed
+To have default account(s) seeded at runtime:
+
+In Development:
+```bash
+MONGO_SEED=true gulp
+```
+For more information on database seeding visit the <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/dbseeding.md">gulp tasks documentation</a>

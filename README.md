@@ -5,6 +5,12 @@
 [![dependencies](https://david-dm.org/modern-mean/modern-mean-core.svg)](https://david-dm.org/modern-mean/modern-mean-core)
 [![Coverage Status](https://coveralls.io/repos/github/modern-mean/modern-mean-core/badge.svg?branch=master)](https://coveralls.io/github/modern-mean/modern-mean-core?branch=master)
 
+
+## Documentation
+Visit our <a href="https://github.com/modern-mean/modern-mean-core/tree/master/docs">documentation folder</a> for up to date documentation
+* <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/quickstart.md">Getting Started Guide</a>
+
+
 Modern-MEAN is a full-stack JavaScript open-source solution, forked originally from MEAN.js which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications.
 
 ##Technology
@@ -12,9 +18,11 @@ Modern-MEAN is a full-stack JavaScript open-source solution, forked originally f
 * Babel -write your modules in ES6 now
 * Angular Material Design
 
-## Documentation
-Visit our <a href="https://github.com/modern-mean/modern-mean-core/tree/master/docs">documentation folder</a> for up to date documentation
-* <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/quickstart.md">Getting Started Guide</a>
+##Goals
+* 100% code test coverage.  Makes PR's quicker to merge
+* John Papa Angular Style guide.
+* Up to date dependencies
+* Fully modular.  Submodules can be added and removed without affecting the core functionality
 
 ## Community
 * Use [Gitter.IM](https://gitter.im/modern-mean)
