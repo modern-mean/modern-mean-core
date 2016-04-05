@@ -11,6 +11,21 @@
         name: 'tracker',
         tracker: 'UA-XXXXXXXX-XX',
         trackEvent: true
+      },
+      navigation: {
+        left: {
+          heading: 'Left Navigation',
+          backdrop: true,
+          locked: {
+            always: false,
+            media: 'gt-sm'
+          }
+        },
+        right: {
+          locked: {
+            always: false
+          }
+        }
       }
 
     });

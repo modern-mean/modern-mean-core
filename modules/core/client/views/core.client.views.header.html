@@ -1,5 +1,5 @@
 <md-toolbar layout="row" class="md-toolbar-tools md-whiteframe-z2">
-  <md-button class="md-fab md-mini md-accent md-raised" aria-label="Leftnav Menu" ng-click="vm.navigation.left.open()">
+  <md-button ng-show="!vm.navigation.left.isLockedOpen()" class="md-fab md-mini md-accent md-raised" aria-label="Leftnav Menu" ng-click="vm.navigation.left.open()">
     <ng-md-icon icon="menu"></ng-md-icon>
   </md-button>
   <span flex="none" style="font-weight: 900; font-size: 1.8em;letter-spacing: -.05em" hide-xs hide-sm>MODERN-MEAN</span>

@@ -12,6 +12,7 @@ module.exports = function (karmaConfig) {
 
   karmaFiles.push('public/dist/angular.js');
   karmaFiles.push('bower_components/angular-mocks/angular-mocks.js');
+  karmaFiles.push('bower_components/angular-material/angular-material-mocks.js');
   karmaFiles = lodash.union(karmaFiles, config.files.test.client.coverage, config.files.test.client.tests);
   karmaFiles.push('public/dist/vendor.js');
   karmaFiles.push('public/dist/templates.js');

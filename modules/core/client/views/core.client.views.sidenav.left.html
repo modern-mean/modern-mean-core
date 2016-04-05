@@ -1,19 +1,20 @@
-<md-sidenav md-component-id="coreLeftNav" class="md-sidenav-left md-whiteframe-z2">
+<md-sidenav md-component-id="coreLeftNav" class="md-sidenav-left md-whiteframe-z2" md-disable-backdrop="{{vm.config.backdrop}}" md-is-locked-open="vm.isLockedOpen()" md-whiteframe="4">
   <md-toolbar class="md-theme-blue-grey md-hue-3 md-whiteframe-z2">
     <h1 class="md-toolbar-tools">
-      <span style="font-weight: 700; font-size: 1.2em">Navigation Menu</span>
+      <span style="font-weight: 700; font-size: 1.2em">{{vm.config.heading}}</span>
       <span flex></span>
-      <md-button class="md-icon-button md-mini" ng-click="vm.navigation.close()" aria-label="Close Menu">
+      <md-button ng-show="!vm.navigation.isLockedOpen()" class="md-icon-button md-mini" ng-click="vm.navigation.close()" aria-label="Close Menu">
         <ng-md-icon icon="close"></ng-md-icon>
       </md-button>
     </h1>
   </md-toolbar>
-  <md-list>
-    <md-list-item ui-sref="root.home" >
-      <ng-md-icon icon="home"></ng-md-icon>
-      <span flex></span>
-      <span>Home</span>
-    </md-list-item>
-  </md-list>
-  <md-divider></md-divider>
+  <md-content>
+    <md-list>
+      <md-list-item ui-sref="root.home" >
+        <ng-md-icon icon="home"></ng-md-icon>
+        <span flex></span>
+        <span>Home</span>
+      </md-list-item>
+    </md-list>
+  </md-content>
 </md-sidenav>
