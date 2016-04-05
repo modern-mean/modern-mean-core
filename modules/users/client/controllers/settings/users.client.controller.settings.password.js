@@ -3,31 +3,42 @@
 
   angular
     .module('users')
-    .controller('ChangePasswordController', ChangePasswordController);
+    .controller('UsersPasswordController', UsersPasswordController);
 
-  ChangePasswordController.$inject = ['Authentication', 'PasswordValidator'];
+  UsersPasswordController.$inject = ['Authentication', 'PasswordValidator', '$mdToast'];
 
-  function ChangePasswordController(Authentication, PasswordValidator) {
+  function UsersPasswordController(Authentication, PasswordValidator, $mdToast) {
     var vm = this;
 
-    vm.changeUserPassword = changeUserPassword;
+    vm.clear = clear;
+    vm.forms = {};
     vm.popoverMsg = PasswordValidator.getPopoverMsg();
-    vm.passwordDetails = {};
+    vm.password = {};
+    vm.save = save;
 
-    // Change user password
-    function changeUserPassword() {
-      vm.success = vm.error = undefined;
+    function clear() {
+      vm.password = {};
+      vm.forms.passwordForm.$setPristine();
+      vm.forms.passwordForm.$setUntouched();
+    }
+
+    function save() {
+
+      var toast = $mdToast.simple()
+        .position('bottom right')
+        .hideDelay(6000);
 
       Authentication
-        .changePassword(vm.passwordDetails).$promise
+        .changePassword(vm.password).$promise
         .then(
           function (response) {
-            vm.success = response.message;
-            vm.passwordDetails = undefined;
+            vm.clear();
+            toast.textContent('Password Changed Successfully!').theme('toast-success');
+            $mdToast.show(toast);
           },
           function (err) {
-            vm.error = err.data.message;
-            vm.passwordDetails = undefined;
+            toast.textContent('Password Change Error!').theme('toast-error');
+            $mdToast.show(toast);
           }
         );
     }

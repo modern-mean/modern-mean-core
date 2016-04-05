@@ -1,0 +1,34 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-headline">Emails</span>
+    </md-card-header-text>
+    <md-card-title-media>
+      <ng-md-icon icon="email"></ng-md-icon>
+    </md-card-title-media>
+  </md-card-header>
+  <md-divider></md-divider>
+  <md-card-content>
+    <form name="vm.forms.emailForm" novalidate>
+      <div ng-repeat="email in vm.user.emails" layout="row">
+        <md-input-container class="md-block" flex layout-margin>
+          <label>Email</label>
+          <input type="email" name="email{{$index}}" ng-model="vm.user.emails[$index].email">
+        </md-input-container>
+        <md-input-container class="md-block" layout-margin>
+          <label>Primary</label>
+          <md-switch ng-model="vm.user.emails[$index].primary" aria-label="Primary Email {{$index}}" ng-change="vm.togglePrimary(email)"></md-switch>
+        </md-input-container>
+        <md-button class="md-icon-button md-warn" aria-label="Remove Email" layout-margin ng-click="vm.remove(email)" ng-disabled="email.primary">
+          <ng-md-icon icon="delete" ></ng-md-icon>
+        </md-button>
+      </div>
+    </form>
+  </md-card-content>
+  <md-card-actions md-theme="card-actions" layout="row" layout-align="end center">
+    <md-button ng-disabled="vm.executing" class="md-raised md-accent" ng-click="vm.add()">Add</md-button>
+    <md-button ng-disabled="vm.executing || vm.forms.emailForm.$pristine" class="md-raised md-primary" ng-click="vm.save()">Save</md-button>
+    <md-button ng-disabled="vm.executing || vm.forms.emailForm.$pristine" class="md-raised md-warn" ng-click="vm.clear()">Cancel</md-button>
+  </md-card-actions>
+  <md-progress-linear class="md-accent" ng-show="vm.executing" md-mode="indeterminate"></md-progress-linear>
+</md-card>

@@ -1,0 +1,32 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-headline">Edit User Information</span>
+    </md-card-header-text>
+    <md-card-title-media>
+      <ng-md-icon icon="account_box"></ng-md-icon>
+    </md-card-title-media>
+  </md-card-header>
+  <md-divider></md-divider>
+  <md-card-content>
+    <form name="vm.forms.profileForm" novalidate autocomplete="off">
+      <md-input-container class="md-block">
+        <input type="text" id="firstName" name="firstName" ng-model="vm.user.name.first" placeholder="First Name" required>
+        <div ng-messages="vm.forms.profileForm.firstName.$error" role="alert">
+          <div ng-message="required">First name is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <input type="text" id="lastName" name="lastName" ng-model="vm.user.name.last" placeholder="Last Name" required>
+        <div ng-messages="vm.forms.profileForm.lastName.$error" role="alert">
+          <div ng-message="required">Last name is required.</div>
+        </div>
+      </md-input-container>
+    </form>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-disabled="vm.executing || vm.forms.profileForm.$pristine" class="md-raised md-warn" ng-click="vm.clear()">Cancel</md-button>
+    <md-button ng-disabled="vm.executing || vm.forms.profileForm.$pristine" class="md-raised md-accent" ng-click="vm.save()">Save</md-button>
+  </md-card-actions>
+  <md-progress-linear class="md-accent" ng-show="vm.executing" md-mode="indeterminate"></md-progress-linear>
+</md-card>

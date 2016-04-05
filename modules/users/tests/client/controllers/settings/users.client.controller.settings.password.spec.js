@@ -5,23 +5,32 @@
 
     var $scope,
       $rootScope,
-      ChangePasswordController,
+      $compile,
+      $mdToast,
+      UsersPasswordController,
       Authentication,
-      $httpBackend;
+      $httpBackend,
+      sandbox;
 
     beforeEach(module('users'));
 
-    beforeEach(inject(function(_$rootScope_, $controller, _Authentication_, _$httpBackend_) {
+    beforeEach(inject(function(_$rootScope_, $controller, _Authentication_, _$httpBackend_, _$mdToast_) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
-      ChangePasswordController = $controller('ChangePasswordController as vm', {
+      UsersPasswordController = $controller('UsersPasswordController as vm', {
         $scope: $scope
       });
       Authentication = _Authentication_;
       $httpBackend = _$httpBackend_;
+      $mdToast = _$mdToast_;
+      sandbox = sinon.sandbox.create();
     }));
 
-    describe('ChangePasswordController', function () {
+    afterEach(function () {
+      sandbox.restore();
+    });
+
+    describe('UsersPasswordController', function () {
 
       it('should have a vm variable', function () {
         expect($scope.vm).to.be.an('object');
@@ -29,38 +38,68 @@
 
       describe('vm', function () {
 
-        it('should have a property changeUserPassword that is a function', function () {
-          expect($scope.vm.changeUserPassword).to.be.an('function');
+        it('should have a property clear that is a function', function () {
+          expect($scope.vm.clear).to.be.an('function');
         });
 
-        describe('changeUserPassword', function () {
-          it('should set error and success to undefined', function () {
-            $scope.vm.success = 'test';
-            $scope.vm.error = 'test';
-            $scope.vm.changeUserPassword();
+        describe('clear()', function () {
 
-            expect($scope.vm.success).to.equal(undefined);
-            expect($scope.vm.error).to.equal(undefined);
+          beforeEach(inject(function (_$compile_) {
+            $compile = _$compile_;
+            $compile('<form name="vm.forms.passwordForm"></form>')($scope);
+          }));
+
+          it('should clear the password', function () {
+            $scope.vm.password.newPassword = 'test';
+            $scope.vm.clear();
+            expect($scope.vm.password.newPassword).to.not.exist;
           });
 
-          it('should post to server and handle success', function () {
+          it('should reset the form', function () {
+            var pristineSpy = sandbox.spy($scope.vm.forms.passwordForm, '$setPristine');
+            var touchedSpy = sandbox.spy($scope.vm.forms.passwordForm, '$setUntouched');
+            $scope.vm.clear();
+            expect(pristineSpy).to.be.called;
+            expect(touchedSpy).to.be.called;
+          });
+
+        });
+
+        it('should have a property save that is a function', function () {
+          expect($scope.vm.save).to.be.an('function');
+        });
+
+        describe('save()', function () {
+
+          beforeEach(inject(function (_$compile_) {
+            $compile = _$compile_;
+            $compile('<form name="vm.forms.passwordForm"></form>')($scope);
+          }));
+
+          it('should post to server, clear, and toast', function () {
+            var toastSpy = sandbox.spy($mdToast, 'show');
+            var clearSpy = sandbox.spy($scope.vm, 'clear');
             $httpBackend.expectPOST('/api/me/password').respond(200, { message: 'Yippee' });
-            $scope.vm.changeUserPassword();
+            $scope.vm.password.newPassword = 'test';
+            $scope.vm.save();
             $scope.$digest();
             $httpBackend.flush();
 
-            expect($scope.vm.success).to.equal('Yippee');
-            expect($scope.vm.passwordDetails).to.equal(undefined);
+            expect(toastSpy).to.be.called;
+            expect(clearSpy).to.be.called;
           });
 
-          it('should post to server and handle error', function () {
+          it('should post to server and toast', function () {
+            var toastSpy = sandbox.spy($mdToast, 'show');
+
             $httpBackend.expectPOST('/api/me/password').respond(400, { message: 'Oops' });
-            $scope.vm.changeUserPassword();
+            $scope.vm.password.newPassword = 'test';
+            $scope.vm.save();
             $scope.$digest();
             $httpBackend.flush();
 
-            expect($scope.vm.error).to.equal('Oops');
-            expect($scope.vm.passwordDetails).to.equal(undefined);
+            expect($scope.vm.password.newPassword).to.equal('test');
+            expect(toastSpy).to.be.called;
           });
         });
 

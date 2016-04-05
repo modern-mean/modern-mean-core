@@ -21,15 +21,10 @@
     </md-list-item>
   </md-list>
   <md-list ng-show="vm.authentication.token">
-    <md-list-item ui-sref="root.user.settings.profile" >
-      <ng-md-icon icon="home"></ng-md-icon>
+    <md-list-item ui-sref="root.user.settings" >
+      <ng-md-icon icon="settings"></ng-md-icon>
       <span flex></span>
-      <span>Edit Profile</span>
-    </md-list-item>
-    <md-list-item ui-sref="root.user.settings.picture" >
-      <ng-md-icon icon="home"></ng-md-icon>
-      <span flex></span>
-      <span>Change Profile Picture</span>
+      <span>Settings</span>
     </md-list-item>
     <md-divider></md-divider>
     <md-list-item ng-click="vm.signout()" >
