@@ -11,6 +11,7 @@ function update(req, res) {
   var user = req.user;
 
   user.name = req.body.name;
+  user.emails = req.body.emails;
 
 
   return user.save()

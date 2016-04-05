@@ -16,62 +16,36 @@
         url: '/user',
         data: {
           roles: ['user', 'admin']
+        },
+        views: {
+          'main@': {
+            templateUrl: 'modules/users/client/views/settings/users.client.views.settings.grid.html'
+          }
         }
       })
       .state('root.user.settings', {
-        abstract: true,
-        url: '/settings'
-      })
-      .state('root.user.settings.profile', {
-        url: '/profile',
+        url: '/settings',
         views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.edit-profile.html',
-            controller: 'EditProfileController',
+          'email': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.emails.html',
+            controller: 'UsersEmailController',
+            controllerAs: 'vm'
+          },
+          'profile': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.profile.html',
+            controller: 'UsersProfileController',
+            controllerAs: 'vm'
+          },
+          'password': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.password.html',
+            controller: 'UsersPasswordController',
             controllerAs: 'vm',
-          }
-        },
-        data: {
-          pageTitle: 'Edit Profile'
-        }
-      })
-      .state('root.user.settings.password', {
-        url: '/password',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.change-password.html',
-            controller: 'ChangePasswordController',
-            controllerAs: 'vm',
-          }
-        },
-        data: {
-          pageTitle: 'Change Password'
-        }
-      })
-      .state('root.user.settings.accounts', {
-        url: '/accounts',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.manage-social-accounts.html',
-            controller: 'SocialAccountsController',
+          },
+          'picture': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.picture.html',
+            controller: 'UsersPictureController',
             controllerAs: 'vm'
           }
-        },
-        data: {
-          pageTitle: 'Manage Social Accounts'
-        }
-      })
-      .state('root.user.settings.picture', {
-        url: '/picture',
-        views: {
-          'main@': {
-            templateUrl: 'modules/users/client/views/settings/users.client.views.change-profile-picture.html',
-            controller: 'ChangeProfilePictureController',
-            controllerAs: 'vm'
-          }
-        },
-        data: {
-          pageTitle: 'Change Profile Picture'
         }
       })
       .state('root.user.authentication', {

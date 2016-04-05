@@ -53,182 +53,38 @@
         expect(state.url).to.equal('/settings');
       });
 
-    });
-
-    describe('root.user.settings.profile', function () {
-
-      beforeEach(function() {
-        state = $state.get('root.user.settings.profile');
-      });
-
-      it('should be an object', function () {
-        expect(state).to.be.an('object');
-      });
-
-      it('should have property url that is /profile', function () {
-        expect(state.url).to.equal('/profile');
-      });
-
-      it('should have property data that is an object', function () {
-        expect(state.data).to.be.a('object');
-      });
-
-      it('should have property data.pageTitle', function () {
-        expect(state.data.pageTitle).to.equal('Edit Profile');
-      });
-
-      it('should have property views that is an object with main@ property', function () {
+      it('should have property views that is an object', function () {
         expect(state.views).to.be.an('object');
-        expect(state.views['main@']).to.be.an('object');
       });
 
-      describe('main@', function () {
+      describe('views', function () {
 
-        it('should have property templateUrl', function () {
-          expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/settings/users.client.views.edit-profile.html');
+        it('should have property email', function () {
+          expect(state.views).to.include.keys('email');
+          expect(state.views['email'].templateUrl).to.equal('modules/users/client/views/cards/users.client.views.cards.emails.html');
+          expect(state.views['email'].controller).to.equal('UsersEmailController');
+          expect(state.views['email'].controllerAs).to.equal('vm');
         });
 
-        it('should have property controller', function () {
-          expect(state.views['main@'].controller).to.equal('EditProfileController');
+        it('should have property profile', function () {
+          expect(state.views).to.include.keys('profile');
+          expect(state.views['profile'].templateUrl).to.equal('modules/users/client/views/cards/users.client.views.cards.profile.html');
+          expect(state.views['profile'].controller).to.equal('UsersProfileController');
+          expect(state.views['profile'].controllerAs).to.equal('vm');
         });
 
-        it('should have property controllerAs', function () {
-          expect(state.views['main@'].controllerAs).to.equal('vm');
+        it('should have property password', function () {
+          expect(state.views).to.include.keys('password');
+          expect(state.views['password'].templateUrl).to.equal('modules/users/client/views/cards/users.client.views.cards.password.html');
+          expect(state.views['password'].controller).to.equal('UsersPasswordController');
+          expect(state.views['password'].controllerAs).to.equal('vm');
         });
 
-      });
-
-    });
-
-    describe('root.user.settings.password', function () {
-
-      beforeEach(function() {
-        state = $state.get('root.user.settings.password');
-      });
-
-      it('should be an object', function () {
-        expect(state).to.be.an('object');
-      });
-
-      it('should have property url that is /profile', function () {
-        expect(state.url).to.equal('/password');
-      });
-
-      it('should have property data that is an object', function () {
-        expect(state.data).to.be.a('object');
-      });
-
-      it('should have property data.pageTitle', function () {
-        expect(state.data.pageTitle).to.equal('Change Password');
-      });
-
-      it('should have property views that is an object with main@ property', function () {
-        expect(state.views).to.be.an('object');
-        expect(state.views['main@']).to.be.an('object');
-      });
-
-      describe('main@', function () {
-
-        it('should have property templateUrl', function () {
-          expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/settings/users.client.views.change-password.html');
-        });
-
-        it('should have property controller', function () {
-          expect(state.views['main@'].controller).to.equal('ChangePasswordController');
-        });
-
-        it('should have property controllerAs', function () {
-          expect(state.views['main@'].controllerAs).to.equal('vm');
-        });
-
-      });
-
-    });
-
-    describe('root.user.settings.accounts', function () {
-
-      beforeEach(function() {
-        state = $state.get('root.user.settings.accounts');
-      });
-
-      it('should be an object', function () {
-        expect(state).to.be.an('object');
-      });
-
-      it('should have property url that is /accounts', function () {
-        expect(state.url).to.equal('/accounts');
-      });
-
-      it('should have property data that is an object', function () {
-        expect(state.data).to.be.a('object');
-      });
-
-      it('should have property data.pageTitle', function () {
-        expect(state.data.pageTitle).to.equal('Manage Social Accounts');
-      });
-
-      it('should have property views that is an object with main@ property', function () {
-        expect(state.views).to.be.an('object');
-        expect(state.views['main@']).to.be.an('object');
-      });
-
-      describe('main@', function () {
-
-        it('should have property templateUrl', function () {
-          expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/settings/users.client.views.manage-social-accounts.html');
-        });
-
-        it('should have property controller', function () {
-          expect(state.views['main@'].controller).to.equal('SocialAccountsController');
-        });
-
-        it('should have property controllerAs', function () {
-          expect(state.views['main@'].controllerAs).to.equal('vm');
-        });
-
-      });
-
-    });
-
-    describe('root.user.settings.picture', function () {
-
-      beforeEach(function() {
-        state = $state.get('root.user.settings.picture');
-      });
-
-      it('should be an object', function () {
-        expect(state).to.be.an('object');
-      });
-
-      it('should have property url that is /picture', function () {
-        expect(state.url).to.equal('/picture');
-      });
-
-      it('should have property data that is an object', function () {
-        expect(state.data).to.be.a('object');
-      });
-
-      it('should have property data.pageTitle', function () {
-        expect(state.data.pageTitle).to.equal('Change Profile Picture');
-      });
-
-      it('should have property views that is an object with main@ property', function () {
-        expect(state.views).to.be.an('object');
-        expect(state.views['main@']).to.be.an('object');
-      });
-
-      describe('main@', function () {
-
-        it('should have property templateUrl', function () {
-          expect(state.views['main@'].templateUrl).to.equal('modules/users/client/views/settings/users.client.views.change-profile-picture.html');
-        });
-
-        it('should have property controller', function () {
-          expect(state.views['main@'].controller).to.equal('ChangeProfilePictureController');
-        });
-
-        it('should have property controllerAs', function () {
-          expect(state.views['main@'].controllerAs).to.equal('vm');
+        it('should have property picture', function () {
+          expect(state.views).to.include.keys('picture');
+          expect(state.views['picture'].templateUrl).to.equal('modules/users/client/views/cards/users.client.views.cards.picture.html');
+          expect(state.views['picture'].controller).to.equal('UsersPictureController');
+          expect(state.views['picture'].controllerAs).to.equal('vm');
         });
 
       });
