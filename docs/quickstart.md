@@ -32,17 +32,15 @@ cd modern-mean-core
 npm install
 ```
 
+###First Run
+When running the application for the first time you should seed the users by setting the MONGO_SEED environment variable.
+```bash
+MONGO_SEED=true gulp
+```
+For more information on database seeding visit the <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/dbseeding.md">database seeding documentation</a>
+
 ##Modern MEAN Runtime
 ```sh
 gulp
 ```
 For more information on gulp tasks visit the <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/gulptasks.md">gulp tasks documentation</a>
-
-### Running with User Seed
-To have default account(s) seeded at runtime:
-
-In Development:
-```bash
-MONGO_SEED=true gulp
-```
-For more information on database seeding visit the <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/dbseeding.md">gulp tasks documentation</a>
