@@ -12,9 +12,6 @@ let validateEmail = function (email) {
   return validator.isEmail(email, { require_tld: false });
 };
 
-/**
- * User Schema
- */
 let EmailSchema = new Schema({
   email: {
     type: String,
@@ -43,7 +40,10 @@ let EmailSchema = new Schema({
 * PreSave
 */
 EmailSchema.pre('save', function (next) {
-  this.timestamps.updated = Date.now;
+  if (this.isModified()) {
+    this.timestamps.updated = Date.now();
+  }
+  
   next();
 });
 

@@ -26,7 +26,9 @@ function init(app) {
 
     //TODO  renable when social accounts are working again.
     //router.route('/accounts').delete(controllers.authentication.removeOAuthProvider);
+    router.route('/addresses').put(profile.addresses);
     router.route('/authorization').get(authorization.read);
+    router.route('/emails').put(profile.emails);
     router.route('/password').post(password.changePassword);
     router.route('/picture').post(upload.single('newProfilePicture'), profile.changeProfilePicture);
 

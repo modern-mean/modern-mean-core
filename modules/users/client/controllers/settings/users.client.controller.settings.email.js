@@ -44,7 +44,7 @@
         .position('bottom right')
         .hideDelay(6000);
 
-      vm.user.$update(function (response) {
+      vm.user.$emails(function (response) {
         vm.executing = false;
         clear();
         toast.textContent('Emails Updated Successfully').theme('toast-success');

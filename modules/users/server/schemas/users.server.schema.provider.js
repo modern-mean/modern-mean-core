@@ -14,9 +14,6 @@ let validateLocalStrategyEmail = function (email) {
   return ((this.type !== 'local') || validator.isEmail(email, { require_tld: false }));
 };
 
-/**
- * User Schema
- */
 let ProviderSchema = new Schema({
   email: {
     type: String,
@@ -61,7 +58,10 @@ ProviderSchema.virtual('clearpassword')
 * PreSave
 */
 ProviderSchema.pre('save', function (next) {
-  this.timestamps.updated = Date.now;
+  if (this.isModified()) {
+    this.timestamps.updated = Date.now();
+  }
+
   next();
 });
 

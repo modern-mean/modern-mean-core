@@ -10,6 +10,7 @@ karmaReporters.push('coverage');
 module.exports = function (karmaConfig) {
   let karmaFiles = [];
 
+  karmaFiles.push('./karma.setup.js');
   karmaFiles.push('public/dist/angular.js');
   karmaFiles.push('bower_components/angular-mocks/angular-mocks.js');
   karmaFiles.push('bower_components/angular-material/angular-material-mocks.js');
@@ -26,11 +27,16 @@ module.exports = function (karmaConfig) {
     },
 
     // Frameworks to use
-    frameworks: ['mocha', 'chai', 'sinon-chai', 'sinon'],
+    frameworks: ['browserify', 'mocha'],
 
     preprocessors: {
+      './karma.setup.js': [ 'browserify' ],
       'modules/*/client/views/**/*.html': ['ng-html2js'],
       'modules/*/client/**/*.js': ['coverage']
+    },
+    browserify: {
+      debug: true,
+      transform: [ 'babelify' ]
     },
 
     ngHtml2JsPreprocessor: {

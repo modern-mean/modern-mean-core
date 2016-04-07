@@ -26,6 +26,11 @@
       .state('root.user.settings', {
         url: '/settings',
         views: {
+          'address': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.addresses.html',
+            controller: 'UsersAddressController',
+            controllerAs: 'vm'
+          },
           'email': {
             templateUrl: 'modules/users/client/views/cards/users.client.views.cards.emails.html',
             controller: 'UsersEmailController',

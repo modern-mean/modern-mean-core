@@ -7,6 +7,7 @@ import generatePassword from 'generate-password';
 import owasp from 'owasp-password-strength-test';
 import Provider from './users.server.schema.provider';
 import Email from './users.server.schema.email';
+import Address from './users.server.schema.address';
 
 let Schema = mongoose.Schema;
 
@@ -14,6 +15,7 @@ let Schema = mongoose.Schema;
  * User Schema
  */
 let UserSchema = new Schema({
+  addresses: [Address],
   emails: [Email],
   name: {
     first: {
@@ -56,7 +58,10 @@ UserSchema.virtual('name.full')
  * PreSave
  */
 UserSchema.pre('save', function (next) {
-  this.timestamps.updated = Date.now;
+  if (this.isModified()) {
+    this.timestamps.updated = Date.now();
+  }
+
   next();
 });
 
