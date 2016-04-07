@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import * as authenticationController from '../../../../server/controllers/users/users.authentication.server.controller';
 import jwtToken from '../../../../server/authentication/jwtToken';
 import userModel from '../../../../server/models/users.server.model.user';
+import aclModule from '../../../../server/config/acl';
 
 
 chai.use(promised);
@@ -118,8 +119,13 @@ describe('/modules/users/server/controllers/users/users.authentication.server.co
 
 
       describe('success', () => {
+        let aclMock, aclStub;
 
         beforeEach(() => {
+          aclStub = {
+            addUserRoles: sandbox.stub().resolves()
+          };
+          sandbox.stub(aclModule, 'getAcl').returns(aclStub);
           mockUser = sandbox.stub(user, 'save').resolves(user);
           return authenticationController.signup(mockReq, mockRes);
         });
