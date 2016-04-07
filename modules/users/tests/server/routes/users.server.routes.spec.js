@@ -100,6 +100,34 @@ describe('modules/users/server/routes/users.server.routes.js', () => {
 
   });
 
+  describe('/addresses route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
+
+    beforeEach(() => {
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        put: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(1).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
+    });
+
+    it('should call route with /authorization', () => {
+      return routeStub.should.have.been.calledWith('/addresses');
+    });
+
+    it('should call .get with profile.addresses', () => {
+      return mockRoute.put.should.have.been.calledWith(userController.profile.addresses);
+    });
+
+  });
+
   describe('/authorization route', () => {
     let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
@@ -111,7 +139,7 @@ describe('modules/users/server/routes/users.server.routes.js', () => {
       };
       realRoute = mockRouter.route('asdf');
       routeStub = sandbox.stub(mockRouter, 'route');
-      routeStub.onCall(1).returns(mockRoute);
+      routeStub.onCall(2).returns(mockRoute);
       routeStub.returns(realRoute);
       sandbox.stub(mockRouter, 'all');
       sandbox.stub(express, 'Router').returns(mockRouter);
@@ -128,6 +156,34 @@ describe('modules/users/server/routes/users.server.routes.js', () => {
 
   });
 
+  describe('/emails route', () => {
+    let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
+
+    beforeEach(() => {
+      app = express();
+      mockRouter = express.Router();
+      mockRoute = {
+        put: sandbox.stub().returnsThis()
+      };
+      realRoute = mockRouter.route('asdf');
+      routeStub = sandbox.stub(mockRouter, 'route');
+      routeStub.onCall(3).returns(mockRoute);
+      routeStub.returns(realRoute);
+      sandbox.stub(mockRouter, 'all');
+      sandbox.stub(express, 'Router').returns(mockRouter);
+      return userRoutes.init(app);
+    });
+
+    it('should call route with /password', () => {
+      return routeStub.should.have.been.calledWith('/emails');
+    });
+
+    it('should call .get with profile.emails', () => {
+      return mockRoute.put.should.have.been.calledWith(userController.profile.emails);
+    });
+
+  });
+
   describe('/password route', () => {
     let app, routerStub, mockRouter, routeStub, realRoute, mockRoute;
 
@@ -139,7 +195,7 @@ describe('modules/users/server/routes/users.server.routes.js', () => {
       };
       realRoute = mockRouter.route('asdf');
       routeStub = sandbox.stub(mockRouter, 'route');
-      routeStub.onCall(2).returns(mockRoute);
+      routeStub.onCall(4).returns(mockRoute);
       routeStub.returns(realRoute);
       sandbox.stub(mockRouter, 'all');
       sandbox.stub(express, 'Router').returns(mockRouter);
@@ -167,7 +223,7 @@ describe('modules/users/server/routes/users.server.routes.js', () => {
       };
       realRoute = mockRouter.route('asdf');
       routeStub = sandbox.stub(mockRouter, 'route');
-      routeStub.onCall(3).returns(mockRoute);
+      routeStub.onCall(5).returns(mockRoute);
       routeStub.returns(realRoute);
       sandbox.stub(mockRouter, 'all');
       sandbox.stub(express, 'Router').returns(mockRouter);

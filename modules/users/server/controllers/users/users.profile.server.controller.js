@@ -4,15 +4,10 @@ import lodash from 'lodash';
 import multer from 'multer';
 import config from 'modernMean/config';
 
+function addresses(req, res) {
+  let user = req.user;
 
-
-function update(req, res) {
-  // Init Variables
-  var user = req.user;
-
-  user.name = req.body.name;
-  user.emails = req.body.emails;
-
+  user.addresses = req.body.addresses;
 
   return user.save()
     .then(user => {
@@ -21,7 +16,6 @@ function update(req, res) {
       res.status(400).json(err.message);
     });
 }
-
 
 function changeProfilePicture(req, res) {
 
@@ -36,15 +30,44 @@ function changeProfilePicture(req, res) {
     });
 }
 
+function emails(req, res) {
+  let user = req.user;
+
+  user.emails = req.body.emails;
+
+  return user.save()
+    .then(user => {
+      res.json(user);
+    }).catch(err => {
+      res.status(400).json(err.message);
+    });
+}
+
 function me(req, res) {
   return res.json(req.user);
 }
 
-let controller = { changeProfilePicture: changeProfilePicture, me: me, update: update };
+function update(req, res) {
+  let user = req.user;
+
+  user.name = req.body.name;
+
+  return user.save()
+    .then(user => {
+      res.json(user);
+    }).catch(err => {
+      res.status(400).json(err.message);
+    });
+}
+
+
+let controller = { addresses: addresses, changeProfilePicture: changeProfilePicture, emails: emails, me: me, update: update };
 
 export default controller;
 export {
+  addresses,
   changeProfilePicture,
+  emails,
   me,
   update
 };

@@ -75,6 +75,19 @@ function seedUser() {
           user.emails.push(email);
         }
 
+        //Set address if its not set
+        if (user.addresses.length === 0) {
+          let address = new userModel.getModels().address({
+            addressType: 'Shipping',
+            streetAddress: '123 Bedrock',
+            locality: 'Hollywood',
+            region: 'CA',
+            postalCode: '90210',
+            country: 'US'
+          });
+          user.addresses.push(address);
+        }
+
         //Remove Providers
         user.providers = [];
         //Set provider

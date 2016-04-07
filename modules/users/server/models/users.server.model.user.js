@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import UserSchema from '../schemas/users.server.schema.user';
 import ProviderSchema from '../schemas/users.server.schema.provider';
 import EmailSchema from '../schemas/users.server.schema.email';
+import AddressSchema from '../schemas/users.server.schema.address';
 
 let models = {};
 
@@ -21,6 +22,10 @@ function init() {
 
     if (!models.email) {
       models.email = mongoose.model('Email', EmailSchema);
+    }
+
+    if (!models.address) {
+      models.address = mongoose.model('Address', AddressSchema);
     }
     console.log(chalk.green('User::Model::Init::Success'));
     return resolve(models);

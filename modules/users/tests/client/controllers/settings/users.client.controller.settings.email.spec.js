@@ -124,7 +124,7 @@
             var toastSpy = sandbox.spy($mdToast, 'show');
 
             $scope.vm.user.test = 'test';
-            $httpBackend.expectPUT('/api/me').respond(200, { message: 'Yippee' });
+            $httpBackend.expectPUT('/api/me/emails').respond(200, { message: 'Yippee' });
             $httpBackend.expectGET('/api/me').respond(200, { test: 'sure' });
             $scope.vm.save();
             $scope.$digest();
@@ -136,7 +136,7 @@
 
           it('should put to server and toast on error', function () {
             var toastSpy = sandbox.spy($mdToast, 'show');
-            $httpBackend.expectPUT('/api/me').respond(400, { message: 'Oops' });
+            $httpBackend.expectPUT('/api/me/emails').respond(400, { message: 'Oops' });
             $scope.vm.save();
             $scope.$digest();
             $httpBackend.flush();

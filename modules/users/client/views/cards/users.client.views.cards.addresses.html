@@ -1,0 +1,95 @@
+<md-card>
+  <md-card-header>
+    <md-card-header-text>
+      <span class="md-headline">Addresses</span>
+    </md-card-header-text>
+    <md-card-title-media>
+      <ng-md-icon icon="home"></ng-md-icon>
+    </md-card-title-media>
+  </md-card-header>
+  <md-divider></md-divider>
+  <md-card-content>
+    <md-list ng-show='!vm.editing'>
+      <md-subheader class="md-no-sticky">Shipping</md-subheader>
+      <md-list-item class="md-3-line" ng-repeat="address in vm.user.addresses | filter: { addressType: 'Shipping' }">
+         <div class="md-list-item-text" layout="column">{{ address.streetAddress }} {{ address.extendedAddress }} {{ address.locality }} {{ address.region }} {{ address.postalCode }} {{ address.country }}</div>
+         <md-button class="md-secondary md-icon-button md-accent">
+           <ng-md-icon icon="mode_edit" ng-click="vm.edit(address)"></ng-md-icon>
+         </md-button>
+         <md-button class="md-secondary md-icon-button md-warn">
+           <ng-md-icon icon="delete" ng-click="vm.remove(address)"></ng-md-icon>
+         </md-button>
+      </md-list-item>
+      <md-subheader class="md-no-sticky">Billing</md-subheader>
+      <md-list-item ng-repeat="address in vm.user.addresses | filter: { addressType: 'Billing' }">
+        <div class="md-list-item-text" layout="column">{{ address.streetAddress }} {{ address.extendedAddress }} {{ address.locality }} {{ address.region }} {{ address.postalCode }} {{ address.country }}</div>
+        <md-button class="md-secondary md-icon-button md-accent">
+          <ng-md-icon icon="mode_edit" ng-click="vm.edit(address)"></ng-md-icon>
+        </md-button>
+        <md-button class="md-secondary md-icon-button md-warn">
+          <ng-md-icon icon="delete" ng-click="vm.remove(address)"></ng-md-icon>
+        </md-button>
+      </md-list-item>
+    </md-list>
+    <form ng-show="vm.editing" name="vm.forms.addressForm" novalidate>
+      <md-input-container class="md-block" flex>
+        <label>Type</label>
+        <md-select name="addressType" ng-model="vm.address.addressType" required>
+          <md-option value=""></md-option>
+          <md-option value="Shipping">Shipping</md-option>
+          <md-option value="Billing">Billing</md-option>
+        </md-select>
+        <div ng-messages="vm.forms.addressForm.addressType.$error" role="alert">
+          <div ng-message="required">Address type is required</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Street Address</label>
+        <input type="text" name="streetAddress" ng-model="vm.address.streetAddress" required>
+        <div ng-messages="vm.forms.addressForm.streetAddress.$error" role="alert">
+          <div ng-message="required">Street address is required</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Extended Address</label>
+        <input type="text" name="extendedAddress" ng-model="vm.address.extendedAddress">
+      </md-input-container>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>City</label>
+          <input type="text" name="city" ng-model="vm.address.locality" required>
+          <div ng-messages="vm.forms.addressForm.city.$error" role="alert">
+            <div ng-message="required">City is required</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>State</label>
+          <input type="text" name="state" ng-model="vm.address.region" required>
+          <div ng-messages="vm.forms.addressForm.state.$error" role="alert">
+            <div ng-message="required">Street address is required</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Postal Code</label>
+          <input type="text" name="postalCode" ng-model="vm.address.postalCode" required>
+          <div ng-messages="vm.forms.addressForm.postalCode.$error" role="alert">
+            <div ng-message="required">Postal code is required</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Country</label>
+          <input type="text" name="country" ng-model="vm.address.country" required>
+          <div ng-messages="vm.forms.addressForm.country.$error" role="alert">
+            <div ng-message="required">Country is required</div>
+          </div>
+        </md-input-container>
+      </div>
+    </form>
+  </md-card-content>
+  <md-card-actions md-theme="card-actions" layout="row" layout-align="end center">
+    <md-button ng-show="!vm.editing" ng-disabled="vm.executing" class="md-raised md-accent" ng-click="vm.editing = true">Add</md-button>
+    <md-button ng-disabled="vm.executing || vm.forms.addressForm.$pristine || vm.forms.addressForm.$invalid" class="md-raised md-primary" ng-click="vm.save()">Save</md-button>
+    <md-button ng-disabled="(vm.executing || vm.forms.addressForm.$pristine) && !vm.editing" class="md-raised md-warn" ng-click="vm.clear()">Cancel</md-button>
+  </md-card-actions>
+  <md-progress-linear class="md-accent" ng-show="vm.executing" md-mode="indeterminate"></md-progress-linear>
+</md-card>
