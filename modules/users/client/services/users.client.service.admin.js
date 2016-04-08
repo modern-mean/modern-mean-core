@@ -9,7 +9,7 @@
   UserAdmin.$inject = ['$resource'];
 
   function UserAdmin($resource) {
-    return $resource('/api/admin/users/:userId', {
+    return $resource('/api/users/:userId', {
       userId: '@_id'
     }, {
       update: {

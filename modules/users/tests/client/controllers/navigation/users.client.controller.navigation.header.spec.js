@@ -8,36 +8,45 @@
     $controller,
     UsersHeaderController,
     $mdComponentRegistry,
-    Authentication;
+    Authentication,
+    $q;
 
   describe('users.client.controller.navigation.header.js', function () {
 
     beforeEach(module('core'));
 
-    beforeEach(inject(function(_$state_, _$rootScope_, _$compile_, $controller, _$mdComponentRegistry_, _Authentication_) {
+    beforeEach(inject(function(_$state_, _$rootScope_, _$compile_, _$mdComponentRegistry_, _Authentication_) {
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
       $state = _$state_;
       $compile = _$compile_;
       $mdComponentRegistry = _$mdComponentRegistry_;
       Authentication = _Authentication_;
-
-      UsersHeaderController = $controller('UsersHeaderController as vm', {
-        $scope: $scope
-      });
     }));
 
-    describe('HeaderController', function () {
+    describe('UsersHeaderController', function () {
+
+      beforeEach(inject(function ($controller) {
+        UsersHeaderController = $controller('UsersHeaderController as vm', {
+          $scope: $scope
+        });
+      }));
+
+
       it('should have a vm variable', function () {
-        expect($scope.vm).to.be.an('object');
+        return $scope.vm.should.be.an('object');
       });
 
       it('should have a vm.authentication object', function () {
-        expect($scope.vm.authentication).to.equal(Authentication);
+        return $scope.vm.authentication.should.equal(Authentication);
+      });
+
+      it('should have a vm.isAdmin object', function () {
+        return $scope.vm.isAdmin.should.equal(false);
       });
 
       it('should have a vm.navigation object', function () {
-        expect($scope.vm.navigation).to.be.an('object');
+        return $scope.vm.navigation.should.be.an('object');
       });
 
       it('should set vm.navigation.left when ready', function () {
@@ -45,7 +54,7 @@
         $rootScope.$digest();
 
         var leftNav = $mdComponentRegistry.get('coreLeftNav');
-        return expect($scope.vm.navigation.left).to.equal(leftNav);
+        return $scope.vm.navigation.left.should.equal(leftNav);
       });
 
       it('should set vm.navigation.right when ready', function () {
@@ -53,8 +62,28 @@
         $rootScope.$digest();
 
         var rightNav = $mdComponentRegistry.get('coreRightNav');
-        return expect($scope.vm.navigation.right).to.equal(rightNav);
+        return $scope.vm.navigation.right.should.equal(rightNav);
       });
+
     });
+
+    describe('admin role', function () {
+      var promise;
+
+      beforeEach(inject(function ($controller, $q) {
+        Authentication.authorization.roles = ['admin'];
+        UsersHeaderController = $controller('UsersHeaderController as vm', {
+          $scope: $scope
+        });
+      }));
+
+      it('should set vm.isAdmin to true', function () {
+        $rootScope.$digest();
+        return $scope.vm.isAdmin.should.equal(true);
+      });
+
+    });
+
   });
+
 })();

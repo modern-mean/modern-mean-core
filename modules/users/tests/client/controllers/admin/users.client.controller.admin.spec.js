@@ -37,7 +37,7 @@
       sandbox.restore();
     });
 
-    describe('UserController', function () {
+    describe('UserListController', function () {
 
       describe('vm', function () {
         it('should be an object', function () {
@@ -64,7 +64,7 @@
       describe('vm.remove', function () {
 
         it('should call the server to delete and redirect on success', function () {
-          $httpBackend.expectDELETE('/api/admin/users/testuser').respond(200, {});
+          $httpBackend.expectDELETE('/api/users/testuser').respond(200, {});
           var stateSpy = sandbox.spy($state, 'go');
           $scope.vm.remove();
           $scope.$digest();
@@ -74,7 +74,7 @@
         });
 
         it('should call the server to delete set an error on error', function () {
-          $httpBackend.expectDELETE('/api/admin/users/testuser').respond(400, { message: 'Error Yo' });
+          $httpBackend.expectDELETE('/api/users/testuser').respond(400, { message: 'Error Yo' });
           $scope.vm.remove();
           $scope.$digest();
           $httpBackend.flush();
@@ -87,8 +87,8 @@
       describe('vm.update', function () {
 
         it('should call the server to update and redirect on success', function () {
-          $httpBackend.expectPUT('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
-          $httpBackend.expectGET('/api/admin/users/testuser').respond(200, { _id: 'testuser' });
+          $httpBackend.expectPUT('/api/users/testuser').respond(200, { _id: 'testuser' });
+          $httpBackend.expectGET('/api/users/testuser').respond(200, { _id: 'testuser' });
 
           var stateSpy = sandbox.spy($state, 'go');
           $scope.vm.update();
@@ -99,7 +99,7 @@
         });
 
         it('should call the server to edit set an error on error', function () {
-          $httpBackend.expectPUT('/api/admin/users/testuser').respond(400, { message: 'Error Yo' });
+          $httpBackend.expectPUT('/api/users/testuser').respond(400, { message: 'Error Yo' });
           $scope.vm.update();
           $scope.$digest();
           $httpBackend.flush();

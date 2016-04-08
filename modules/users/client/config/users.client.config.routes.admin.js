@@ -10,6 +10,29 @@
 
   function routeConfig($stateProvider) {
     $stateProvider
+      .state('root.admin', {
+        url: '/admin',
+        abstract: true,
+        data: {
+          roles: ['admin']
+        },
+        views: {
+          'main@': {
+            templateUrl: 'modules/users/client/views/admin/users.client.views.admin.grid.html'
+          }
+        }
+      })
+      .state('root.admin.dashboard', {
+        url: '/dashboard',
+        data: {
+          roles: ['admin']
+        },
+        views: {
+          'row-1-col-1': {
+            templateUrl: 'modules/users/client/views/cards/users.client.views.cards.admin.users.html'
+          }
+        }
+      })
       .state('root.admin.users', {
         url: '/users',
         views: {

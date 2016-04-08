@@ -23,6 +23,16 @@
       Authentication.authorization.roles = ['admin'];
     }));
 
+    it('should have a home state', function () {
+      var state = $state.get('root.admin');
+      expect(state).to.be.an('object');
+      expect(state.url).to.equal('/admin');
+      expect(state.data).to.be.an('object');
+      expect(state.data.roles).to.be.an('array');
+      expect(state.data.roles.length).to.equal(1);
+      expect(state.data.roles).to.include('admin');
+    });
+
     it('should have an admin.users state', function () {
       var state = $state.get('root.admin.users');
       expect(state).to.be.an('object');
@@ -61,7 +71,7 @@
     });
 
     it('should resolve a user id', function () {
-      $httpBackend.expectGET('/api/admin/users/test').respond(200, { _id: 'sure' });
+      $httpBackend.expectGET('/api/users/test').respond(200, { _id: 'sure' });
       //$httpBackend.expectGET('modules/users/client/views/admin/users.client.views.view-user.html').respond(200, '<div></div>');
       //$httpBackend.expectGET('modules/core/client/views/core.client.views.home.html').respond(200, '<div></div>');
       //TODO HERE

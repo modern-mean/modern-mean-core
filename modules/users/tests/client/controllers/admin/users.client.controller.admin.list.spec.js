@@ -26,7 +26,7 @@
       });
 
       it('should make a call to get a list of users', function () {
-        $httpBackend.expectGET('/api/admin/users').respond(200, [ { id: 'testuser' }, { id: 'testuser2' } ]);
+        $httpBackend.expectGET('/api/users').respond(200, [ { id: 'testuser' }, { id: 'testuser2' } ]);
         $scope.$digest();
         $httpBackend.flush();
         expect($scope.vm.users).to.be.an('array');
