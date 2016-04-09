@@ -4,6 +4,9 @@
   </md-button>
   <span flex="none" style="font-weight: 900; font-size: 1.2em;letter-spacing: -.05em" hide-xs>MODERN-MEAN</span>
   <span flex></span>
+  <md-button class="md-fab md-mini md-warn" ng-show="vm.authentication.token && vm.isAdmin" class="md-icon-button" aria-label="Admin Dashboard" ui-sref="root.admin.dashboard">
+    <ng-md-icon icon="security"></ng-md-icon>
+  </md-button>
   <md-button class="md-fab md-mini" ng-show="!vm.authentication.token" class="md-icon-button" aria-label="Rightnav Menu" ng-click="vm.navigation.right.toggle()">
     <ng-md-icon icon="account_circle"></ng-md-icon>
   </md-button>
