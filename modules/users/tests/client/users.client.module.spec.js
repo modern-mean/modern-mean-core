@@ -19,14 +19,14 @@
     it('should have created the users.admin module', function () {
       expect(angular.module('users.admin')).to.be.an('object');
       expect(angular.module('users.admin').name).to.equal('users.admin');
-      expect(angular.module('users.admin').requires.length).to.equal(1);
+      expect(angular.module('users.admin').requires.length).to.equal(0);
     });
 
     it('should have created the users.routes module', function () {
       expect(angular.module('users.admin.routes')).to.be.an('object');
       expect(angular.module('users.admin.routes').name).to.equal('users.admin.routes');
       expect(angular.module('users.admin.routes').requires.length).to.equal(1);
-      expect(angular.module('users.admin.routes').requires).to.include('core.admin.routes');
+      expect(angular.module('users.admin.routes').requires).to.include('core.routes');
     });
 
   });
