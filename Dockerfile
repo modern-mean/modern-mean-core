@@ -1,4 +1,4 @@
-FROM node:0.12
+FROM node:5.10
 
 # Install gem sass for  grunt-contrib-sass
 RUN apt-get update -qq && apt-get install -y build-essential
@@ -6,9 +6,13 @@ RUN apt-get install -y ruby
 RUN gem install sass
 
 WORKDIR /home/modern-mean
+RUN mkdir -p /home/modern-mean/logs
+
+# disable NPM color output to keep logs cleaner
+RUN npm config set color false
 
 # Install Modern-MEAN Prerequisites
-RUN npm install -g gulp
+RUN npm install -g gulpjs/gulp-cli#4.0
 RUN npm install -g bower
 
 # Install Modern-MEAN packages
@@ -23,10 +27,8 @@ RUN bower install --config.interactive=false --allow-root
 # Make everything available for start
 ADD . /home/modern-mean
 
-# Set development environment as default
-ENV NODE_ENV development
-
-# Port 3000 for server
+# Port 8080 for server
 # Port 35729 for livereload
-EXPOSE 3000 35729
-CMD ["grunt"]
+EXPOSE 8080 35729
+CMD ["gulp","prod"]
+
