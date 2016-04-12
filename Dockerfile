@@ -11,11 +11,11 @@ RUN mkdir -p /home/modern-mean/logs
 # disable NPM color output to keep logs cleaner
 RUN npm config set color false
 
-# Install Mean.JS Prerequisites
+# Install Modern-MEAN Prerequisites
 RUN npm install -g gulpjs/gulp-cli#4.0
 RUN npm install -g bower
 
-# Install Mean.JS packages
+# Install Modern-MEAN packages
 ADD package.json /home/modern-mean/package.json
 RUN npm install
 
