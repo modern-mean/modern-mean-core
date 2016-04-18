@@ -1,4 +1,4 @@
-(function(angular) {
+(function() {
   'use strict';
 
   angular
@@ -10,4 +10,4 @@
     $locationProvider.html5Mode(true).hashPrefix('!');
   }
 
-})(angular);
+})();

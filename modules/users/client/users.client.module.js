@@ -1,9 +1,9 @@
-(function(window, angular) {
+(function(app) {
   'use strict';
 
-  window.modernMeanApplication.registerModule('users', ['core', 'ngFileUpload']);
-  window.modernMeanApplication.registerModule('users.routes', ['core.routes']);
-  window.modernMeanApplication.registerModule('users.admin', []);
-  window.modernMeanApplication.registerModule('users.admin.routes', ['core.routes']);
+  app.registerModule('users', ['core', 'ngFileUpload']);
+  app.registerModule('users.routes', ['core.routes']);
+  app.registerModule('users.admin', []);
+  app.registerModule('users.admin.routes', ['core.routes']);
 
-})(window, angular);
+})(window.modernMeanApplication);

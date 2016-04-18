@@ -1,4 +1,4 @@
-(function(angular) {
+(function() {
   'use strict';
 
   // Setting HTML5 Location Mode
@@ -30,4 +30,4 @@
     }
 
   }
-})(angular);
+})();

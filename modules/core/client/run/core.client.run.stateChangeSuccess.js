@@ -1,4 +1,4 @@
-(function(angular) {
+(function() {
   'use strict';
 
   // Setting HTML5 Location Mode
@@ -28,4 +28,4 @@
     //Save in rootscope for use in users module
     $rootScope.storePreviousState = storePreviousState;
   }
-})(angular);
+})();
