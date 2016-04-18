@@ -1,8 +1,7 @@
 {
   "env": {
     "production": {
-      "presets": ["es2015-node5"],
-      "plugins": ["transform-remove-console"]
+      "presets": ["es2015-node5"]
     },
     "test": {
       "presets": ["es2015-node5"]
