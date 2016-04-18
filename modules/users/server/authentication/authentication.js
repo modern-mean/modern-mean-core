@@ -1,21 +1,22 @@
 'use strict';
 
 import passport from 'passport';
-import chalk from 'chalk';
+import winston from 'winston';
 import jwtStrategy from './strategies/jwt';
 import localStrategy from './strategies/local';
 
 function init(app) {
   return new Promise(function (resolve, reject) {
+    winston.debug('Users::Authentication::Start');
     Promise.all([ jwtStrategy.strategy(app), localStrategy.strategy(app) ])
       .then(function () {
         app.use(passport.initialize());
-        console.log(chalk.bold.green('Users::Authentication::Success'));
-        resolve(app);
+        winston.verbose('Users::Authentication::Success');
+        return resolve(app);
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('Users::Authentication::Error' + err));
-        reject(err);
+        winston.error(err);
+        return reject(err);
       });
   });
 }

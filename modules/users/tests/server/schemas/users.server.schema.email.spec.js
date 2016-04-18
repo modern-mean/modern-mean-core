@@ -1,20 +1,9 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonAsPromised from 'sinon-as-promised';
-import promised from 'chai-as-promised';
 import userModel from '../../../server/models/users.server.model.user';
 import userSeed from '../../../server/models/users.server.model.user.seed';
 import mongooseModule from '../../../../core/server/app/mongoose';
 import aclModule from '../../../server/config/acl';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 
@@ -74,7 +63,7 @@ describe('/modules/users/server/schemas/users.server.schema.email.js', () => {
             result.emails[0].timestamps.updated.toString().should.equal(timestamp.toString());
             return done();
           });
-          
+
       }, 1001);
 
     });

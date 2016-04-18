@@ -1,6 +1,7 @@
 'use strict';
 
 import chalk from 'chalk';
+import winston from 'winston';
 import config from 'modernMean/config';
 import userModel from './users.server.model.user';
 import aclModule from '../config/acl.js';
@@ -104,7 +105,7 @@ function seedUser() {
             aclModule.getAcl().addUserRoles(user._id.toString(), 'user');
             users.user = user.toObject();
             users.user.password = password;
-            console.log(chalk.bold.magenta('Users::Model::Seed::User::'), user.emails[0].email + ':' + password);
+            winston.info('Users::Model::Seed::User::' + chalk.bold.magenta(user.emails[0].email + ':' + password));
             resolve(user);
           });
           /*
@@ -159,7 +160,7 @@ function seedAdmin() {
             aclModule.getAcl().addUserRoles(user._id.toString(), ['admin']);
             users.admin = user.toObject();
             users.admin.password = password;
-            console.log(chalk.bold.magenta('Users::Model::Seed::Admin::'), user.emails[0].email + ':' + password);
+            winston.info('Users::Model::Seed::User::' + chalk.bold.magenta(user.emails[0].email + ':' + password));
             resolve(user);
           });
           /*
@@ -181,11 +182,11 @@ function init() {
       return resolve(users);
     }
 
-    console.log(chalk.green('Users::Model::Seed::Start'));
+    winston.debug('Users::Model::Seed::Start');
     seedUser()
       .then(seedAdmin)
       .then(() => {
-        console.log(chalk.green('Users::Model::Seed::Success'));
+        winston.verbose('Users::Model::Seed::Success');
         resolve(users);
       });
       /*

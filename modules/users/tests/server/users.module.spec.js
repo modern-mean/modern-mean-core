@@ -1,24 +1,12 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import express from 'express';
-import config from 'modernMean/config';
 import * as users from '../../server/users.module';
 import userRoutes from '../../server/routes/users.server.routes';
 import authRoutes from '../../server/routes/auth.server.routes';
 import userModel from '../../server/models/users.server.model.user';
 import userSeed from '../../server/models/users.server.model.user.seed';
 import authentication from '../../server/authentication/authentication';
-
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

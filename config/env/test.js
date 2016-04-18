@@ -24,6 +24,20 @@ let test = {
       }
     }
   },
+  logs: {
+    //https://github.com/expressjs/morgan
+    morgan: {
+      format: 'dev',
+      options: {
+        skip: () => { return true; }
+      }
+    },
+    //https://github.com/winstonjs/winston
+    winston: {
+      level:  process.env.WINSTON_LEVEL || -1, //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
+      file: false
+    }
+  },
   app: {
     title: ' - Test Environment'
   },

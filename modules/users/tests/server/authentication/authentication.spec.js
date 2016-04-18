@@ -1,21 +1,10 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonAsPromised from 'sinon-as-promised';
-import promised from 'chai-as-promised';
 import express from 'express';
 import passport from 'passport';
 import * as authentication from '../../../server/authentication/authentication';
 import jwtStrategy from '../../../server/authentication/strategies/jwt';
 import localStrategy from '../../../server/authentication/strategies/local';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

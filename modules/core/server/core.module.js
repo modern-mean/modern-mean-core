@@ -1,19 +1,21 @@
 'use strict';
 
+import winston from 'winston';
 import routes from './routes/core.server.routes';
-import chalk from 'chalk';
+
 
 
 function init(app) {
   return new Promise(function (resolve, reject) {
+    winston.debug('Core::Init::Start');
     routes.init(app)
       .then(function (app) {
-        console.log(chalk.bold.green('Core::Init::Success'));
-        resolve(app);
+        winston.verbose('Core::Init::Success');
+        return resolve(app);
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('Users::Init::Error::' + err));
-        reject(err);
+        winston.error(err);
+        return reject(err);
       });
   });
 

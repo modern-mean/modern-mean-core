@@ -1,9 +1,9 @@
 'use strict';
 
-import chalk from 'chalk';
 import mongoose from 'mongoose';
 import globby from 'globby';
 import path from 'path';
+import winston from 'winston';
 import config from 'modernMean/config';
 
 mongoose.Promise = global.Promise;
@@ -15,7 +15,7 @@ function connect() {
   return new Promise((resolve, reject) => {
 
     if (mongoose.connection.readyState !== 0) {
-      //console.log(chalk.cyan.bold('Mongoose::Connect::AlreadyConnected'));
+      winston.info('Mongoose::Connect::Already Connected');
       return resolve(mongoose);
     }
 
@@ -26,7 +26,7 @@ function connect() {
     });
 
     mongoose.connection.once('connected', function () {
-      console.log(chalk.cyan.bold('Mongoose::Connect::Success'), mongoose.connection.readyState);
+      winston.info('Mongoose::Connect::Success');
       return resolve(mongoose);
     });
 
@@ -35,21 +35,22 @@ function connect() {
 
 function disconnect() {
   return new Promise(function (resolve, reject) {
-    console.log(chalk.cyan.bold('Mongoose::Disconnect::Start'));
+    winston.debug('Mongoose::Disconnect::Start');
     if (mongoose.connection.readyState === 0) {
-      resolve();
+      winston.info('Mongoose::Disconnect::Not Connected');
+      return resolve();
     }
 
     mongoose.disconnect(function (err) {
       if (err) {
-        reject(err);
+        return reject(err);
       }
     });
 
     mongoose.connection.once('disconnected', function () {
-      console.log(chalk.cyan.bold('Mongoose::Disconnect::Success'));
+      winston.info('Mongoose::Disconnect::Success');
       db = undefined;
-      resolve();
+      return resolve();
     });
 
   });

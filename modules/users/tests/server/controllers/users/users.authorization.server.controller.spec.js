@@ -1,21 +1,9 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonAsPromised from 'sinon-as-promised';
-import promised from 'chai-as-promised';
 import mongoose from 'mongoose';
 import * as authorizationController from '../../../../server/controllers/users/users.authorization.server.controller';
 import aclModule from '../../../../server/config/acl';
 import userModel from '../../../../server/models/users.server.model.user';
-
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

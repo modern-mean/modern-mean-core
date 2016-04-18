@@ -1,6 +1,6 @@
 'use strict';
 
-import chalk from 'chalk';
+import winston from 'winston';
 import mongooseModule from './mongoose';
 import express from './express';
 import config from 'modernMean/config';
@@ -38,11 +38,11 @@ function start() {
       .then(express.core)
       .then(express.listen)
       .then(function (app) {
-        console.log(chalk.bold.cyan('Express::Done::Success'));
+        winston.verbose('Express::Done::Success');
         resolve(app);
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('Express::Done::Error' + err));
+        winston.error(err);
         reject(err);
       });
   });
@@ -54,12 +54,12 @@ function stop() {
   return new Promise(function (resolve, reject) {
     Promise.all([express.destroy(), mongooseModule.disconnect()])
       .then(function () {
-        console.log(chalk.bold.cyan('MEAN::Stop::Success'));
+        winston.verbose('MEAN::Stop::Success');
         resolve();
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('MEAN::Stop::Error' + err));
-        reject();
+        winston.error(err);
+        reject(err);
       });
   });
 }
