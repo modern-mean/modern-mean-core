@@ -1,7 +1,7 @@
-(function(window) {
+(function(app) {
   'use strict';
 
-  window.modernMeanApplication.registerModule('core', [window.modernMeanApplication.name]);
-  window.modernMeanApplication.registerModule('core.routes', ['ui.router']);
+  app.registerModule('core', [app.name]);
+  app.registerModule('core.routes', ['ui.router']);
 
-})(window);
+})(window.modernMeanApplication);
