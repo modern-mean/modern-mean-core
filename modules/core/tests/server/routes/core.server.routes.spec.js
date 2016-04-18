@@ -1,20 +1,9 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import express from 'express';
-import request from 'superagent';
 import * as routes from '../../../server/routes/core.server.routes';
 import * as controller from '../../../server/controllers/core.server.controller';
 import mean from '../../../server/app/init';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

@@ -1,21 +1,9 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import expressModule from '../../../server/app/express';
 import express from 'express';
-import config from 'modernMean/config';
-import request from 'superagent';
 import http from 'http';
 import https from 'https';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

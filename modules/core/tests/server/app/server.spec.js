@@ -1,16 +1,6 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import app from '../../../server/app/init';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 
@@ -32,10 +22,14 @@ describe('/modules/core/server/app/server.js', () => {
       mockStart = sandbox.stub(app, 'start').resolves();
     });
 
-    it('should call app.start()', () => {
+    it('should call app.start()', (done) => {
       delete require.cache[require.resolve('../../../server/app/server')];
       require('../../../server/app/server');
-      return mockStart.should.have.been.calledOnce;
+      setTimeout(() => {
+        mockStart.should.be.calledOnce;
+        done();
+      }, 75);
+
     });
 
   });

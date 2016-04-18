@@ -1,21 +1,11 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import express from 'express';
 import adminRoutes from '../../server/routes/admin.server.routes';
 import adminPolicy from '../../server/policies/admin.server.policy';
 import aclModule from '../../server/config/acl';
 import * as adminUsers from '../../server/admin.users.module';
 import mongooseModule from '../../../core/server/app/mongoose';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

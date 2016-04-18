@@ -56,7 +56,8 @@ function mochaSingle(done) {
   	  gulp.src(config.files.test.server.tests)
       //.pipe(injectModules())
   		.pipe(mocha({
-        reporter: 'dot'
+        reporter: 'spec',
+        require: ['./mocha.setup'],
       }))
   		.pipe(istanbul.writeReports(
         {
@@ -89,6 +90,7 @@ function mochaWatch(done) {
     		//.pipe(babel())
     		//.pipe(injectModules())
     		.pipe(mocha({
+          require: ['./mocha.setup'],
           timeout: 4000
         }))
         .on('error', gutil.log)

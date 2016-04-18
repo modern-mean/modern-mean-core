@@ -2,12 +2,14 @@
 
 import passport from 'passport';
 import express from 'express';
+import winston from 'winston';
 import nodeacl from 'acl';
 import aclModule from '../config/acl';
 import * as admin from '../controllers/admin.server.controller';
 
 function init(app) {
   return new Promise((resolve, reject) => {
+    winston.debug('Users::Routes::Admin::Start');
     let router = express.Router();
     let acl = aclModule.getAcl();
 
@@ -27,8 +29,9 @@ function init(app) {
     router.param('userId', admin.userByID);
 
     app.use('/api/users', router);
-    resolve(app);
 
+    winston.verbose('Users::Routes::Admin::Success');
+    return resolve(app);
   });
 }
 

@@ -1,44 +1,47 @@
 'use strict';
 
+import winston from 'winston';
 import userModel from './models/users.server.model.user';
 import userSeed from './models/users.server.model.user.seed';
 import userRoutes from './routes/users.server.routes';
 import authRoutes from './routes/auth.server.routes';
 import authentication from './authentication/authentication';
-import chalk from 'chalk';
 import config from 'modernMean/config';
 
 
 function init(app) {
-
-  console.log(chalk.bold.green('Users::Init::Start'));
+  winston.debug('Users::Init::Start');
 
   let modelInit = new Promise(function (resolve, reject) {
+    winston.debug('Users::Init::Model::Start');
     userModel
       .init()
       .then(function (model) {
         if (config.seedDB) {
           userSeed.init();
         }
-        resolve();
+        winston.verbose('Users::Init::Model::Success');
+        return resolve();
       })
       .catch(function (err) {
-        reject(err);
+        winston.error(err);
+        return reject(err);
       });
   });
 
 
   let expressInit = new Promise(function (resolve, reject) {
+    winston.debug('Users::Init::Express::Start');
     authentication.init(app)
       .then(userRoutes.init)
       .then(authRoutes.init)
       .then(function () {
-        console.log(chalk.bold.green('Users::Init::Success'));
-        resolve(app);
+        winston.verbose('Users::Init::Success');
+        return resolve(app);
       })
       .catch(function (err) {
-        console.log(chalk.bold.red('Users::Init::Error::' + err));
-        reject(err);
+        winston.error('Users::Init::Error::' + err);
+        return reject(err);
       });
   });
 

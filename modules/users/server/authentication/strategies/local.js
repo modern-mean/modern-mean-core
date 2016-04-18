@@ -2,13 +2,14 @@
 
 import lodash from 'lodash';
 import passport from 'passport';
-import chalk from 'chalk';
+import winston from 'winston';
 import userModel from '../../models/users.server.model.user';
 
 let LocalStrategy = require('passport-local').Strategy;
 
 function strategy() {
   return new Promise(function (resolve, reject) {
+    winston.debug('Users::Authentication::Local::Start');
     // Use local strategy
     passport.use(new LocalStrategy({
       usernameField: 'email',
@@ -36,8 +37,8 @@ function strategy() {
           return done(err, false);
         });
     }));
-    console.log(chalk.bold.green('Users::Authentication::Local::Success'));
-    resolve();
+    winston.verbose('Users::Authentication::Local::Success');
+    return resolve();
   });
 }
 

@@ -11,6 +11,17 @@ let development = {
     debug: process.env.MONGODB_DEBUG || false
   },
   livereload: true,
+  logs: {
+    //https://github.com/expressjs/morgan
+    morgan: {
+      format: 'dev'
+    },
+    //https://github.com/winstonjs/winston
+    winston: {
+      level:  process.env.WINSTON_LEVEL || 'debug', //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
+      file: process.env.WINSTON_FILE || './logs/winston.log'
+    }
+  },
   seedDB: process.env.MONGO_SEED === 'true' ? true : false
 
 };

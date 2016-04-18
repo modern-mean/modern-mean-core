@@ -2,7 +2,7 @@
 
 import passport from 'passport';
 import config from 'modernMean/config';
-import chalk from 'chalk';
+import winston from 'winston';
 import JwtStrategy from 'passport-jwt';
 import userModel from '../../models/users.server.model.user';
 
@@ -11,6 +11,7 @@ let extract = JwtStrategy.ExtractJwt;
 
 function strategy() {
   return new Promise(function (resolve, reject) {
+    winston.debug('Users::Authentication::JWT::Start');
     var opts = {};
     opts.secretOrKey = config.jwt.secret;
     opts.jwtFromRequest = extract.fromAuthHeader();
@@ -30,8 +31,8 @@ function strategy() {
         });
 
     }));
-    console.log(chalk.bold.green('Users::Authentication::Jwt::Success'));
-    resolve();
+    winston.verbose('Users::Authentication::Jwt::Success');
+    return resolve();
   });
 }
 

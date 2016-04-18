@@ -1,15 +1,16 @@
 'use strict';
 
-import chalk from 'chalk';
+import winston from 'winston';
 import app from './init';
+import logger from './winston';
 
-app
-  .start()
+logger
+  .init()
+  .then(app.start)
   .then(function (app) {
-    console.log(chalk.bold.green('Modern-MEAN started Successfully'));
+    winston.info('Modern-MEAN started Successfully');
   })
   .catch(function (err) {
-    console.log(chalk.bold.red('Modern-MEAN start failure'));
-    console.log(chalk.bold.red(err));
+    winston.error(err);
     app.stop();
   });

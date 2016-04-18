@@ -1,19 +1,8 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonAsPromised from 'sinon-as-promised';
-import promised from 'chai-as-promised';
 import * as aclModule from '../../../server/config/acl';
 import mongooseModule from '../../../../core/server/app/mongoose';
 import config from 'modernMean/config';
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 

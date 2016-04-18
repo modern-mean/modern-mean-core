@@ -1,9 +1,5 @@
 'use strict';
 
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import promised from 'chai-as-promised';
 import express from 'express';
 import passport from 'passport';
 import request from 'supertest';
@@ -11,13 +7,6 @@ import mongoose from 'mongoose';
 import * as localStrategy from '../../../../server/authentication/strategies/local';
 import userSeed from '../../../../server/models/users.server.model.user.seed';
 import mean from '../../../../../core/server/app/init';
-
-
-chai.use(promised);
-chai.use(sinonChai);
-
-let expect = chai.expect;
-let should = chai.should();
 
 let sandbox;
 let app;
