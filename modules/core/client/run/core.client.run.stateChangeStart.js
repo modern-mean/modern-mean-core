@@ -6,10 +6,11 @@
     .module('core')
     .run(stateChangeStart);
 
-  stateChangeStart.$inject = ['$rootScope', '$state', '$mdComponentRegistry'];
-  function stateChangeStart($rootScope, $state, $mdComponentRegistry) {
+  stateChangeStart.$inject = ['$rootScope', '$state', '$mdComponentRegistry', '$log'];
+  function stateChangeStart($rootScope, $state, $mdComponentRegistry, $log) {
     // Record previous state
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      $log.debug('Core::StateChangeStart', toState, fromState);
       closeSideNavs();
     });
 

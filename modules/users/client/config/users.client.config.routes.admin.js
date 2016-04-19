@@ -74,5 +74,6 @@
     function getUser($stateParams, UserAdmin) {
       return UserAdmin.get({ userId: $stateParams.userId });
     }
+
   }
 })();

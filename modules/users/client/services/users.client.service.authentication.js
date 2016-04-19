@@ -5,9 +5,9 @@
     .module('users')
     .service('Authentication', Authentication);
 
-  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', 'User', 'Authorization'];
+  Authentication.$inject = ['$q', '$resource', '$http', '$location', '$state', 'User', 'Authorization', '$log'];
 
-  function Authentication($q, $resource, $http, $location, $state, User, Authorization) {
+  function Authentication($q, $resource, $http, $location, $state, User, Authorization, $log) {
 
 
     var readyPromise = $q.defer();
@@ -40,13 +40,11 @@
 
     function signout() {
       return $q(function(resolve, reject) {
-        console.log('AuthenticationService::Signout');
         removeToken();
         service.user = new User();
         service.authorization = new Authorization();
         setHeader();
         readyPromise = $q.defer();
-        console.log('AuthenticationService::Signout');
         resolve();
       });
     }
@@ -125,7 +123,7 @@
       } else {
         readyPromise.resolve(service);
       }
-      console.log('AuthenticationService::Init', service);
+      $log.info('AuthenticationService::Init', service);
     }
 
     //Run init

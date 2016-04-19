@@ -5,9 +5,9 @@
     .module('core')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['$mdComponentRegistry'];
+  HeaderController.$inject = ['$mdComponentRegistry', '$log'];
 
-  function HeaderController($mdComponentRegistry) {
+  function HeaderController($mdComponentRegistry, $log) {
     var vm = this;
 
     vm.navigation = {};
@@ -24,6 +24,6 @@
         vm.navigation.right = nav;
       });
 
-    console.log('HeaderController::Init', vm);
+    $log.info('HeaderController::Init', vm);
   }
 })();

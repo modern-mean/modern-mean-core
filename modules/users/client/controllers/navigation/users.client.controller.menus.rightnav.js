@@ -5,9 +5,9 @@
     .module('users')
     .controller('UsersRightNavController', UsersRightNavController);
 
-  UsersRightNavController.$inject = ['Authentication', '$state', '$mdComponentRegistry', '$mdToast'];
+  UsersRightNavController.$inject = ['Authentication', '$state', '$mdComponentRegistry', '$mdToast', '$log'];
 
-  function UsersRightNavController(Authentication, $state, $mdComponentRegistry, $mdToast) {
+  function UsersRightNavController(Authentication, $state, $mdComponentRegistry, $mdToast, $log) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -16,12 +16,12 @@
     $mdComponentRegistry
       .when('coreRightNav')
       .then(function(nav) {
-        console.log('yippeee', nav);
         vm.navigation = nav;
       });
 
 
     function signout() {
+      $log.debug('UserRightNavController::signout', vm);
       vm.navigation
         .close()
         .then(Authentication.signout)
@@ -34,11 +34,12 @@
             .theme('toast-success');
 
           $mdToast.show(toast);
+          $log.debug('UserRightNavController::success', Authentication);
         });
 
     }
 
 
-    console.log('UserRightNavController::Init::vm', vm);
+    $log.info('UserRightNavController::Init', vm);
   }
 })();

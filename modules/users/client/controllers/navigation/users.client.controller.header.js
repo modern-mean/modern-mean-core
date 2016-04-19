@@ -5,9 +5,9 @@
     .module('users')
     .controller('UsersHeaderController', UsersHeaderController);
 
-  UsersHeaderController.$inject = ['$mdComponentRegistry', 'Authentication'];
+  UsersHeaderController.$inject = ['$mdComponentRegistry', 'Authentication', '$log'];
 
-  function UsersHeaderController($mdComponentRegistry, Authentication) {
+  function UsersHeaderController($mdComponentRegistry, Authentication, $log) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -29,9 +29,10 @@
     Authentication.ready
       .then(function () {
         vm.isAdmin = (Authentication.authorization.roles && Authentication.authorization.roles.indexOf('admin') !== -1);
+        $log.debug('UsersHeaderController::AuthReady', Authentication);
       });
 
 
-    console.log('UsersHeaderController::Init', vm);
+    $log.info('UsersHeaderController::Init', vm);
   }
 })();

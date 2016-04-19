@@ -5,9 +5,9 @@
     .module('users')
     .controller('UsersAddressController', UsersAddressController);
 
-  UsersAddressController.$inject = ['Authentication', '$mdToast', '$mdDialog'];
+  UsersAddressController.$inject = ['Authentication', '$mdToast', '$mdDialog', '$log'];
 
-  function UsersAddressController(Authentication, $mdToast, $mdDialog) {
+  function UsersAddressController(Authentication, $mdToast, $mdDialog, $log) {
     var vm = this;
 
     vm.address = {};
@@ -37,6 +37,7 @@
     }
 
     function remove(address) {
+      $log.debug('UsersAddressController::remove', address);
       var confirm = $mdDialog.confirm()
           .title('Confirm Address Delete?')
           .textContent('Are you sure you want to delete this address?')
@@ -48,6 +49,7 @@
         .then(function(result) {
           vm.user.addresses.splice(vm.user.addresses.indexOf(address), 1);
           vm.save();
+          $log.debug('UsersAddressController::remove:success', vm.user.addresses);
         });
 
 
@@ -68,13 +70,15 @@
         vm.clear();
         toast.textContent('Addresses Updated Successfully').theme('toast-success');
         $mdToast.show(toast);
+        $log.debug('UsersAddressController::save:success', vm.user);
       }, function (err) {
         vm.executing = false;
         toast.textContent('Address Update Error').theme('toast-error');
         $mdToast.show(toast);
+        $log.error('UsersAddressController::remove:error', vm.user.addresses);
       });
     }
 
-    console.log('Users::UsersAddressController::Init::vm', vm);
+    $log.info('Users::UsersAddressController::Init', vm);
   }
 })();

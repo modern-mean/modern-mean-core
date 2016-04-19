@@ -5,9 +5,9 @@
     .module('users.admin')
     .controller('UserController', UserController);
 
-  UserController.$inject = ['userResolve', '$state'];
+  UserController.$inject = ['userResolve', '$state', '$log'];
 
-  function UserController(userResolve, $state) {
+  function UserController(userResolve, $state, $log) {
     var vm = this;
 
     vm.remove = remove;
@@ -40,6 +40,6 @@
       );
     }
 
-    console.log('Users.Admin::UserController::Init', vm);
+    $log.info('Users.Admin::UserController::Init', vm);
   }
 })();

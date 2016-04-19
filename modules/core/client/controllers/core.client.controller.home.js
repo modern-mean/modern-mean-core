@@ -5,10 +5,11 @@
     .module('core')
     .controller('HomeController', HomeController);
 
-  //HomeController.$inject = ['Authentication'];
+  HomeController.$inject = ['$log'];
 
-  function HomeController() {
+  function HomeController($log) {
     var vm = this;
-  
+
+    $log.info('HomeController::Init', vm);
   }
 })();

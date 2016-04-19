@@ -5,9 +5,9 @@
     .module('users')
     .controller('SignupAuthenticationController', SignupAuthenticationController);
 
-  SignupAuthenticationController.$inject = ['Authentication', 'PasswordValidator', '$state', '$location', '$mdToast'];
+  SignupAuthenticationController.$inject = ['Authentication', 'PasswordValidator', '$state', '$location', '$mdToast', '$log'];
 
-  function SignupAuthenticationController(Authentication, PasswordValidator, $state, $location, $mdToast) {
+  function SignupAuthenticationController(Authentication, PasswordValidator, $state, $location, $mdToast, $log) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -19,6 +19,7 @@
     vm.user = {};
 
     function signup () {
+      $log.debug('SignupAuthenticationController::signup', vm);
       vm.error = undefined;
 
       var toast = $mdToast.simple()
@@ -33,9 +34,11 @@
             toast.textContent('Signup Successful!').theme('toast-success');
             $mdToast.show(toast);
             vm.clearForm();
+            $log.debug('SignupAuthenticationController::signup::success', response);
           },
           function (err) {
             vm.error = err.data.message;
+            $log.debug('SignupAuthenticationController::signup::error', err);
           }
         );
     }
@@ -49,6 +52,6 @@
       vm.forms.signUp.$setUntouched();
     }
 
-    console.log('SignupAuthenticationController::Init::vm', vm);
+    $log.info('SignupAuthenticationController::Init', vm);
   }
 })();

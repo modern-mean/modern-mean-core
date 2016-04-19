@@ -5,9 +5,9 @@
     .module('users')
     .controller('SigninAuthenticationController', SigninAuthenticationController);
 
-  SigninAuthenticationController.$inject = ['Authentication', '$state', '$mdToast'];
+  SigninAuthenticationController.$inject = ['Authentication', '$state', '$mdToast', '$log'];
 
-  function SigninAuthenticationController(Authentication, $state, $mdToast) {
+  function SigninAuthenticationController(Authentication, $state, $mdToast, $log) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -19,7 +19,7 @@
 
     function signin () {
       vm.error = undefined;
-
+      $log.debug('SigninAuthenticationController::signin', vm);
       var toast = $mdToast.simple()
         .position('bottom right')
         .hideDelay(6000);
@@ -32,11 +32,13 @@
             toast.textContent('Signin Successful!').theme('toast-success');
             $mdToast.show(toast);
             vm.clearForm();
+            $log.debug('SigninAuthenticationController::signin::success', response);
           },
           function (err) {
             vm.error = err.data.message;
             toast.textContent('Signin Failed!').theme('toast-error');
             $mdToast.show(toast);
+            $log.debug('SigninAuthenticationController::signin::error', err);
           }
         );
     }
@@ -48,6 +50,6 @@
       vm.forms.signIn.$setUntouched();
     }
 
-    console.log('SigninAuthenticationController::Init::vm', vm);
+    $log.info('SigninAuthenticationController::Init', vm);
   }
 })();

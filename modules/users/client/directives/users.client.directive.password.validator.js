@@ -5,14 +5,14 @@
     .module('users')
     .directive('passwordValidator', passwordValidator);
 
-  passwordValidator.$inject = ['PasswordValidator'];
+  passwordValidator.$inject = ['PasswordValidator', '$log'];
 
-  function passwordValidator(PasswordValidator) {
+  function passwordValidator(PasswordValidator, $log) {
     return {
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
         ngModel.$validators.requirements = function (password) {
-          console.log('Users::Directive::passwordValidator::Init', password);
+          $log.info('Users::Directive::passwordValidator::Init', password);
           var status = true;
           if (password) {
             var result = PasswordValidator.getResult(password);
