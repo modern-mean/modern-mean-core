@@ -92,6 +92,5 @@
       }
     });
 
-    console.log('Core::Routes::Loaded', $stateProvider);
   }
 })();

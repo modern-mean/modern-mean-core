@@ -5,9 +5,9 @@
     .module('users')
     .controller('SocialAuthenticationController', SocialAuthenticationController);
 
-  SocialAuthenticationController.$inject = ['$location', '$state'];
+  SocialAuthenticationController.$inject = ['$location', '$state', '$log'];
 
-  function SocialAuthenticationController($location, $state) {
+  function SocialAuthenticationController($location, $state, $log) {
     var vm = this;
 
     vm.callOauthProvider = callOauthProvider;
@@ -21,6 +21,6 @@
       $location.path(url);
     }
 
-    console.log('SocialAuthenticationController::Init::vm', vm);
+    $log.info('SocialAuthenticationController::Init', vm);
   }
 })();

@@ -5,9 +5,9 @@
     .module('core.routes')
     .directive('pageTitle', pageTitle);
 
-  pageTitle.$inject = ['$rootScope', '$state', 'CORE_CONSTANTS'];
+  pageTitle.$inject = ['$rootScope', '$state', 'CORE_CONSTANTS', '$log'];
 
-  function pageTitle($rootScope, $state, CORE_CONSTANTS) {
+  function pageTitle($rootScope, $state, CORE_CONSTANTS, $log) {
     var directive = {
       retrict: 'A',
       link: link
@@ -17,7 +17,7 @@
       $rootScope.$on('$stateChangeStart', listener);
 
       function listener(event, toState) {
-        console.log('Core::Directive::PageTitle', toState.data.pageTitle);
+        $log.info('Core::Directive::PageTitle', toState.data.pageTitle);
         if (toState.data && toState.data.pageTitle) {
           element.html(CORE_CONSTANTS.page.title + ' - ' + toState.data.pageTitle);
         } else {

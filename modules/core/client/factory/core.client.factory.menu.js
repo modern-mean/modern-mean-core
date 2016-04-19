@@ -5,8 +5,8 @@
     .module('core')
     .factory('menuFactory', menuFactory);
 
-  menuFactory.$inject = ['lodash'];
-  function menuFactory(lodash) {
+  menuFactory.$inject = ['lodash', '$log'];
+  function menuFactory(lodash, $log) {
     var factory = {
       toolbar: {
         items: [],
@@ -32,7 +32,7 @@
       var menu = this.getItem(item);  // jshint ignore:line
 
       if (menu) {
-        console.log('Menu Exists:' , menu);
+        $log.info('Menu Exists:' , menu);
         return menu;
       }
 

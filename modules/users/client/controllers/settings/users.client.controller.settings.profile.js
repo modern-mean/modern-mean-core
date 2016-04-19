@@ -5,9 +5,9 @@
     .module('users')
     .controller('UsersProfileController', UsersProfileController);
 
-  UsersProfileController.$inject = ['Authentication', '$mdToast'];
+  UsersProfileController.$inject = ['Authentication', '$mdToast', '$log'];
 
-  function UsersProfileController(Authentication, $mdToast) {
+  function UsersProfileController(Authentication, $mdToast, $log) {
     var vm = this;
 
     vm.clear = clear;
@@ -25,6 +25,7 @@
     }
 
     function save() {
+      $log.debug('UsersProfileController::save', vm);
       vm.executing = true;
 
       var toast = $mdToast.simple()
@@ -36,13 +37,15 @@
         vm.clear();
         toast.textContent('Profile Updated Successfully').theme('toast-success');
         $mdToast.show(toast);
+        $log.debug('UsersProfileController::save::success', response);
       }, function (err) {
         vm.executing = false;
         toast.textContent('Profile Update Error').theme('toast-error');
         $mdToast.show(toast);
+        $log.error('UsersProfileController::save::error', err);
       });
     }
 
-    console.log('Users::EditProfileController::Init::vm', vm);
+    $log.info('Users::EditProfileController::Init', vm);
   }
 })();

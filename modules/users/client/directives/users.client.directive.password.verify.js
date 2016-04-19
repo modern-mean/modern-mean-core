@@ -5,8 +5,8 @@
     .module('users')
     .directive('passwordVerify', passwordVerify);
 
-  DirectiveController.$inject = ['$scope'];
-  function DirectiveController($scope) {
+  DirectiveController.$inject = ['$scope', '$log'];
+  function DirectiveController($scope, $log) {
     var vm = this;
 
     $scope.$watchCollection('vm.passwordVerify', function (newObj, oldObj) {
@@ -18,6 +18,8 @@
         }
       }
     }, true);
+
+    $log.info('Users::Directive::passwordVerify::Init', vm);
 
   }
 

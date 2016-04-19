@@ -150,7 +150,5 @@
           pageTitle: 'Password Reset Form'
         }
       });
-
-    console.log('Users::Routes::Loaded', $stateProvider);
   }
 })();

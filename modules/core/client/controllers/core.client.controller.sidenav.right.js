@@ -5,9 +5,9 @@
     .module('core')
     .controller('SideNavRightController', SideNavRightController);
 
-  SideNavRightController.$inject = ['$mdComponentRegistry'];
+  SideNavRightController.$inject = ['$mdComponentRegistry', '$log'];
 
-  function SideNavRightController($mdComponentRegistry) {
+  function SideNavRightController($mdComponentRegistry, $log) {
     var vm = this;
 
     $mdComponentRegistry
@@ -16,6 +16,6 @@
         vm.navigation = nav;
       });
 
-    console.log('SideNavRightController::Init', vm);
+    $log.info('SideNavRightController::Init', vm);
   }
 })();

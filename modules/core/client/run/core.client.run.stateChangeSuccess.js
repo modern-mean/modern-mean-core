@@ -6,10 +6,11 @@
     .module('core')
     .run(stateChangeSuccess);
 
-  stateChangeSuccess.$inject = ['$rootScope', '$state', '$mdComponentRegistry'];
-  function stateChangeSuccess($rootScope, $state, $mdComponentRegistry) {
+  stateChangeSuccess.$inject = ['$rootScope', '$state', '$mdComponentRegistry', '$log'];
+  function stateChangeSuccess($rootScope, $state, $mdComponentRegistry, $log) {
     // Record previous state
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      $log.debug('Core::StateChangeSuccess', toState, fromState);
       storePreviousState(fromState, fromParams);
     });
 

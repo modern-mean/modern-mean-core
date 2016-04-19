@@ -5,9 +5,9 @@
     .module('users')
     .controller('UsersEmailController', UsersEmailController);
 
-  UsersEmailController.$inject = ['Authentication', '$mdToast'];
+  UsersEmailController.$inject = ['Authentication', '$mdToast', '$log'];
 
-  function UsersEmailController(Authentication, $mdToast) {
+  function UsersEmailController(Authentication, $mdToast, $log) {
     var vm = this;
 
     vm.add = add;
@@ -21,6 +21,7 @@
 
     function add() {
       vm.user.emails.push({ email: undefined, default: false });
+      $log.debug('UsersEmailController::add:success', vm.user.emails);
     }
 
     function clear() {
@@ -35,9 +36,11 @@
     function remove(email) {
       vm.user.emails.splice(vm.user.emails.indexOf(email), 1);
       vm.forms.emailForm.$pristine = false;
+      $log.debug('UsersEmailController::remove:success', vm.user.emails);
     }
 
     function save() {
+      $log.debug('UsersEmailController::save', vm);
       vm.executing = true;
 
       var toast = $mdToast.simple()
@@ -49,10 +52,12 @@
         clear();
         toast.textContent('Emails Updated Successfully').theme('toast-success');
         $mdToast.show(toast);
+        $log.debug('UsersEmailController::save:success', response);
       }, function (err) {
         vm.executing = false;
         toast.textContent('Email Update Error').theme('toast-error');
         $mdToast.show(toast);
+        $log.error('UsersEmailController::save:error', err);
       });
     }
 
@@ -61,8 +66,9 @@
         email.primary = false;
       });
       email.primary = true;
+      $log.debug('UsersEmailController::togglePrimary', email, vm.user.emails);
     }
 
-    console.log('Users::UsersEmailController::Init::vm', vm);
+    $log.info('Users::UsersEmailController::Init', vm);
   }
 })();

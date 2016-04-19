@@ -9,6 +9,7 @@
 ## Documentation
 Visit our <a href="https://github.com/modern-mean/modern-mean-core/tree/master/docs">documentation folder</a> for up to date documentation
 * <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/quickstart.md">Getting Started Guide</a>
+* <a href="https://github.com/modern-mean/modern-mean-core/blob/master/docs/logging.md">Logging</a>
 
 
 Modern-MEAN is a full-stack JavaScript open-source solution, forked originally from MEAN.js which provides a solid starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications.

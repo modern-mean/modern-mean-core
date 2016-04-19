@@ -5,9 +5,9 @@
     .module('core')
     .controller('SideNavLeftController', SideNavLeftController);
 
-  SideNavLeftController.$inject = ['$mdComponentRegistry', '$mdMedia', 'CORE_CONSTANTS'];
+  SideNavLeftController.$inject = ['$mdComponentRegistry', '$mdMedia', 'CORE_CONSTANTS', '$log'];
 
-  function SideNavLeftController($mdComponentRegistry, $mdMedia, CORE_CONSTANTS) {
+  function SideNavLeftController($mdComponentRegistry, $mdMedia, CORE_CONSTANTS, $log) {
     var vm = this;
 
     vm.config = CORE_CONSTANTS.navigation.left;
@@ -34,7 +34,6 @@
       return false;
     }
 
-
-    console.log('SideNavLeftController::Init', vm);
+    $log.info('SideNavLeftController::Init', vm);
   }
 })();
