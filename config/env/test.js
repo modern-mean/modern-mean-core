@@ -88,8 +88,8 @@ let test = {
         eslint: ['./modules/**/*.js', './config/**/*.js']
       },
       client: {
-        tests: ['./modules/*/tests/client/**/*.spec.js'],
-        coverage: ['modules/core/client/app/core.client.app.loader.js', 'modules/*/client/**/*.module.js', './modules/*/client/**/!(*module).js']
+        tests: ['..//modules/*/tests/client/**/*.spec.js'],
+        coverage: ['../modules/core/client/app/core.client.app.loader.js', '../modules/*/client/**/*.module.js', '../modules/*/client/**/!(*module).js']
       },
       server: {
         tests: ['./modules/*/tests/server/**/*.spec.js'],

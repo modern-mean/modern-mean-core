@@ -5,7 +5,7 @@ import sinonPromised from 'sinon-as-promised';
 import promised from 'chai-as-promised';
 import request from 'supertest';
 import config from 'modernMean/config';
-import winston from './modules/core/server/app/winston';
+import winston from '../modules/core/server/app/winston';
 
 winston.init();
 
