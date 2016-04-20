@@ -28,7 +28,7 @@ lint.displayName = 'lint';
 
 function karmaSingle(done) {
   new KarmaServer({
-    configFile: process.cwd() + '/karma.conf.js',
+    configFile: process.cwd() + '/config/karma.conf.js',
     singleRun: true
   }, done).start();
 }
@@ -36,7 +36,7 @@ karmaSingle.displayName = 'karma';
 
 function karmaWatch(done) {
   new KarmaServer({
-    configFile: process.cwd() + '/karma.conf.js',
+    configFile: process.cwd() + '/config/karma.conf.js',
     autoWatch: true
   }, function() {
         done();
@@ -57,7 +57,7 @@ function mochaSingle(done) {
       //.pipe(injectModules())
   		.pipe(mocha({
         reporter: 'spec',
-        require: ['./mocha.setup'],
+        require: ['./config/mocha.setup'],
       }))
   		.pipe(istanbul.writeReports(
         {
@@ -90,7 +90,7 @@ function mochaWatch(done) {
     		//.pipe(babel())
     		//.pipe(injectModules())
     		.pipe(mocha({
-          require: ['./mocha.setup'],
+          require: ['./config/mocha.setup'],
           timeout: 4000
         }))
         .on('error', gutil.log)

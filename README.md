@@ -31,7 +31,7 @@ Modern-MEAN is a full-stack JavaScript open-source solution, forked originally f
 
 
 ## Contributing
-We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/modern-mean/modern-mean-core/CONTRIBUTING.md) doc to get started.  All PR's must pass all tests and not reduce coverage.
+We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/modern-mean/modern-mean-core/docs/CONTRIBUTING.md) doc to get started.  All PR's must pass all tests and not reduce coverage.
 
 
 ## Credits

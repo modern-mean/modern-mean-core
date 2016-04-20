@@ -1,5 +1,5 @@
 import lodash from 'lodash';
-import { mergeEnvironment } from './config/config.js';
+import { mergeEnvironment } from './config.js';
 
 let config = mergeEnvironment();
 
@@ -10,13 +10,13 @@ karmaReporters.push('coverage');
 module.exports = function (karmaConfig) {
   let karmaFiles = [];
 
-  karmaFiles.push('./karma.setup.js');
-  karmaFiles.push('public/dist/angular.js');
-  karmaFiles.push('bower_components/angular-mocks/angular-mocks.js');
-  karmaFiles.push('bower_components/angular-material/angular-material-mocks.js');
+  karmaFiles.push('karma.setup.js');
+  karmaFiles.push('../public/dist/angular.js');
+  karmaFiles.push('../bower_components/angular-mocks/angular-mocks.js');
+  karmaFiles.push('../bower_components/angular-material/angular-material-mocks.js');
   karmaFiles = lodash.union(karmaFiles, config.files.test.client.coverage, config.files.test.client.tests);
-  karmaFiles.push('public/dist/vendor.js');
-  karmaFiles.push('public/dist/templates.js');
+  karmaFiles.push('../public/dist/vendor.js');
+  karmaFiles.push('../public/dist/templates.js');
   //karmaFiles.push('modules/core/client/app/core.client.app.loader.js');
   //karmaFiles.push('modules/core/client/app/core.client.app.loader.spec.js');
   //console.log('Karma::Files', karmaFiles);
@@ -30,9 +30,9 @@ module.exports = function (karmaConfig) {
     frameworks: ['browserify', 'mocha'],
 
     preprocessors: {
-      './karma.setup.js': [ 'browserify' ],
-      'modules/*/client/views/**/*.html': ['ng-html2js'],
-      'modules/*/client/**/*.js': ['coverage']
+      'karma.setup.js': [ 'browserify' ],
+      '../modules/*/client/views/**/*.html': ['ng-html2js'],
+      '../modules/*/client/**/*.js': ['coverage']
     },
     browserify: {
       debug: true,
